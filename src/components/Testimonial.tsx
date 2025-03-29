@@ -39,7 +39,7 @@ const Testimonial = ({ quote, name, title, company, project, children, delay = 0
   return (
     <div 
       ref={testimonialRef}
-      className="glass rounded-lg p-8 border border-brand-purple/20 animate-on-scroll hover:shadow-lg hover:shadow-brand-purple/20 transition-all duration-300 transform hover:-translate-y-1 animate-pulse-glow"
+      className="backdrop-blur-sm bg-black/30 rounded-lg p-8 border border-gray-800 animate-on-scroll hover:shadow-lg hover:shadow-brand-purple/20 transition-all duration-300 transform hover:-translate-y-1"
     >
       <div className="flex mb-4">
         {[1, 2, 3, 4, 5].map((star) => (
@@ -58,7 +58,7 @@ const Testimonial = ({ quote, name, title, company, project, children, delay = 0
 
       <div className="flex items-center">
         <div className="flex-shrink-0 mr-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-brand-purple to-brand-blue rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-brand-purple/25">
+          <div className="w-12 h-12 bg-gradient-to-br from-brand-purple via-indigo-500 to-brand-blue rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-brand-purple/25">
             {name.charAt(0)}
           </div>
         </div>
