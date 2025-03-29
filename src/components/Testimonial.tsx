@@ -1,5 +1,5 @@
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 
 interface TestimonialProps {
   quote: string;
@@ -8,11 +8,39 @@ interface TestimonialProps {
   company: string;
   project: string;
   children?: ReactNode;
+  delay?: number;
 }
 
-const Testimonial = ({ quote, name, title, company, project, children }: TestimonialProps) => {
+const Testimonial = ({ quote, name, title, company, project, children, delay = 0 }: TestimonialProps) => {
+  const testimonialRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('appear');
+          }, delay);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    if (testimonialRef.current) {
+      observer.observe(testimonialRef.current);
+    }
+    
+    return () => {
+      if (testimonialRef.current) {
+        observer.unobserve(testimonialRef.current);
+      }
+    };
+  }, [delay]);
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-8 border border-gray-100">
+    <div 
+      ref={testimonialRef}
+      className="bg-white rounded-lg shadow-md p-8 border border-gray-100 animate-on-scroll hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1"
+    >
       <div className="flex mb-4">
         {[1, 2, 3, 4, 5].map((star) => (
           <svg
@@ -30,14 +58,14 @@ const Testimonial = ({ quote, name, title, company, project, children }: Testimo
 
       <div className="flex items-center">
         <div className="flex-shrink-0 mr-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-brand-purple to-brand-blue rounded-full flex items-center justify-center text-white font-bold">
+          <div className="w-12 h-12 bg-gradient-to-r from-[#b692e0] to-[#7ee7d2] rounded-full flex items-center justify-center text-white font-bold">
             {name.charAt(0)}
           </div>
         </div>
         <div>
           <p className="font-semibold text-gray-900">{name}</p>
           <p className="text-sm text-gray-600">{title}, {company}</p>
-          <p className="text-xs text-brand-purple mt-1">Project: {project}</p>
+          <p className="text-xs text-[#b692e0] mt-1">Project: {project}</p>
         </div>
       </div>
       

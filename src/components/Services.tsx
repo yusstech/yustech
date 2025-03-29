@@ -1,7 +1,32 @@
 
 import { Button } from "@/components/ui/button";
+import { useEffect, useRef } from "react";
 
 const Services = () => {
+  const servicesRef = useRef<HTMLDivElement>(null);
+  
+  // Animation observer setup
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          // Add a delay based on index to create a staggered effect
+          setTimeout(() => {
+            entry.target.classList.add('appear');
+          }, index * 150);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    // Get all elements to animate
+    const animElements = servicesRef.current?.querySelectorAll('.animate-on-scroll');
+    animElements?.forEach(el => observer.observe(el));
+    
+    return () => {
+      animElements?.forEach(el => observer.unobserve(el));
+    };
+  }, []);
+
   const services = [
     {
       title: "Websites & Web Apps",
@@ -34,9 +59,10 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+    <section id="services" className="py-20 bg-white relative" ref={servicesRef}>
+      <div className="absolute inset-0 sweet-pattern"></div>
+      <div className="container mx-auto px-4 relative">
+        <div className="text-center mb-16 animate-on-scroll">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Your Product, <span className="gradient-text">Shipped</span> With Confidence
           </h2>
@@ -50,26 +76,26 @@ const Services = () => {
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-shadow p-8 animate-fade-in"
+              className="bg-white border border-gray-100 rounded-lg shadow-sm service-card animate-on-scroll p-8"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <h3 className="text-2xl font-bold mb-3 text-brand-dark">{service.title}</h3>
               <p className="text-gray-700 mb-4">{service.description}</p>
               
               <div className="mb-6">
-                <h4 className="font-semibold text-brand-purple mb-2">Pain Point:</h4>
+                <h4 className="font-semibold text-[#b692e0] mb-2">Pain Point:</h4>
                 <p className="italic text-gray-600">{service.painPoint}</p>
               </div>
               
               <div className="mb-6">
-                <h4 className="font-semibold text-brand-blue mb-2">Our Solution:</h4>
+                <h4 className="font-semibold text-[#7ee7d2] mb-2">Our Solution:</h4>
                 <p className="text-gray-700">{service.solution}</p>
               </div>
               
               <ul className="mb-6 space-y-2">
                 {service.features.map((feature, i) => (
                   <li key={i} className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 mr-2 text-brand-purple" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 mr-2 text-[#b692e0]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
                     {feature}
@@ -78,7 +104,7 @@ const Services = () => {
               </ul>
               
               <Button 
-                className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-opacity"
+                className="w-full bg-gradient-to-r from-[#b692e0] to-[#7ee7d2] hover:opacity-90 transition-opacity"
               >
                 Learn More
               </Button>
