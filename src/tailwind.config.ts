@@ -64,10 +64,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				brand: {
-					purple: '#b692e0',  // Updated to sweet purple
-					blue: '#7ee7d2',    // Updated to teal/mint
-					pink: '#ffa5c3',    // Added soft pink
+					purple: '#b183ff',  // Updated to a more vivid purple
+					blue: '#7ee7d2',    // Kept the teal/mint
+					pink: '#ff8ad8',    // Updated to a more neon pink
 					dark: '#1A1F2C',
+					darker: '#141623',  // Added darker shade
 					light: '#F6F6F7',
 				}
 			},
@@ -100,18 +101,38 @@ export default {
 				'slide-up': {
 					'0%': { transform: 'translateY(20px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
-				}
+				},
+                'float': {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-10px)' }
+                },
+                'pulse-glow': {
+                    '0%, 100%': { 
+                        'box-shadow': '0 0 5px rgba(177, 131, 255, 0.5)',
+                        'border-color': 'rgba(177, 131, 255, 0.5)'
+                    },
+                    '50%': { 
+                        'box-shadow': '0 0 20px rgba(177, 131, 255, 0.8)',
+                        'border-color': 'rgba(177, 131, 255, 0.8)'
+                    }
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
-				'slide-up': 'slide-up 0.7s ease-out'
+				'slide-up': 'slide-up 0.7s ease-out',
+                'float': 'float 6s ease-in-out infinite',
+                'pulse-glow': 'pulse-glow 3s ease-in-out infinite'
 			},
 			fontFamily: {
 				sans: ['Inter var', 'sans-serif'],
 				heading: ['Plus Jakarta Sans', 'sans-serif']
 			},
+            backgroundImage: {
+                'tech-gradient': 'linear-gradient(125deg, rgba(35, 39, 57, 0.9), rgba(20, 22, 35, 0.9))',
+                'hero-glow': 'radial-gradient(circle at 50% 50%, rgba(177, 131, 255, 0.2) 0%, transparent 50%)'
+            }
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

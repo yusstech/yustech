@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 
 const Services = () => {
   const servicesRef = useRef<HTMLDivElement>(null);
@@ -59,14 +60,17 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-20 bg-white relative" ref={servicesRef}>
-      <div className="absolute inset-0 sweet-pattern"></div>
+    <section id="services" className="py-20 relative" ref={servicesRef}>
+      <div className="absolute inset-0 tech-pattern"></div>
       <div className="container mx-auto px-4 relative">
         <div className="text-center mb-16 animate-on-scroll">
+          <div className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
+            Our Services
+          </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Your Product, <span className="gradient-text">Shipped</span> With Confidence
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             We specialize in building and shipping digital products with a 100% completion guarantee. 
             No more half-finished projects or endless development cycles.
           </p>
@@ -76,26 +80,26 @@ const Services = () => {
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="bg-white border border-gray-100 rounded-lg shadow-sm service-card animate-on-scroll p-8"
+              className="glass rounded-lg service-card animate-on-scroll p-8 border border-brand-purple/20"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <h3 className="text-2xl font-bold mb-3 text-brand-dark">{service.title}</h3>
-              <p className="text-gray-700 mb-4">{service.description}</p>
+              <h3 className="text-2xl font-bold mb-3 text-white">{service.title}</h3>
+              <p className="text-gray-300 mb-4">{service.description}</p>
               
-              <div className="mb-6">
-                <h4 className="font-semibold text-[#b692e0] mb-2">Pain Point:</h4>
-                <p className="italic text-gray-600">{service.painPoint}</p>
+              <div className="mb-6 bg-brand-purple/10 p-4 rounded-lg border border-brand-purple/20">
+                <h4 className="font-semibold text-brand-purple mb-2">Pain Point:</h4>
+                <p className="italic text-gray-300">{service.painPoint}</p>
               </div>
               
-              <div className="mb-6">
-                <h4 className="font-semibold text-[#7ee7d2] mb-2">Our Solution:</h4>
-                <p className="text-gray-700">{service.solution}</p>
+              <div className="mb-6 bg-brand-blue/10 p-4 rounded-lg border border-brand-blue/20">
+                <h4 className="font-semibold text-brand-blue mb-2">Our Solution:</h4>
+                <p className="text-gray-200">{service.solution}</p>
               </div>
               
               <ul className="mb-6 space-y-2">
                 {service.features.map((feature, i) => (
-                  <li key={i} className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 mr-2 text-[#b692e0]" fill="currentColor" viewBox="0 0 20 20">
+                  <li key={i} className="flex items-center text-sm text-gray-300">
+                    <svg className="w-4 h-4 mr-2 text-brand-purple" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
                     </svg>
                     {feature}
@@ -104,9 +108,10 @@ const Services = () => {
               </ul>
               
               <Button 
-                className="w-full bg-gradient-to-r from-[#b692e0] to-[#7ee7d2] hover:opacity-90 transition-opacity"
+                className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group"
               >
                 Learn More
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </Button>
             </div>
           ))}

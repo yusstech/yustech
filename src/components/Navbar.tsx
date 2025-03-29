@@ -11,7 +11,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+    <nav className="sticky top-0 z-50 glass shadow-md backdrop-blur-lg">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -23,21 +23,21 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#services" className="font-medium text-gray-600 hover:text-brand-purple transition-colors">
+            <a href="#services" className="font-medium text-gray-300 hover:text-brand-purple transition-colors">
               Services
             </a>
-            <a href="#testimonials" className="font-medium text-gray-600 hover:text-brand-purple transition-colors">
+            <a href="#testimonials" className="font-medium text-gray-300 hover:text-brand-purple transition-colors">
               Results
             </a>
-            <a href="#process" className="font-medium text-gray-600 hover:text-brand-purple transition-colors">
+            <a href="#process" className="font-medium text-gray-300 hover:text-brand-purple transition-colors">
               How It Works
             </a>
-            <a href="#faq" className="font-medium text-gray-600 hover:text-brand-purple transition-colors">
+            <a href="#faq" className="font-medium text-gray-300 hover:text-brand-purple transition-colors">
               FAQ
             </a>
             <Button
               variant="default"
-              className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-opacity"
+              className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-opacity hover:shadow-lg hover:shadow-brand-purple/25"
             >
               Book Consultation
             </Button>
@@ -47,7 +47,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="p-2 text-gray-600 hover:text-brand-purple"
+              className="p-2 text-gray-300 hover:text-brand-purple"
               aria-label="Toggle Menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -57,32 +57,32 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 border-t border-gray-100 animate-fade-in">
+          <div className="md:hidden mt-4 py-4 border-t border-brand-purple/20 animate-fade-in">
             <div className="flex flex-col space-y-4">
               <a 
                 href="#services" 
-                className="font-medium text-gray-600 hover:text-brand-purple transition-colors"
+                className="font-medium text-gray-300 hover:text-brand-purple transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Services
               </a>
               <a 
                 href="#testimonials" 
-                className="font-medium text-gray-600 hover:text-brand-purple transition-colors"
+                className="font-medium text-gray-300 hover:text-brand-purple transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Results
               </a>
               <a 
                 href="#process" 
-                className="font-medium text-gray-600 hover:text-brand-purple transition-colors"
+                className="font-medium text-gray-300 hover:text-brand-purple transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 How It Works
               </a>
               <a 
                 href="#faq" 
-                className="font-medium text-gray-600 hover:text-brand-purple transition-colors"
+                className="font-medium text-gray-300 hover:text-brand-purple transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 FAQ

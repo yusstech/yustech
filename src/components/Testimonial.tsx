@@ -39,7 +39,7 @@ const Testimonial = ({ quote, name, title, company, project, children, delay = 0
   return (
     <div 
       ref={testimonialRef}
-      className="bg-white rounded-lg shadow-md p-8 border border-gray-100 animate-on-scroll hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1"
+      className="glass rounded-lg p-8 border border-brand-purple/20 animate-on-scroll hover:shadow-lg hover:shadow-brand-purple/20 transition-all duration-300 transform hover:-translate-y-1 animate-pulse-glow"
     >
       <div className="flex mb-4">
         {[1, 2, 3, 4, 5].map((star) => (
@@ -54,18 +54,18 @@ const Testimonial = ({ quote, name, title, company, project, children, delay = 0
         ))}
       </div>
 
-      <p className="text-gray-700 italic mb-6">"{quote}"</p>
+      <p className="text-gray-200 italic mb-6">"{quote}"</p>
 
       <div className="flex items-center">
         <div className="flex-shrink-0 mr-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-[#b692e0] to-[#7ee7d2] rounded-full flex items-center justify-center text-white font-bold">
+          <div className="w-12 h-12 bg-gradient-to-r from-brand-purple to-brand-blue rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-brand-purple/25">
             {name.charAt(0)}
           </div>
         </div>
         <div>
-          <p className="font-semibold text-gray-900">{name}</p>
-          <p className="text-sm text-gray-600">{title}, {company}</p>
-          <p className="text-xs text-[#b692e0] mt-1">Project: {project}</p>
+          <p className="font-semibold text-white">{name}</p>
+          <p className="text-sm text-gray-300">{title}, {company}</p>
+          <p className="text-xs text-brand-purple mt-1">Project: {project}</p>
         </div>
       </div>
       

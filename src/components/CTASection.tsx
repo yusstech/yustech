@@ -1,24 +1,32 @@
 
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 const CTASection = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-brand-purple to-brand-blue text-white">
-      <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Ship Your Product?</h2>
-        <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+    <section className="py-20 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/20 to-brand-blue/20"></div>
+      <div className="absolute inset-0 tech-pattern opacity-10"></div>
+      
+      {/* Animated orbs */}
+      <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-brand-purple/10 blur-3xl animate-float"></div>
+      <div className="absolute bottom-1/3 left-1/3 w-48 h-48 rounded-full bg-brand-blue/10 blur-3xl animate-float" style={{ animationDelay: "3s" }}></div>
+      
+      <div className="container mx-auto px-4 text-center relative z-10">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 glow-text">Ready to Ship Your Product?</h2>
+        <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-300">
           Book a $100 consultation and let's discuss how we can bring your vision to life with our 100% ship guarantee.
         </p>
         
-        <div className="max-w-md mx-auto bg-white rounded-lg p-6 shadow-lg">
-          <h3 className="text-xl font-bold mb-4 text-gray-800">Schedule Your Consultation</h3>
+        <div className="max-w-md mx-auto glass rounded-lg p-6 shadow-lg border border-brand-purple/30 animate-pulse-glow">
+          <h3 className="text-xl font-bold mb-4 text-white">Schedule Your Consultation</h3>
           
           <form className="space-y-4">
             <div>
               <input 
                 type="text" 
                 placeholder="Your Name" 
-                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                className="w-full px-4 py-2 rounded bg-muted/50 border border-brand-purple/30 focus:outline-none focus:ring-2 focus:ring-brand-purple text-white placeholder:text-gray-400"
                 required
               />
             </div>
@@ -26,13 +34,13 @@ const CTASection = () => {
               <input 
                 type="email" 
                 placeholder="Your Email" 
-                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                className="w-full px-4 py-2 rounded bg-muted/50 border border-brand-purple/30 focus:outline-none focus:ring-2 focus:ring-brand-purple text-white placeholder:text-gray-400"
                 required
               />
             </div>
             <div>
               <select 
-                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-purple text-gray-700"
+                className="w-full px-4 py-2 rounded bg-muted/50 border border-brand-purple/30 focus:outline-none focus:ring-2 focus:ring-brand-purple text-gray-300 placeholder:text-gray-400"
                 defaultValue=""
                 required
               >
@@ -45,13 +53,14 @@ const CTASection = () => {
             </div>
             <Button 
               type="submit"
-              className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-opacity"
+              className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group"
             >
               Book Now - $100
+              <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </form>
           
-          <p className="mt-4 text-xs text-gray-600">
+          <p className="mt-4 text-xs text-gray-400">
             By booking, you agree to our terms and conditions. The $100 fee is applied to your project if you decide to work with us.
           </p>
         </div>
