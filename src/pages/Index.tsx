@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -6,6 +5,8 @@ import Services from "@/components/Services";
 import Testimonial from "@/components/Testimonial";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import ShippingProcess from "@/components/ShippingProcess";
+import AnimatedText from "@/components/AnimatedText";
 
 const Index = () => {
   useEffect(() => {
@@ -79,88 +80,34 @@ const Index = () => {
       </section>
       
       {/* Process Section */}
-      <section id="process" className="py-20 bg-white relative">
-        <div className="absolute inset-0 sweet-pattern"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <section id="process" className="py-20 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#0d0d0f]"></div>
+        <div className="absolute inset-0 sweet-pattern opacity-10"></div>
+        
+        {/* Animated elements */}
+        <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-brand-purple/5 blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-brand-blue/5 blur-3xl"></div>
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 grid-pattern opacity-10"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <AnimatedText className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
+              Our Process
+            </AnimatedText>
+            
+            <AnimatedText variant="gradient" delay={100} className="text-3xl md:text-4xl font-bold mb-4">
               How We <span className="gradient-text">Ship</span> Your Product
-            </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+            </AnimatedText>
+            
+            <AnimatedText delay={200} className="text-lg text-gray-400 max-w-2xl mx-auto">
               Our proven process ensures your product gets built, tested, and shipped on time, every time.
-            </p>
+              No more missed deadlines or budget overruns.
+            </AnimatedText>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="relative">
-              {/* Timeline line */}
-              <div className="absolute left-5 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-[#b692e0]/20"></div>
-              
-              {/* Step 1 */}
-              <div className="relative mb-12">
-                <div className="flex flex-col md:flex-row items-center">
-                  <div className="flex-1 md:pr-8 md:text-right order-2 md:order-1 mt-4 md:mt-0 animate-on-scroll">
-                    <h3 className="text-xl font-bold text-[#b692e0] mb-2">1. Discovery & Strategy</h3>
-                    <p className="text-gray-700">
-                      We start with a $100 consultation to understand your vision, goals, and requirements. 
-                      Then we develop a strategic roadmap with clear milestones.
-                    </p>
-                  </div>
-                  <div className="z-10 flex items-center justify-center w-10 h-10 bg-[#b692e0] rounded-full order-1 md:order-2 relative md:left-0 animate-on-scroll">
-                    <span className="text-white font-bold">1</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 2 */}
-              <div className="relative mb-12">
-                <div className="flex flex-col md:flex-row-reverse items-center">
-                  <div className="flex-1 md:pl-8 mt-4 md:mt-0 order-2 animate-on-scroll">
-                    <h3 className="text-xl font-bold text-[#7ee7d2] mb-2">2. Design & Planning</h3>
-                    <p className="text-gray-700">
-                      Our designers create prototypes while our engineers plan the technical architecture. 
-                      You approve each step before we move forward.
-                    </p>
-                  </div>
-                  <div className="z-10 flex items-center justify-center w-10 h-10 bg-[#7ee7d2] rounded-full order-1 relative md:right-0 animate-on-scroll">
-                    <span className="text-white font-bold">2</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 3 */}
-              <div className="relative mb-12">
-                <div className="flex flex-col md:flex-row items-center">
-                  <div className="flex-1 md:pr-8 md:text-right order-2 md:order-1 mt-4 md:mt-0 animate-on-scroll">
-                    <h3 className="text-xl font-bold text-[#b692e0] mb-2">3. Development & Testing</h3>
-                    <p className="text-gray-700">
-                      Our developers build your product in short, focused sprints with regular demos. 
-                      Rigorous testing ensures everything works flawlessly.
-                    </p>
-                  </div>
-                  <div className="z-10 flex items-center justify-center w-10 h-10 bg-[#b692e0] rounded-full order-1 md:order-2 relative md:left-0 animate-on-scroll">
-                    <span className="text-white font-bold">3</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 4 */}
-              <div className="relative">
-                <div className="flex flex-col md:flex-row-reverse items-center">
-                  <div className="flex-1 md:pl-8 mt-4 md:mt-0 order-2 animate-on-scroll">
-                    <h3 className="text-xl font-bold text-[#7ee7d2] mb-2">4. Launch & Support</h3>
-                    <p className="text-gray-700">
-                      We handle deployment and launch, then provide ongoing support to ensure your 
-                      product continues to perform optimally.
-                    </p>
-                  </div>
-                  <div className="z-10 flex items-center justify-center w-10 h-10 bg-[#7ee7d2] rounded-full order-1 relative md:right-0 animate-on-scroll">
-                    <span className="text-white font-bold">4</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ShippingProcess />
         </div>
       </section>
       
