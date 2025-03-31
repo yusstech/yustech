@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import Testimonial from "./Testimonial";
 
 const Services = () => {
   const servicesRef = useRef<HTMLDivElement>(null);
@@ -34,28 +35,56 @@ const Services = () => {
       description: "Custom responsive websites and powerful web applications built to convert visitors into customers.",
       features: ["Modern & responsive design", "SEO optimization", "Performance optimization", "Interactive features"],
       painPoint: "Tired of websites that don't convert or apps that never launch?",
-      solution: "We deliver fully-functional, beautiful websites and web apps that actually get completed and generate results."
+      solution: "We deliver fully-functional, beautiful websites and web apps that actually get completed and generate results.",
+      testimonial: {
+        quote: "The website exceeded our expectations and was delivered ahead of schedule.",
+        name: "Alex Roberts",
+        title: "Marketing Director",
+        company: "GrowthBrand",
+        project: "Company Website"
+      }
     },
     {
       title: "Mobile Apps",
       description: "Native and cross-platform mobile applications that deliver exceptional user experiences across all devices.",
       features: ["iOS & Android development", "User-focused design", "Performance optimization", "Continuous support"],
       painPoint: "Frustrated with mobile app developers who miss deadlines and go over budget?",
-      solution: "Our fixed timeline and budget guarantee ensures your mobile app launches on schedule, every time."
+      solution: "Our fixed timeline and budget guarantee ensures your mobile app launches on schedule, every time.",
+      testimonial: {
+        quote: "Their AI integration saved us 30+ hours of manual work every week. The ROI was almost immediate.",
+        name: "Michael Chen",
+        title: "Operations Director",
+        company: "LogisticsPro",
+        project: "AI Workflow Automation"
+      }
     },
     {
       title: "AI Integration",
       description: "Harness the power of artificial intelligence to automate processes and unlock new capabilities for your business.",
       features: ["Custom AI solutions", "Process automation", "Data analysis", "AI-powered features"],
       painPoint: "Struggling to implement AI solutions that deliver real business value?",
-      solution: "We build practical AI implementations that solve real problems and create measurable ROI for your business."
+      solution: "We build practical AI implementations that solve real problems and create measurable ROI for your business.",
+      testimonial: {
+        quote: "YusTech helped us implement AI that actually made sense for our business. No fluff, just results.",
+        name: "Lisa Wang",
+        title: "Innovation Lead",
+        company: "RetailSmart",
+        project: "Inventory AI"
+      }
     },
     {
       title: "Project Rescue & Management",
       description: "We take over stalled projects, fix issues, and get your product back on track with professional management.",
       features: ["Code audit & refactoring", "Performance optimization", "Feature completion", "Ongoing maintenance"],
       painPoint: "Have a half-finished product that's burning money and not delivering value?",
-      solution: "Our rescue team will evaluate, fix, and complete your project so you can finally launch and start seeing returns."
+      solution: "Our rescue team will evaluate, fix, and complete your project so you can finally launch and start seeing returns.",
+      testimonial: {
+        quote: "Our app was stuck in development hell for 9 months. YusTech rescued it and shipped a functional version in just 6 weeks.",
+        name: "Thomas Wright",
+        title: "Founder",
+        company: "HealthTrack",
+        project: "Mobile App Rescue"
+      }
     }
   ];
 
@@ -94,6 +123,20 @@ const Services = () => {
               <div className="mb-6 bg-brand-blue/10 p-4 rounded-lg border border-brand-blue/20">
                 <h4 className="font-semibold text-brand-blue mb-2">Our Solution:</h4>
                 <p className="text-gray-200">{service.solution}</p>
+                
+                {/* Embed minimal testimonial within the solution section */}
+                {service.testimonial && (
+                  <Testimonial
+                    quote={service.testimonial.quote}
+                    name={service.testimonial.name}
+                    title={service.testimonial.title}
+                    company={service.testimonial.company}
+                    project={service.testimonial.project}
+                    variant="minimal"
+                    delay={index * 100}
+                    showStars={false}
+                  />
+                )}
               </div>
               
               <ul className="mb-6 space-y-2">

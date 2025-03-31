@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { ClipboardCheck, Code, Lightbulb, Rocket } from "lucide-react";
 import AnimatedText from "./AnimatedText";
+import Testimonial from "./Testimonial";
 
 const ShippingProcess = () => {
   const processRef = useRef<HTMLDivElement>(null);
@@ -59,7 +60,14 @@ const ShippingProcess = () => {
         "Resource planning & allocation",
         "Risk assessment & mitigation",
         "Timeline development"
-      ]
+      ],
+      testimonial: {
+        quote: "The discovery process was thorough but efficient. They asked questions no other agency had thought to ask.",
+        name: "Emma Davidson",
+        title: "Product Owner",
+        company: "FinTech Solutions",
+        project: "Banking App"
+      }
     },
     {
       icon: <ClipboardCheck className="w-6 h-6" />,
@@ -71,7 +79,14 @@ const ShippingProcess = () => {
         "Technical specification",
         "System architecture planning",
         "Client approval process"
-      ]
+      ],
+      testimonial: {
+        quote: "Their design process was collaborative and thorough. We felt like part of the team.",
+        name: "Ryan Peters",
+        title: "Creative Director",
+        company: "BrandMasters",
+        project: "E-commerce Platform"
+      }
     },
     {
       icon: <Code className="w-6 h-6" />,
@@ -83,7 +98,14 @@ const ShippingProcess = () => {
         "Weekly sprint reviews",
         "Comprehensive QA testing",
         "Continuous integration"
-      ]
+      ],
+      testimonial: {
+        quote: "Weekly demos kept us in the loop. No surprises and total transparency throughout development.",
+        name: "Jessica Kim",
+        title: "VP of Engineering",
+        company: "DataStream",
+        project: "Analytics Dashboard"
+      }
     },
     {
       icon: <Rocket className="w-6 h-6" />,
@@ -95,7 +117,14 @@ const ShippingProcess = () => {
         "Performance monitoring",
         "Post-launch optimization",
         "Ongoing maintenance"
-      ]
+      ],
+      testimonial: {
+        quote: "The launch was flawless and the support afterward has been exceptional. Our users love the product.",
+        name: "Daniel Morris",
+        title: "CEO",
+        company: "AgriTech",
+        project: "Field Management System"
+      }
     }
   ];
 
@@ -125,6 +154,23 @@ const ShippingProcess = () => {
                           </li>
                         ))}
                       </ul>
+                      
+                      {/* Inline testimonial */}
+                      {step.testimonial && (
+                        <div className="mt-4 text-right">
+                          <Testimonial
+                            quote={step.testimonial.quote}
+                            name={step.testimonial.name}
+                            title={step.testimonial.title}
+                            company={step.testimonial.company}
+                            project={step.testimonial.project}
+                            variant="inline"
+                            delay={index * 150}
+                            showStars={false}
+                            className="ml-auto"
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -150,6 +196,22 @@ const ShippingProcess = () => {
                           </li>
                         ))}
                       </ul>
+                      
+                      {/* Inline testimonial */}
+                      {step.testimonial && (
+                        <div className="mt-4">
+                          <Testimonial
+                            quote={step.testimonial.quote}
+                            name={step.testimonial.name}
+                            title={step.testimonial.title}
+                            company={step.testimonial.company}
+                            project={step.testimonial.project}
+                            variant="inline"
+                            delay={index * 150}
+                            showStars={false}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -169,6 +231,22 @@ const ShippingProcess = () => {
                         </li>
                       ))}
                     </ul>
+                    
+                    {/* Inline testimonial for mobile */}
+                    {step.testimonial && (
+                      <div className="mt-4">
+                        <Testimonial
+                          quote={step.testimonial.quote}
+                          name={step.testimonial.name}
+                          title={step.testimonial.title}
+                          company={step.testimonial.company}
+                          project={step.testimonial.project}
+                          variant="minimal"
+                          delay={index * 100}
+                          showStars={false}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
