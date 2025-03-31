@@ -6,8 +6,8 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-heading font-bold mb-4">
-              <span className="text-brand-purple">Product</span>
-              <span className="text-brand-blue">Ship</span>
+              <span className="text-brand-purple">Yus</span>
+              <span className="text-brand-blue">Tech</span>
             </h3>
             <p className="text-sm text-gray-400 mb-4">
               We build and ship digital products with a 100% completion guarantee. 
@@ -61,7 +61,7 @@ const Footer = () => {
           <div>
             <h4 className="text-sm font-bold uppercase text-white mb-4">Contact</h4>
             <ul className="space-y-2 text-sm">
-              <li className="text-gray-400">hello@productship.dev</li>
+              <li className="text-gray-400">hello@yustech.dev</li>
               <li className="text-gray-400">(555) 123-4567</li>
               <li className="text-gray-400">123 Tech Lane, San Francisco, CA 94107</li>
             </ul>
@@ -69,7 +69,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} ProductShip. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} YusTech. All rights reserved.</p>
         </div>
       </div>
     </footer>
