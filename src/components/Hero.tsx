@@ -1,9 +1,13 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
+import { Triangle, Hexagon, Circle, Square } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import AnimatedText from "./AnimatedText";
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Animate elements when the page loads
@@ -25,20 +29,49 @@ const Hero = () => {
       <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-brand-purple/10 blur-3xl animate-float"></div>
       <div className="absolute bottom-1/4 right-1/4 w-40 h-40 rounded-full bg-brand-blue/10 blur-3xl animate-float" style={{ animationDelay: "2s" }}></div>
       
+      {/* Geometric Elements */}
+      <div className="absolute top-20 left-[10%] animate-float opacity-30" style={{ animationDelay: "1.3s" }}>
+        <Triangle className="text-brand-purple w-16 h-16 md:w-24 md:h-24" />
+      </div>
+      <div className="absolute bottom-32 right-[15%] animate-float opacity-30" style={{ animationDelay: "2.7s" }}>
+        <Square className="text-brand-blue w-12 h-12 md:w-16 md:h-16" strokeWidth={1} />
+      </div>
+      <div className="absolute top-[40%] right-[5%] animate-float opacity-20" style={{ animationDelay: "3.5s" }}>
+        <Hexagon className="text-brand-purple w-20 h-20 md:w-32 md:h-32" strokeWidth={1} />
+      </div>
+      <div className="absolute bottom-20 left-[20%] animate-float opacity-20" style={{ animationDelay: "1.8s" }}>
+        <Circle className="text-brand-blue w-10 h-10 md:w-14 md:h-14" strokeWidth={1} />
+      </div>
+      
+      {/* Tech Lines - Horizontal */}
+      <div className="absolute left-0 w-full h-[1px] top-1/3 bg-gradient-to-r from-transparent via-brand-purple/30 to-transparent"></div>
+      <div className="absolute left-0 w-full h-[1px] bottom-1/3 bg-gradient-to-r from-transparent via-brand-blue/30 to-transparent"></div>
+      
+      {/* Tech Lines - Vertical */}
+      <div className="absolute top-0 h-full w-[1px] left-1/3 bg-gradient-to-b from-transparent via-brand-purple/30 to-transparent"></div>
+      <div className="absolute top-0 h-full w-[1px] right-1/3 bg-gradient-to-b from-transparent via-brand-blue/30 to-transparent"></div>
+      
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-block mb-6 px-3 py-1 rounded-full neon-border hero-animate animate-on-scroll">
             <span className="text-brand-purple text-sm">100% Ship Rate Guarantee</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight hero-animate animate-on-scroll glow-text">
+          <AnimatedText 
+            variant="gradient" 
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
+          >
             We <span className="gradient-text">Ship Your Product</span> While You Focus On Your Business
-          </h1>
+          </AnimatedText>
           
-          <p className="text-lg md:text-xl text-gray-300 mb-10 hero-animate animate-on-scroll">
+          <AnimatedText 
+            delay={200}
+            direction="left"
+            className="text-lg md:text-xl text-gray-300 mb-10"
+          >
             Our 100% shipping guarantee means your product gets built and delivered on time. 
             No delays, no excuses, just results that drive your business forward.
-          </p>
+          </AnimatedText>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center hero-animate animate-on-scroll">
             <Button
@@ -55,6 +88,58 @@ const Hero = () => {
             >
               See Our Work
             </Button>
+          </div>
+          
+          {/* Mobile Device Showcase */}
+          <div className="mt-16 relative mx-auto w-64 h-80 md:w-72 md:h-96 hero-animate animate-on-scroll">
+            <div className="absolute inset-0 bg-gradient-to-b from-brand-purple/50 to-brand-blue/50 rounded-[40px] p-2">
+              <div className="w-full h-full bg-black rounded-[36px] overflow-hidden relative">
+                <div className="absolute top-0 left-0 right-0 h-6 bg-black flex justify-center items-center">
+                  <div className="w-20 h-4 rounded-full bg-gray-900"></div>
+                </div>
+                {/* Screen Content */}
+                <div className="pt-6 px-2 h-full">
+                  <div className="h-full w-full bg-gradient-to-br from-gray-900 to-black rounded-2xl p-3 overflow-hidden flex flex-col">
+                    {/* App UI Elements */}
+                    <div className="flex justify-between items-center mb-4">
+                      <div className="w-8 h-2 bg-brand-purple/70 rounded-full"></div>
+                      <div className="w-4 h-4 rounded-full bg-brand-blue/70"></div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 mb-3">
+                      {[1, 2, 3, 4].map(i => (
+                        <div 
+                          key={i} 
+                          className="h-14 rounded bg-gradient-to-r from-gray-800 to-gray-700 flex items-center justify-center"
+                          style={{ animationDelay: `${i * 0.2}s` }}
+                        >
+                          <div className="w-6 h-6 rounded-full bg-brand-purple/40"></div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="h-20 rounded bg-gradient-to-r from-gray-800 to-gray-700 mb-3"></div>
+                    <div className="flex-1 rounded bg-gradient-to-b from-gray-800 to-gray-700"></div>
+                    
+                    {/* Animated Dots */}
+                    <div className="absolute bottom-5 left-0 right-0 flex justify-center gap-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse-glow"></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse-glow" style={{ animationDelay: "0.3s" }}></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse-glow" style={{ animationDelay: "0.6s" }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Glowing effect around the phone */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-brand-purple/10 to-brand-blue/10 rounded-[50px] blur-lg -z-10"></div>
+            
+            {/* Binary Code Snippets floating around */}
+            <div className="absolute -top-12 -right-16 text-[8px] text-brand-purple/40 font-mono animate-float" style={{ animationDelay: "2s" }}>
+              010110<br/>101010<br/>110101
+            </div>
+            <div className="absolute -bottom-10 -left-14 text-[8px] text-brand-blue/40 font-mono animate-float" style={{ animationDelay: "3s" }}>
+              110101<br/>010101<br/>101010
+            </div>
           </div>
           
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
