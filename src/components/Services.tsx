@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Award, Quote } from "lucide-react";
 import Testimonial from "./Testimonial";
 
 const Services = () => {
@@ -123,21 +123,31 @@ const Services = () => {
               <div className="mb-6 bg-brand-blue/10 p-4 rounded-lg border border-brand-blue/20">
                 <h4 className="font-semibold text-brand-blue mb-2">Our Solution:</h4>
                 <p className="text-gray-200">{service.solution}</p>
-                
-                {/* Embed minimal testimonial within the solution section */}
-                {service.testimonial && (
-                  <Testimonial
-                    quote={service.testimonial.quote}
-                    name={service.testimonial.name}
-                    title={service.testimonial.title}
-                    company={service.testimonial.company}
-                    project={service.testimonial.project}
-                    variant="minimal"
-                    delay={index * 100}
-                    showStars={false}
-                  />
-                )}
               </div>
+              
+              {/* Success story section with visual highlight */}
+              {service.testimonial && (
+                <div className="relative mb-6 bg-gradient-to-r from-black/40 to-black/60 p-5 rounded-lg border border-brand-purple/30 overflow-hidden">
+                  <div className="absolute top-0 right-0 w-24 h-24 transform translate-x-12 -translate-y-8 bg-brand-purple opacity-10 rounded-full blur-xl"></div>
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 mr-3">
+                      <Award className="h-6 w-6 text-brand-purple" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-brand-purple mb-1">Client Success:</h4>
+                      <p className="text-sm text-gray-200 italic mb-2">"{service.testimonial.quote}"</p>
+                      <div className="flex items-center">
+                        <div className="w-5 h-5 rounded-full bg-gradient-to-r from-brand-purple to-brand-blue flex items-center justify-center text-xs font-medium text-white">
+                          {service.testimonial.name.charAt(0)}
+                        </div>
+                        <p className="ml-2 text-xs text-gray-300">
+                          <span className="font-medium">{service.testimonial.name}</span>, {service.testimonial.company}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               
               <ul className="mb-6 space-y-2">
                 {service.features.map((feature, i) => (
