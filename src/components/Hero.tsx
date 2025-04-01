@@ -1,9 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
-import { Triangle, Hexagon, Circle, Square } from "lucide-react";
+import { Triangle, Hexagon, Circle, Square, Star, Award, Check } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import AnimatedText from "./AnimatedText";
+import { Badge } from "./ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -55,6 +57,41 @@ const Hero = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-block mb-6 px-3 py-1 rounded-full neon-border hero-animate animate-on-scroll">
             <span className="text-brand-purple text-sm">100% Ship Rate Guarantee</span>
+          </div>
+          
+          {/* Social Proof Compact Design */}
+          <div className="mb-6 mx-auto max-w-md animate-on-scroll hero-animate relative">
+            <div className="bg-black/40 backdrop-blur-md border border-brand-purple/30 rounded-lg overflow-hidden p-3 flex items-center">
+              <div className="absolute -top-2 -right-2">
+                <div className="bg-gradient-to-r from-brand-purple to-brand-blue p-1 rounded-full">
+                  <Award className="w-4 h-4 text-white" />
+                </div>
+              </div>
+              <div className="flex space-x-2 mr-3">
+                <Avatar className="w-8 h-8 border-2 border-white/10">
+                  <AvatarImage src="https://i.pravatar.cc/100?img=1" alt="Client" />
+                  <AvatarFallback>JS</AvatarFallback>
+                </Avatar>
+                <Avatar className="w-8 h-8 -ml-4 border-2 border-white/10">
+                  <AvatarImage src="https://i.pravatar.cc/100?img=2" alt="Client" />
+                  <AvatarFallback>MR</AvatarFallback>
+                </Avatar>
+                <Avatar className="w-8 h-8 -ml-4 border-2 border-white/10">
+                  <AvatarImage src="https://i.pravatar.cc/100?img=3" alt="Client" />
+                  <AvatarFallback>AL</AvatarFallback>
+                </Avatar>
+              </div>
+              <div className="flex-1">
+                <div className="text-xs text-gray-300">Trusted by 50+ startups</div>
+                <div className="flex items-center">
+                  {Array(5).fill(0).map((_, i) => (
+                    <Star key={i} className="w-3 h-3 fill-brand-purple text-brand-purple" />
+                  ))}
+                  <span className="text-xs ml-1 text-white font-semibold">4.9/5</span>
+                </div>
+              </div>
+              <Badge variant="outline" className="bg-black/20 text-brand-blue ml-2 text-xs">Verified</Badge>
+            </div>
           </div>
           
           <AnimatedText 
