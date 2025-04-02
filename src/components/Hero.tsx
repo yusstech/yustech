@@ -72,8 +72,7 @@ const Hero = () => {
                   <AvatarImage src="https://i.pravatar.cc/100?img=1" alt="Client" />
                   <AvatarFallback>JS</AvatarFallback>
                 </Avatar>
-                <Avatar className="w-8 h-8 -ml-4 border-2 border-white/10">
-                  <AvatarImage src="https://i.pravatar.cc/100?img=2" alt="Client" />
+                <Avatar className="w-8 h-8 -ml-4 border-2 border-white/10"><AvatarImage src="https://i.pravatar.cc/100?img=2" alt="Client" />
                   <AvatarFallback>MR</AvatarFallback>
                 </Avatar>
                 <Avatar className="w-8 h-8 -ml-4 border-2 border-white/10">
@@ -98,7 +97,7 @@ const Hero = () => {
             variant="gradient" 
             className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
           >
-            We <span className="gradient-text">Ship Your Product</span> While You Focus On Your Business
+            Your Vision. Our Execution. <span className="gradient-text">Launch in Days, Not Months.</span>
           </AnimatedText>
           
           <AnimatedText 
@@ -106,8 +105,9 @@ const Hero = () => {
             direction="left"
             className="text-lg md:text-xl text-gray-300 mb-10"
           >
-            Our 100% shipping guarantee means your product gets built and delivered on time. 
-            No delays, no excuses, just results that drive your business forward.
+            Frustrated with slow development, unreliable teams, or endless delays? 
+            We turn your idea into a fully built, 100% shipped product—so you can focus 
+            on growing your business, not chasing developers.
           </AnimatedText>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center hero-animate animate-on-scroll">
@@ -116,7 +116,7 @@ const Hero = () => {
               size="lg"
               className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all hover:shadow-lg hover:shadow-brand-purple/25 text-base py-6 px-8"
             >
-              Book Your $100 Consultation
+              Let's Build It—Get Your Custom Plan Today →
             </Button>
             <Button
               variant="outline"

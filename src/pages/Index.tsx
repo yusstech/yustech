@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -37,27 +36,30 @@ const Index = () => {
       <Navbar />
       <Hero />
       
-      {/* Services Section with Testimonial */}
+      {/* Step 1: The Problem - Why Most Products Never Launch */}
       <section id="services" className="pt-20 relative">
         <div className="absolute inset-0 tech-pattern"></div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-on-scroll">
             <div className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
-              Our Services
+              Step 1: The Problem
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Your Product, <span className="gradient-text">Shipped</span> With Confidence
+              Why Most Products <span className="gradient-text">Never Launch</span>
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              We specialize in building and shipping digital products with a 100% completion guarantee. 
-              No more half-finished projects or endless development cycles.
+              <span className="block mb-2">• Frustrated with developers disappearing mid-project?</span>
+              <span className="block mb-2">• Tired of spending months (or years) on something that never ships?</span>
+              <span className="block mb-2">• Lost in technical complexity?</span>
+              <span className="block mt-4 text-white font-semibold">🛑 The truth? Most startups fail not because of bad ideas, but because of bad execution.</span>
+              <span className="block mt-4 text-brand-purple font-medium">✅ What if you had a team that guarantees your product gets built & launched—without delays?</span>
             </p>
           </div>
 
           {/* Featured testimonial */}
           <div className="mb-16">
             <Testimonial
-              quote="After two failed attempts with other developers, YusTech delivered our e-commerce platform in half the time and exactly to spec. Revenue is up 215% since launch."
+              quote="After two failed attempts with other developers, YussTech delivered our e-commerce platform in half the time and exactly to spec. Revenue is up 215% since launch."
               name="Sarah Johnson"
               title="CEO"
               company="FashionMart"
@@ -66,7 +68,7 @@ const Index = () => {
             />
           </div>
           
-          {/* Services grid */}
+          {/* Services grid - keep existing code with updated messaging */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             {[
               {
@@ -177,7 +179,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Process Section with Testimonials */}
+      {/* Step 2: The Solution - Our Proven Process */}
       <section id="process" className="py-20 bg-black relative overflow-hidden">
         <div className="absolute inset-0 bg-[#0d0d0f]"></div>
         <div className="absolute inset-0 sweet-pattern opacity-10"></div>
@@ -192,22 +194,22 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <AnimatedText className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
-              Our Process
+              Step 2: The Solution
             </AnimatedText>
             
             <AnimatedText variant="gradient" delay={100} className="text-3xl md:text-4xl font-bold mb-4">
-              How We <span className="gradient-text">Ship</span> Your Product
+              Our Proven <span className="gradient-text">"Shipped Product"</span> Process
             </AnimatedText>
             
             <AnimatedText delay={200} className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Our proven process ensures your product gets built, tested, and shipped on time, every time.
-              No more missed deadlines or budget overruns.
+              At YussTech, we don't just build. We guarantee you a fully shipped product.
+              No wasted time. No unreliable teams. Just results.
             </AnimatedText>
           </div>
 
           <div className="mb-16 grid md:grid-cols-2 gap-8">
             <Testimonial
-              quote="The structured approach YusTech brings to development made the entire process transparent and stress-free. We always knew where we stood."
+              quote="The structured approach YussTech brings to development made the entire process transparent and stress-free. We always knew where we stood."
               name="Jennifer Lee"
               title="Product Manager"
               company="TechFusion"
@@ -232,6 +234,176 @@ const Index = () => {
         </div>
       </section>
       
+      {/* Step 3: Social Proof - Success Stories & Testimonials */}
+      <section id="testimonials" className="py-20 relative bg-black/80">
+        <div className="absolute inset-0 grid-pattern opacity-10"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16 animate-on-scroll">
+            <div className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
+              Step 3: Social Proof
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Real Clients. <span className="gradient-text">Real Results.</span>
+            </h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              Don't take our word for it. Here's what our clients say about working with us.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <Testimonial
+              quote="YussTech delivered our platform in 3 weeks—after other teams wasted months!"
+              name="Robert Chen"
+              title="Founder"
+              company="HealthTech Solutions"
+              project="Telehealth Platform"
+              variant="default"
+              delay={100}
+            />
+            <Testimonial
+              quote="From idea to launch, they handled everything. Best decision we made."
+              name="Amanda Lopez"
+              title="COO"
+              company="RetailConnect"
+              project="Inventory System"
+              variant="default"
+              delay={200}
+            />
+            <Testimonial
+              quote="Their team rescued our project when we were ready to give up. Now we're profitable."
+              name="James Wilson"
+              title="CEO"
+              company="DataDrive"
+              project="Analytics Dashboard"
+              variant="default"
+              delay={300}
+            />
+          </div>
+        </div>
+      </section>
+      
+      {/* Step 4: Offer - Your Custom Build Plan */}
+      <section id="offer" className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/10 to-brand-blue/10"></div>
+        <div className="absolute inset-0 tech-pattern opacity-10"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16 animate-on-scroll">
+            <div className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
+              Step 4: Limited Offer
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Your Custom <span className="gradient-text">Build Plan</span>
+            </h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              We only take on a few clients per month. Get clarity on your product & a strategy to launch—before you invest thousands.
+            </p>
+          </div>
+          
+          <div className="max-w-md mx-auto glass rounded-lg p-6 shadow-lg border border-brand-purple/30 animate-pulse-glow">
+            <h3 className="text-xl font-bold mb-4 text-white">⚡ Limited Slots Available</h3>
+            
+            <form className="space-y-4">
+              <div>
+                <input 
+                  type="text" 
+                  placeholder="Your Name" 
+                  className="w-full px-4 py-2 rounded bg-muted/50 border border-brand-purple/30 focus:outline-none focus:ring-2 focus:ring-brand-purple text-white placeholder:text-gray-400"
+                  required
+                />
+              </div>
+              <div>
+                <input 
+                  type="email" 
+                  placeholder="Your Email" 
+                  className="w-full px-4 py-2 rounded bg-muted/50 border border-brand-purple/30 focus:outline-none focus:ring-2 focus:ring-brand-purple text-white placeholder:text-gray-400"
+                  required
+                />
+              </div>
+              <div>
+                <select 
+                  className="w-full px-4 py-2 rounded bg-muted/50 border border-brand-purple/30 focus:outline-none focus:ring-2 focus:ring-brand-purple text-gray-300 placeholder:text-gray-400"
+                  defaultValue=""
+                  required
+                >
+                  <option value="" disabled>Select Service</option>
+                  <option value="website">Website/Web App</option>
+                  <option value="mobile">Mobile App</option>
+                  <option value="ai">AI Integration</option>
+                  <option value="rescue">Project Rescue</option>
+                </select>
+              </div>
+              <Button 
+                type="submit"
+                className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group py-6"
+              >
+                Book Your Custom Plan Today
+                <ArrowUpRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              </Button>
+            </form>
+            
+            <p className="mt-4 text-xs text-gray-400">
+              By booking, you agree to our terms and conditions. The $100 fee is applied to your project if you decide to work with us.
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Step 5: Existing Projects - Fix, Rebuild, or Scale */}
+      <section id="rescue" className="py-20 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#0d0d0f]"></div>
+        <div className="absolute inset-0 sweet-pattern opacity-10"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16 animate-on-scroll">
+            <div className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
+              Step 5: Rescue Services
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Fix, Rebuild, or <span className="gradient-text">Scale Your Product</span>
+            </h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              Already have a product but stuck? Let's get your product back on track.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="glass rounded-lg p-6 border border-brand-purple/20 animate-on-scroll">
+              <h3 className="text-xl font-bold mb-3 text-white">Fix Broken Code</h3>
+              <p className="text-gray-300 mb-4">We rescue failing projects with expert code review and repair services.</p>
+              <Button className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90">
+                Rescue My Project
+              </Button>
+            </div>
+            
+            <div className="glass rounded-lg p-6 border border-brand-purple/20 animate-on-scroll" style={{ animationDelay: "0.1s" }}>
+              <h3 className="text-xl font-bold mb-3 text-white">Rebuild & Scale</h3>
+              <p className="text-gray-300 mb-4">Upgrade outdated or poorly built software with modern architecture.</p>
+              <Button className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90">
+                Upgrade My Product
+              </Button>
+            </div>
+            
+            <div className="glass rounded-lg p-6 border border-brand-purple/20 animate-on-scroll" style={{ animationDelay: "0.2s" }}>
+              <h3 className="text-xl font-bold mb-3 text-white">Add Features & Automate</h3>
+              <p className="text-gray-300 mb-4">Enhance your product with AI, integrations, and optimizations.</p>
+              <Button className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90">
+                Enhance My Product
+              </Button>
+            </div>
+          </div>
+          
+          <div className="mt-12 text-center">
+            <Testimonial
+              quote="Our app was stuck in development hell for 9 months. YussTech rescued it and shipped a functional version in just 6 weeks."
+              name="Thomas Wright"
+              title="Founder"
+              company="HealthTrack"
+              project="Mobile App Rescue"
+              variant="featured"
+            />
+          </div>
+        </div>
+      </section>
+      
       {/* FAQ Section */}
       <section id="faq" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -247,7 +419,7 @@ const Index = () => {
           {/* Client testimonial about the experience */}
           <div className="max-w-3xl mx-auto mb-12">
             <Testimonial
-              quote="Working with YusTech was refreshingly straightforward. They answered all our questions directly and delivered exactly what they promised."
+              quote="Working with YussTech was refreshingly straightforward. They answered all our questions directly and delivered exactly what they promised."
               name="Rebecca Wong"
               title="Operations Director"
               company="RetailGrowth"
@@ -291,7 +463,30 @@ const Index = () => {
         </div>
       </section>
       
-      <CTASection />
+      {/* Final CTA Section */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/20 to-brand-blue/20"></div>
+        <div className="absolute inset-0 tech-pattern opacity-10"></div>
+        
+        {/* Animated orbs */}
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-brand-purple/10 blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/3 left-1/3 w-48 h-48 rounded-full bg-brand-blue/10 blur-3xl animate-float" style={{ animationDelay: "3s" }}></div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 glow-text">Final Call: While You Think, Others Are Launching</h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-300">
+            Your product could be live in weeks. Book a $100 consultation and let's make it happen.
+          </p>
+          
+          <Button 
+            className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group py-6 px-8 text-lg"
+          >
+            Get Your Custom Build Plan Now
+            <ArrowUpRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </Button>
+        </div>
+      </section>
+      
       <Footer />
     </div>
   );

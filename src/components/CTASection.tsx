@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const CTASection = () => {
   return (
@@ -19,7 +19,7 @@ const CTASection = () => {
         </p>
         
         <div className="max-w-md mx-auto glass rounded-lg p-6 shadow-lg border border-brand-purple/30 animate-pulse-glow">
-          <h3 className="text-xl font-bold mb-4 text-white">Schedule Your Consultation</h3>
+          <h3 className="text-xl font-bold mb-4 text-white">Limited Slots Available</h3>
           
           <form className="space-y-4">
             <div>
@@ -55,8 +55,8 @@ const CTASection = () => {
               type="submit"
               className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group"
             >
-              Book Now - $100
-              <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
+              Book Your Custom Plan - $100
+              <ArrowUpRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </Button>
           </form>
           
