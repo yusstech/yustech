@@ -7,6 +7,8 @@ import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import ShippingProcess from "@/components/ShippingProcess";
 import AnimatedText from "@/components/AnimatedText";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
 
 const Index = () => {
   useEffect(() => {
