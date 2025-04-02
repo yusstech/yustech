@@ -25,24 +25,39 @@ const RescueSection = () => {
           <div className="glass rounded-lg p-6 border border-brand-purple/20 animate-on-scroll">
             <h3 className="text-xl font-bold mb-3 text-white">Fix Broken Code</h3>
             <p className="text-gray-300 mb-4">We rescue failing projects with expert code review and repair services.</p>
-            <Button className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90">
-              Rescue My Project
+            <Button 
+              className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90" 
+              asChild
+            >
+              <a href="https://paystack.com/pay/hbwnuhje7h" target="_blank" rel="noopener noreferrer">
+                Rescue My Project
+              </a>
             </Button>
           </div>
           
           <div className="glass rounded-lg p-6 border border-brand-purple/20 animate-on-scroll" style={{ animationDelay: "0.1s" }}>
             <h3 className="text-xl font-bold mb-3 text-white">Rebuild & Scale</h3>
             <p className="text-gray-300 mb-4">Upgrade outdated or poorly built software with modern architecture.</p>
-            <Button className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90">
-              Upgrade My Product
+            <Button 
+              className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90" 
+              asChild
+            >
+              <a href="https://paystack.com/pay/hbwnuhje7h" target="_blank" rel="noopener noreferrer">
+                Upgrade My Product
+              </a>
             </Button>
           </div>
           
           <div className="glass rounded-lg p-6 border border-brand-purple/20 animate-on-scroll" style={{ animationDelay: "0.2s" }}>
             <h3 className="text-xl font-bold mb-3 text-white">Add Features & Automate</h3>
             <p className="text-gray-300 mb-4">Enhance your product with AI, integrations, and optimizations.</p>
-            <Button className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90">
-              Enhance My Product
+            <Button 
+              className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90" 
+              asChild
+            >
+              <a href="https://paystack.com/pay/hbwnuhje7h" target="_blank" rel="noopener noreferrer">
+                Enhance My Product
+              </a>
             </Button>
           </div>
         </div>

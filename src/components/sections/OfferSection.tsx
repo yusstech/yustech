@@ -24,7 +24,7 @@ const OfferSection = () => {
         <div className="max-w-md mx-auto glass rounded-lg p-6 shadow-lg border border-brand-purple/30 animate-pulse-glow">
           <h3 className="text-xl font-bold mb-4 text-white">⚡ Limited Slots Available</h3>
           
-          <form className="space-y-4">
+          <form className="space-y-4" action="https://paystack.com/pay/hbwnuhje7h" method="GET">
             <div>
               <input 
                 type="text" 
@@ -58,13 +58,13 @@ const OfferSection = () => {
               type="submit"
               className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group py-6"
             >
-              Book Your Custom Plan Today
+              Book Your Custom Plan - $50
               <ArrowUpRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </Button>
           </form>
           
           <p className="mt-4 text-xs text-gray-400">
-            By booking, you agree to our terms and conditions. The $100 fee is applied to your project if you decide to work with us.
+            By booking, you agree to our terms and conditions. The $50 fee is applied to your project if you decide to work with us.
           </p>
         </div>
       </div>

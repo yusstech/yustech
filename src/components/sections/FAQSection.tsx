@@ -39,7 +39,10 @@ const FAQSection = () => {
                 answer: "We offer ongoing maintenance and support packages to ensure your product continues to perform optimally. We can also implement new features and improvements as your business grows."
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-sm animate-on-scroll hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 border-l-4 border-brand-purple">
+              <div 
+                key={index} 
+                className="bg-white p-6 rounded-lg shadow-sm animate-on-scroll hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 border-l-4 border-brand-purple"
+              >
                 <h3 className="text-lg font-semibold text-brand-dark mb-2">{faq.question}</h3>
                 <p className="text-gray-700">{faq.answer}</p>
               </div>
