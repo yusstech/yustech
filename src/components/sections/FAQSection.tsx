@@ -15,19 +15,6 @@ const FAQSection = () => {
           </p>
         </div>
 
-        {/* Client testimonial about the experience */}
-        <div className="max-w-3xl mx-auto mb-12">
-          <Testimonial
-            quote="Working with YussTech was refreshingly straightforward. They answered all our questions directly and delivered exactly what they promised."
-            name="Rebecca Wong"
-            title="Operations Director"
-            company="RetailGrowth"
-            project="Inventory System"
-            variant="default"
-            delay={100}
-          />
-        </div>
-
         <div className="max-w-3xl mx-auto">
           <div className="space-y-6">
             {[
@@ -37,11 +24,11 @@ const FAQSection = () => {
               },
               {
                 question: "How much does a typical project cost?",
-                answer: "Project costs vary widely based on complexity, features, and timeline. After your $100 consultation, we'll provide a fixed-price quote with no surprises or hidden fees."
+                answer: "Project costs vary widely based on complexity, features, and timeline. After your $50 consultation, we'll provide a fixed-price quote with no surprises or hidden fees."
               },
               {
                 question: "How long does a typical project take?",
-                answer: "Timelines depend on project scope. Simple websites might take 2-4 weeks, while complex applications can take 3-6 months. We'll provide a detailed timeline during your consultation."
+                answer: "We'll provide a detailed timeline during your consultation."
               },
               {
                 question: "Can you work with my existing development team?",
@@ -52,7 +39,7 @@ const FAQSection = () => {
                 answer: "We offer ongoing maintenance and support packages to ensure your product continues to perform optimally. We can also implement new features and improvements as your business grows."
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-sm animate-on-scroll hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+              <div key={index} className="bg-white p-6 rounded-lg shadow-sm animate-on-scroll hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 border-l-4 border-brand-purple">
                 <h3 className="text-lg font-semibold text-brand-dark mb-2">{faq.question}</h3>
                 <p className="text-gray-700">{faq.answer}</p>
               </div>

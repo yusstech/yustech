@@ -15,13 +15,13 @@ const CTASection = () => {
       <div className="container mx-auto px-4 text-center relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 glow-text">Final Call: While You Think, Others Are Launching</h2>
         <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-300">
-          Your product could be live in weeks. Book a $100 consultation and let's make it happen.
+          Your product could be live in weeks. Book a $50 consultation and let's make it happen.
         </p>
         
         <div className="max-w-md mx-auto glass rounded-lg p-6 shadow-lg border border-brand-purple/30 animate-pulse-glow">
           <h3 className="text-xl font-bold mb-4 text-white">Limited Slots Available</h3>
           
-          <form className="space-y-4">
+          <form className="space-y-4" action="https://paystack.com/pay/hbwnuhje7h" method="GET">
             <div>
               <input 
                 type="text" 
@@ -55,13 +55,13 @@ const CTASection = () => {
               type="submit"
               className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group"
             >
-              Book Your Custom Plan - $100
+              Book Your Custom Plan - $50
               <ArrowUpRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </Button>
           </form>
           
           <p className="mt-4 text-xs text-gray-400">
-            By booking, you agree to our terms and conditions. The $100 fee is applied to your project if you decide to work with us.
+            By booking, you agree to our terms and conditions. The $50 fee is applied to your project if you decide to work with us.
           </p>
         </div>
       </div>

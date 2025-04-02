@@ -64,6 +64,16 @@ const Footer = () => {
               <li className="text-gray-400">hello@yustech.dev</li>
               <li className="text-gray-400">(555) 123-4567</li>
               <li className="text-gray-400">123 Tech Lane, San Francisco, CA 94107</li>
+              <li className="mt-4">
+                <a 
+                  href="https://paystack.com/pay/hbwnuhje7h" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-brand-purple hover:text-brand-blue transition-colors font-medium"
+                >
+                  Book a one-on-one Build Strategy Session
+                </a>
+              </li>
             </ul>
           </div>
         </div>
