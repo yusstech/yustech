@@ -3,15 +3,11 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - main  # or your default branch name
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      DEPLOY_HOST: ${{ secrets.HOSTINGER_HOST }}
-      DEPLOY_USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
-      DEPLOY_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,19 +23,13 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Debug Info
-        run: |
-          echo "Host: $DEPLOY_HOST"
-          echo "Username: $DEPLOY_USERNAME"
-          echo "Key exists: ${{ secrets.HOSTINGER_SSH_KEY != '' }}"
-
       - name: Deploy to Hostinger
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ env.DEPLOY_HOST }}
-          username: ${{ env.DEPLOY_USERNAME }}
-          key: ${{ env.DEPLOY_KEY }}
-          port: 65002
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: "65002"
           source: "dist/*"
           target: "/public_html"
           strip_components: 1 
