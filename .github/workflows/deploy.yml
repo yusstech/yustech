@@ -23,13 +23,21 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HOSTINGER_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p 65002 -H 109.106.250.162 >> ~/.ssh/known_hosts
+
       - name: Deploy to Hostinger
         uses: appleboy/scp-action@v0.1.7
         with:
           host: "109.106.250.162"
           username: "u534640516"
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          key_path: ~/.ssh/deploy_key
           port: "65002"
           source: "dist/*"
           target: "/public_html"
-          strip_components: 1 
+          strip_components: 1
+          debug: true 
