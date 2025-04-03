@@ -1,4 +1,6 @@
 
+import React from 'react';
+
 const Footer = () => {
   return (
     <footer className="bg-black/80 backdrop-blur-md py-12 border-t border-gray-800">
@@ -61,9 +63,9 @@ const Footer = () => {
           <div>
             <h4 className="text-sm font-bold uppercase text-white mb-4">Contact</h4>
             <ul className="space-y-2 text-sm">
-              <li className="text-gray-400">hello@yustech.dev</li>
-              <li className="text-gray-400">(555) 123-4567</li>
-              <li className="text-gray-400">123 Tech Lane, San Francisco, CA 94107</li>
+              <li className="text-gray-400">info@yusstech.com</li>
+              <li className="text-gray-400">+2347037942851</li>
+              <li className="text-gray-400">Plot 831 64 Crescent Gwarimpa, Abuja - Nigeria</li>
               <li className="mt-4">
                 <a 
                   href="https://paystack.com/pay/hbwnuhje7h" 
