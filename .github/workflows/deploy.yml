@@ -29,13 +29,15 @@ jobs:
           echo "${{ secrets.HOSTINGER_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -p 65002 -H 109.106.250.162 >> ~/.ssh/known_hosts
+          ls -la ~/.ssh/
+          cat ~/.ssh/deploy_key
 
       - name: Deploy to Hostinger
         uses: appleboy/scp-action@v0.1.7
         with:
           host: "109.106.250.162"
           username: "u534640516"
-          key_path: ~/.ssh/deploy_key
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: "65002"
           source: "dist/*"
           target: "/public_html"
