@@ -1,4 +1,3 @@
-
 import { ReactNode, useEffect, useRef } from 'react';
 
 interface AnimatedTextProps {
@@ -29,14 +28,18 @@ const AnimatedText = ({
               entry.target.classList.add('animate-text-revealed');
               
               // Add direction-specific class
-              if (direction === 'left') {
-                entry.target.classList.add('reveal-from-left');
-              } else if (direction === 'right') {
-                entry.target.classList.add('reveal-from-right');
-              } else if (direction === 'down') {
-                entry.target.classList.add('reveal-from-top');
-              } else {
-                entry.target.classList.add('reveal-from-bottom');
+              switch (direction) {
+                case 'left':
+                  entry.target.classList.add('animate-[reveal-from-left_0.5s_ease-out_forwards]');
+                  break;
+                case 'right':
+                  entry.target.classList.add('animate-[reveal-from-right_0.5s_ease-out_forwards]');
+                  break;
+                case 'down':
+                  entry.target.classList.add('animate-[reveal-from-top_0.5s_ease-out_forwards]');
+                  break;
+                default: // 'up'
+                  entry.target.classList.add('animate-[reveal-from-bottom_0.5s_ease-out_forwards]');
               }
               
               // Handle staggered children animation if enabled
@@ -44,8 +47,8 @@ const AnimatedText = ({
                 const children = textRef.current.children;
                 Array.from(children).forEach((child, index) => {
                   setTimeout(() => {
-                    child.classList.add('animate-text-revealed');
-                    child.classList.add('reveal-from-bottom');
+                    (child as HTMLElement).classList.add('animate-text-revealed');
+                    (child as HTMLElement).classList.add('animate-[reveal-from-bottom_0.5s_ease-out_forwards]');
                   }, 100 * index);
                 });
               }
@@ -77,7 +80,8 @@ const AnimatedText = ({
   return (
     <div 
       ref={textRef} 
-      className={`animate-text-hidden ${variantClasses[variant]} ${className}`}
+      className={`opacity-0 ${variantClasses[variant]} ${className}`}
+      style={{ willChange: 'transform, opacity' }}
     >
       {children}
     </div>
