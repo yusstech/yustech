@@ -15,11 +15,11 @@ const ServicesHeader = ({ children }: ServicesHeaderProps) => {
         Why Most Products <span className="gradient-text">Never Launch</span>
       </h2>
       <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-        <span className="block mb-2">• Frustrated with developers disappearing mid-project?</span>
-        <span className="block mb-2">• Tired of spending months (or years) on something that never ships?</span>
-        <span className="block mb-2">• Lost in technical complexity?</span>
-        <span className="block mt-4 text-white font-semibold">🛑 The truth? Most startups fail not because of bad ideas, but because of bad execution.</span>
-        <span className="block mt-4 text-brand-purple font-medium">✅ What if you had a team that guarantees your product gets built & launched—without delays?</span>
+        <span className="block mb-4">You're tired of delays, unreliable developers, and projects that never ship.</span>
+        <span className="block mb-4">We are your technical partners—we take your idea and build it to launch so you can focus on growing your business.</span>
+        <span className="block mb-4">Web & Mobile Apps</span>
+        <span className="block mb-4">AI Automation & AI Integration</span>
+        <span className="block text-brand-purple font-medium">100% Execution. No Excuses.</span>
       </p>
       {children}
     </div>
