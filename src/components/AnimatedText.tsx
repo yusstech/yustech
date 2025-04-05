@@ -19,54 +19,82 @@ const AnimatedText = ({
 }: AnimatedTextProps) => {
   const textRef = useRef<HTMLDivElement>(null);
 
+  const animateElement = (element: HTMLElement) => {
+    element.classList.add('animate-text-revealed');
+    
+    // Add direction-specific class
+    switch (direction) {
+      case 'left':
+        element.classList.add('animate-[reveal-from-left_0.5s_ease-out_forwards]');
+        break;
+      case 'right':
+        element.classList.add('animate-[reveal-from-right_0.5s_ease-out_forwards]');
+        break;
+      case 'down':
+        element.classList.add('animate-[reveal-from-top_0.5s_ease-out_forwards]');
+        break;
+      default: // 'up'
+        element.classList.add('animate-[reveal-from-bottom_0.5s_ease-out_forwards]');
+    }
+    
+    // Handle staggered children animation if enabled
+    if (staggerChildren && element.children.length > 0) {
+      Array.from(element.children).forEach((child, index) => {
+        setTimeout(() => {
+          (child as HTMLElement).classList.add('animate-text-revealed');
+          (child as HTMLElement).classList.add('animate-[reveal-from-bottom_0.5s_ease-out_forwards]');
+        }, 100 * index);
+      });
+    }
+  };
+
   useEffect(() => {
+    if (!textRef.current) return;
+
+    // Check if element is already in viewport
+    const rect = textRef.current.getBoundingClientRect();
+    const isInitiallyVisible = 
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+
+    // If element is initially visible, animate after a short delay
+    if (isInitiallyVisible) {
+      setTimeout(() => {
+        if (textRef.current) {
+          animateElement(textRef.current);
+        }
+      }, delay);
+    }
+
+    // Set up intersection observer for elements not initially visible
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setTimeout(() => {
-              entry.target.classList.add('animate-text-revealed');
-              
-              // Add direction-specific class
-              switch (direction) {
-                case 'left':
-                  entry.target.classList.add('animate-[reveal-from-left_0.5s_ease-out_forwards]');
-                  break;
-                case 'right':
-                  entry.target.classList.add('animate-[reveal-from-right_0.5s_ease-out_forwards]');
-                  break;
-                case 'down':
-                  entry.target.classList.add('animate-[reveal-from-top_0.5s_ease-out_forwards]');
-                  break;
-                default: // 'up'
-                  entry.target.classList.add('animate-[reveal-from-bottom_0.5s_ease-out_forwards]');
-              }
-              
-              // Handle staggered children animation if enabled
-              if (staggerChildren && textRef.current) {
-                const children = textRef.current.children;
-                Array.from(children).forEach((child, index) => {
-                  setTimeout(() => {
-                    (child as HTMLElement).classList.add('animate-text-revealed');
-                    (child as HTMLElement).classList.add('animate-[reveal-from-bottom_0.5s_ease-out_forwards]');
-                  }, 100 * index);
-                });
+              if (entry.target instanceof HTMLElement) {
+                animateElement(entry.target);
               }
             }, delay);
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1 }
+      { 
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
     );
 
-    if (textRef.current) {
+    // Only observe if not initially visible
+    if (!isInitiallyVisible) {
       observer.observe(textRef.current);
     }
 
     return () => {
-      if (textRef.current) {
-        observer.unobserve(textRef.current);
-      }
+      observer.disconnect();
     };
   }, [delay, direction, staggerChildren]);
 
