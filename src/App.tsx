@@ -1,5 +1,5 @@
 // YussTech - Modern React Application
-// Testing deployment with source files preserved
+// Testing deployment with proper GitHub Actions permissions
 // Last updated: April 5, 2024
 
 import { Toaster } from "@/components/ui/toaster";
