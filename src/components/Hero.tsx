@@ -110,6 +110,15 @@ const Hero = () => {
             on growing your business, not chasing developers.
           </AnimatedText>
           
+          {/* Services List */}
+          <div className="mb-10 flex flex-col items-center animate-on-scroll hero-animate">
+            <div className="py-3 px-5 backdrop-blur-lg bg-brand-purple/10 rounded-xl border border-brand-purple/20 inline-flex flex-col gap-3">
+              <span className="text-white text-lg">Web & Mobile Apps</span>
+              <span className="text-white text-lg">AI Automation & AI Integration</span>
+              <span className="text-brand-purple font-medium text-lg">100% Execution. No Excuses.</span>
+            </div>
+          </div>
+          
           <div className="flex flex-col sm:flex-row gap-4 justify-center hero-animate animate-on-scroll">
             <Button
               variant="default"
