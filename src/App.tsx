@@ -1,5 +1,5 @@
 // YussTech - Modern React Application
-// Testing Hostinger webhook deployment
+// Testing deployment with source files preserved
 // Last updated: April 5, 2024
 
 import { Toaster } from "@/components/ui/toaster";
