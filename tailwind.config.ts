@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
 
@@ -68,6 +69,7 @@ export default {
 					blue: '#0EA5E9',
 					dark: '#1A1F2C',
 					light: '#F6F6F7',
+					green: '#4ade80',  // Added for terminal text
 				}
 			},
 			borderRadius: {
@@ -107,6 +109,19 @@ export default {
 				'reveal-from-top': {
 					'0%': { transform: 'translateY(-20px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'code-pulse': {
+					'0%': { borderColor: 'rgba(110, 89, 165, 0.5)' },
+					'50%': { borderColor: 'rgba(110, 89, 165, 1)' },
+					'100%': { borderColor: 'rgba(110, 89, 165, 0.5)' }
+				},
+				'cursor-blink': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0' }
+				},
+				'typing': {
+					'from': { width: '0' },
+					'to': { width: '100%' }
 				}
 			},
 			animation: {
@@ -115,11 +130,15 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out',
 				'slide-up': 'slide-up 0.7s ease-out',
 				'text-revealed': 'fade-in 0.5s ease-out forwards',
-				'text-hidden': 'opacity-0'
+				'text-hidden': 'opacity-0',
+				'code-pulse': 'code-pulse 2s ease-in-out infinite',
+				'cursor-blink': 'cursor-blink 1s step-end infinite',
+				'typing': 'typing 3.5s steps(40, end)'
 			},
 			fontFamily: {
 				sans: ['Inter var', 'sans-serif'],
-				heading: ['Plus Jakarta Sans', 'sans-serif']
+				heading: ['Plus Jakarta Sans', 'sans-serif'],
+				mono: ['JetBrains Mono', 'Menlo', 'monospace']
 			},
 		}
 	},

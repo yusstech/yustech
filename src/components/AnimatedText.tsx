@@ -1,12 +1,14 @@
+
 import { ReactNode, useEffect, useRef } from 'react';
 
 interface AnimatedTextProps {
   children: ReactNode;
   className?: string;
   delay?: number;
-  variant?: 'default' | 'tech' | 'gradient' | 'glow';
+  variant?: 'default' | 'tech' | 'gradient' | 'glow' | 'code' | 'terminal';
   direction?: 'up' | 'left' | 'right' | 'down';
   staggerChildren?: boolean;
+  typewriter?: boolean;
 }
 
 const AnimatedText = ({ 
@@ -16,6 +18,7 @@ const AnimatedText = ({
   variant = 'default',
   direction = 'up',
   staggerChildren = false,
+  typewriter = false,
 }: AnimatedTextProps) => {
   const textRef = useRef<HTMLDivElement>(null);
 
@@ -45,6 +48,27 @@ const AnimatedText = ({
           (child as HTMLElement).classList.add('animate-[reveal-from-bottom_0.5s_ease-out_forwards]');
         }, 100 * index);
       });
+    }
+
+    // Handle typewriter effect if enabled
+    if (typewriter && element.textContent) {
+      const text = element.textContent;
+      element.textContent = '';
+      element.classList.add('after:content-["_"]', 'after:animate-pulse', 'after:ml-0.5');
+      
+      let index = 0;
+      const typeChar = () => {
+        if (index < text.length) {
+          element.textContent += text.charAt(index);
+          index++;
+          setTimeout(typeChar, 50);
+        } else {
+          // Remove cursor after typing is complete
+          element.classList.remove('after:content-["_"]', 'after:animate-pulse', 'after:ml-0.5');
+        }
+      };
+      
+      setTimeout(typeChar, 100);
     }
   };
 
@@ -96,13 +120,15 @@ const AnimatedText = ({
     return () => {
       observer.disconnect();
     };
-  }, [delay, direction, staggerChildren]);
+  }, [delay, direction, staggerChildren, typewriter]);
 
   const variantClasses = {
     default: '',
     tech: 'font-mono tracking-wider',
     gradient: 'bg-gradient-to-r from-brand-purple to-brand-blue bg-clip-text text-transparent',
     glow: 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]',
+    code: 'font-mono text-brand-blue bg-black/30 p-2 rounded border-l-4 border-brand-purple',
+    terminal: 'font-mono text-brand-green bg-black/80 p-3 rounded-md before:content-["$_"] before:text-brand-purple before:mr-2'
   };
 
   return (
@@ -110,6 +136,7 @@ const AnimatedText = ({
       ref={textRef} 
       className={`opacity-0 ${variantClasses[variant]} ${className}`}
       style={{ willChange: 'transform, opacity' }}
+      data-variant={variant}
     >
       {children}
     </div>
