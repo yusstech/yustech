@@ -83,15 +83,15 @@ const ServiceDisplay = ({ service, index }: ServiceDisplayProps) => {
                 <span className="ml-auto opacity-60 text-gray-400">ai_model.py</span>
               </div>
               <div className="animate-pulse">
-                <p>> Initializing AI model...</p>
-                <p>> Loading training data...</p>
-                <p>> Optimizing neural network...</p>
-                <p>> Analyzing business patterns...</p>
-                <p>> Generating insights...</p>
-                <p className="text-brand-purple">> Prediction accuracy: 97.8%</p>
-                <p>> Processing customer data...</p>
-                <p>> Automating workflow...</p>
-                <p className="text-white">> Process complete. Business efficiency increased by 42%</p>
+                <p>{"> "}Initializing AI model...</p>
+                <p>{"> "}Loading training data...</p>
+                <p>{"> "}Optimizing neural network...</p>
+                <p>{"> "}Analyzing business patterns...</p>
+                <p>{"> "}Generating insights...</p>
+                <p className="text-brand-purple">{"> "}Prediction accuracy: 97.8%</p>
+                <p>{"> "}Processing customer data...</p>
+                <p>{"> "}Automating workflow...</p>
+                <p className="text-white">{"> "}Process complete. Business efficiency increased by 42%</p>
               </div>
             </div>
           </div>
