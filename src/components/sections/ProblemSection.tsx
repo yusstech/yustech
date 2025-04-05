@@ -1,6 +1,7 @@
 
 import React from "react";
 import Testimonial from "@/components/Testimonial";
+import ServiceDisplay from "@/components/services/ServiceDisplay";
 
 const ProblemSection = () => {
   return (
@@ -36,7 +37,7 @@ const ProblemSection = () => {
         </div>
         
         {/* Services grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <div className="space-y-16 mb-16">
           {[
             {
               title: "Websites & Web Apps",
@@ -89,58 +90,7 @@ const ProblemSection = () => {
               }
             }
           ].map((service, index) => (
-            <div key={index} className="space-y-6">
-              <div 
-                className="glass rounded-lg service-card animate-on-scroll p-8 border border-brand-purple/20"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <h3 className="text-2xl font-bold mb-3 text-white">{service.title}</h3>
-                <p className="text-gray-300 mb-4">{service.description}</p>
-                
-                <div className="mb-6 bg-brand-purple/10 p-4 rounded-lg border border-brand-purple/20">
-                  <h4 className="font-semibold text-brand-purple mb-2">Pain Point:</h4>
-                  <p className="italic text-gray-300">{service.painPoint}</p>
-                </div>
-                
-                <div className="mb-6 bg-brand-blue/10 p-4 rounded-lg border border-brand-blue/20">
-                  <h4 className="font-semibold text-brand-blue mb-2">Our Solution:</h4>
-                  <p className="text-gray-200">{service.solution}</p>
-                </div>
-                
-                <ul className="mb-6 space-y-2">
-                  {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-sm text-gray-300">
-                      <svg className="w-4 h-4 mr-2 text-brand-purple" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <button 
-                  className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group px-4 py-2 rounded text-white font-medium flex items-center justify-center"
-                >
-                  Learn More
-                  <svg className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                  </svg>
-                </button>
-              </div>
-              
-              {/* Testimonial below each service card if available */}
-              {service.testimonial && (
-                <Testimonial
-                  quote={service.testimonial.quote}
-                  name={service.testimonial.name}
-                  title={service.testimonial.title}
-                  company={service.testimonial.company}
-                  project={service.testimonial.project}
-                  variant="compact"
-                  delay={index * 100 + 200}
-                />
-              )}
-            </div>
+            <ServiceDisplay key={index} service={service} index={index} />
           ))}
         </div>
       </div>
