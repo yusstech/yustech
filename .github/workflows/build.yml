@@ -40,3 +40,10 @@ jobs:
           git add dist -f
           git commit -m "chore: Update build files [skip ci]" || echo "No changes to commit"
           git push
+
+      - name: Trigger Hostinger Deployment
+        if: success()
+        run: |
+          curl -X POST https://webhooks.hostinger.com/deploy/c8cec9d8493593e95aa221fbd9c7716a \
+          -H "Content-Type: application/json" \
+          -d '{"ref": "main", "repository": "${{ github.repository }}", "commit": "${{ github.sha }}"}'
