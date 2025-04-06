@@ -17,9 +17,17 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
+          clean: true
+          fetch-depth: 0
+
+      - name: Clear npm cache
+        run: npm cache clean --force
 
       - name: Install all dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Clean previous build
+        run: rm -rf dist
 
       - name: Build
         run: npm run build
@@ -30,5 +38,5 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git add dist -f
-          git commit -m "chore: Update build files" || echo "No changes to commit"
+          git commit -m "chore: Update build files [skip ci]" || echo "No changes to commit"
           git push
