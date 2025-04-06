@@ -1,69 +1,128 @@
-# Welcome to your Lovable project
+# YussTech - Modern Web Development Agency
 
-## Project info
+A modern, responsive web application built with React, TypeScript, and Tailwind CSS, showcasing professional web development services.
 
-**URL**: https://lovable.dev/projects/f01f8e0a-f35f-41bf-be5a-cf69d279a347
+## 🚀 Features
 
-## How can I edit this code?
+- **Modern UI/UX**: Built with React and Tailwind CSS for a beautiful, responsive design
+- **Type-Safe**: Written in TypeScript for better development experience and code reliability
+- **Component Library**: Utilizes shadcn/ui for consistent, accessible components
+- **Animations**: Custom animations and transitions for engaging user experience
+- **SEO Optimized**: Built with best practices for search engine optimization
+- **Performance Focused**: Optimized build process and lazy loading for fast load times
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+- **Frontend Framework**: React 18
+- **Type System**: TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: React Query
+- **Routing**: React Router
+- **UI Components**: shadcn/ui
+- **Build Tool**: Vite
+- **Deployment**: Hostinger
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f01f8e0a-f35f-41bf-be5a-cf69d279a347) and start prompting.
+## 📦 Installation
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yusstech/yustech.git
+   cd yustech
+   ```
 
-**Use your preferred IDE**
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+4. Build for production:
+   ```bash
+   npm run build
+   ```
 
-Follow these steps:
+## 🌐 Environment Setup
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Make sure you have the following installed:
+- Node.js (v18 or higher)
+- npm (v8 or higher)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📁 Project Structure
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+yustech/
+├── src/
+│   ├── components/     # Reusable UI components
+│   │   ├── ui/        # shadcn/ui components
+│   │   └── sections/  # Page sections
+│   ├── hooks/         # Custom React hooks
+│   ├── pages/         # Page components
+│   ├── styles/        # Global styles
+│   └── App.tsx        # Main application component
+├── public/            # Static assets
+└── dist/             # Production build output
 ```
 
-**Edit a file directly in GitHub**
+## 🔧 Configuration
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **TypeScript**: `tsconfig.json` and `tsconfig.app.json`
+- **Vite**: `vite.config.ts`
+- **Tailwind**: `tailwind.config.ts`
+- **Dependencies**: `package.json`
 
-**Use GitHub Codespaces**
+## 🚀 Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The project is configured for automatic deployment to Hostinger:
 
-## What technologies are used for this project?
+1. Push changes to the main branch
+2. GitHub Actions workflow builds the project
+3. Hostinger webhook triggers deployment
+4. Changes are live within minutes
 
-This project is built with .
+## 🧪 Development
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Commands
 
-## How can I deploy this project?
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run preview`: Preview production build locally
 
-Simply open [Lovable](https://lovable.dev/projects/f01f8e0a-f35f-41bf-be5a-cf69d279a347) and click on Share -> Publish.
+### Code Style
 
-## I want to use a custom domain - is that possible?
+- Follow TypeScript best practices
+- Use functional components with hooks
+- Implement responsive design using Tailwind classes
+- Follow component-based architecture
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👥 Team
+
+- Development by YussTech
+- Design inspiration from modern web trends
+- Built with ❤️ using React and TypeScript
+
+## 📞 Support
+
+For support or inquiries:
+- Website: [YussTech Website]
+- Email: [Contact Email]
+- GitHub Issues: [Project Issues]
+
+---
+
+Built with precision and care by YussTech 🚀
