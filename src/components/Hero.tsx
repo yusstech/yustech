@@ -1,4 +1,4 @@
-
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
 import { Triangle, Hexagon, Circle, Square, Star, Award, Check } from "lucide-react";
@@ -6,10 +6,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import AnimatedText from "./AnimatedText";
 import { Badge } from "./ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import CTAPopup from "@/components/ui/cta-popup";
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     // Animate elements when the page loads
@@ -21,6 +23,15 @@ const Hero = () => {
       }, index * 200); // Stagger the animations
     });
   }, []);
+
+  const handleSubmit = (data: { name: string; email: string; service: string }) => {
+    // Here you can handle the form data, e.g., send to analytics or CRM
+    console.log("Form submitted:", data);
+  };
+
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/7037942851?text=Hi, I\'m interested in discussing a project with YussTech.', '_blank');
+  };
 
   return (
     <div className="relative overflow-hidden animated-bg min-h-[90vh] flex items-center py-24" ref={heroRef}>
@@ -121,6 +132,7 @@ const Hero = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center hero-animate animate-on-scroll">
             <Button
+              onClick={() => setIsPopupOpen(true)}
               variant="default"
               size="lg"
               className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all hover:shadow-lg hover:shadow-brand-purple/25 text-base py-6 px-8"
@@ -128,11 +140,12 @@ const Hero = () => {
               Let's Build It—Get Your Custom Plan Today →
             </Button>
             <Button
+              onClick={handleWhatsAppClick}
               variant="outline"
               size="lg" 
               className="border-brand-purple text-brand-purple hover:bg-brand-purple/10 text-base py-6 px-8 neon-border"
             >
-              See Our Work
+              Direct Line to Our Team
             </Button>
           </div>
           
@@ -207,6 +220,12 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      <CTAPopup 
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </div>
   );
 };
