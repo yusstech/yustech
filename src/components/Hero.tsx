@@ -7,6 +7,7 @@ import AnimatedText from "./AnimatedText";
 import { Badge } from "./ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import CTAPopup from "@/components/ui/cta-popup";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -130,22 +131,16 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center hero-animate animate-on-scroll">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+            <CTAButton className="text-lg">
+              Book Free Strategy Call
+            </CTAButton>
             <Button
-              onClick={() => setIsPopupOpen(true)}
-              variant="default"
-              size="lg"
-              className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all hover:shadow-lg hover:shadow-brand-purple/25 text-base py-6 px-8"
-            >
-              Let's Build It—Get Your Custom Plan Today →
-            </Button>
-            <Button
-              onClick={handleWhatsAppClick}
               variant="outline"
-              size="lg" 
-              className="border-brand-purple text-brand-purple hover:bg-brand-purple/10 text-base py-6 px-8 neon-border"
+              className="text-lg border-brand-purple hover:bg-brand-purple/10"
+              onClick={() => window.open('https://wa.me/2349058744770?text=Hi%20YussTech%2C%20I%27m%20interested%20in%20your%20services', '_blank')}
             >
-              Direct Line to Our Team
+              Get Instant Answers
             </Button>
           </div>
           

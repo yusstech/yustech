@@ -1,7 +1,7 @@
-
 import React from "react";
 import Testimonial from "@/components/Testimonial";
 import ServiceDisplay from "@/components/services/ServiceDisplay";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const ProblemSection = () => {
   return (
@@ -20,6 +20,11 @@ const ProblemSection = () => {
             <span className="block mt-4 text-white font-semibold">The truth? Most startups fail not because of bad ideas, but because of bad execution.</span>
             <span className="block mt-4 text-brand-purple font-medium">What if you had a team that guarantees your product gets built & launched—without delays?</span>
           </p>
+          <div className="mt-8">
+            <CTAButton>
+              Get Your Guaranteed Launch Plan
+            </CTAButton>
+          </div>
         </div>
 
         {/* Featured testimonial */}

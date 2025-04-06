@@ -1,8 +1,8 @@
-
 import React from "react";
 import AnimatedText from "@/components/AnimatedText";
 import Testimonial from "@/components/Testimonial";
 import ShippingProcess from "@/components/ShippingProcess";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const SolutionSection = () => {
   return (
@@ -31,6 +31,10 @@ const SolutionSection = () => {
             At YussTech, we don't just build. We guarantee you a fully shipped product.
             No wasted time. No unreliable teams. Just results.
           </AnimatedText>
+          
+          <CTAButton>
+            See How We Do It
+          </CTAButton>
         </div>
 
         <div className="mb-16 grid md:grid-cols-2 gap-8">
