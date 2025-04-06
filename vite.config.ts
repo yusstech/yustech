@@ -27,13 +27,19 @@ export default defineConfig(({ mode }) => ({
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]'
       }
-    }
+    },
+    manifest: true,
+    sourcemap: true,
+    minify: 'terser',
+    emptyOutDir: true
   },
   preview: {
     headers: {
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
-      'Expires': '0'
+      'Expires': '0',
+      'Surrogate-Control': 'no-store',
+      'Clear-Site-Data': '"cache"'
     }
   }
 }));
