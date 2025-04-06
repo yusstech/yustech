@@ -22,16 +22,39 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: undefined,
+        manualChunks: (id) => {
+          // Vendor chunk
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || 
+                id.includes('@radix-ui') || 
+                id.includes('class-variance-authority') ||
+                id.includes('clsx') ||
+                id.includes('tailwind-merge')) {
+              return 'vendor';
+            }
+          }
+          // UI components chunk
+          if (id.includes('src/components/ui/')) {
+            return 'ui';
+          }
+          // Sections chunk
+          if (id.includes('src/components/sections/')) {
+            return 'sections';
+          }
+        },
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]'
       }
     },
     manifest: true,
-    sourcemap: true,
-    minify: 'terser',
-    emptyOutDir: true
+    sourcemap: mode === 'development',
+    minify: 'esbuild',
+    emptyOutDir: true,
+    target: 'esnext',
+    cssMinify: true,
+    reportCompressedSize: true,
+    chunkSizeWarningLimit: 500,
   },
   preview: {
     headers: {
