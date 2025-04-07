@@ -1,5 +1,6 @@
 name: Build and Deploy to Hostinger
 
+# Trigger on push to main branch
 on:
   push:
     branches:
@@ -8,55 +9,42 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build and Deploy
+    name: Build and Push
+    permissions:
+      contents: write
     steps:
-      - name: Checkout code
+      - name: git-checkout
         uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'npm'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+          clean: true
+          fetch-depth: 0
 
-      - name: Install dependencies
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Install all dependencies
         run: npm ci
+
+      - name: Clean previous build
+        run: rm -rf dist
 
       - name: Build
         run: npm run build
 
-      - name: Verify build
+      - name: Commit and Push
         run: |
-          if [ ! -d "dist" ]; then
-            echo "Build failed - dist directory not found"
-            exit 1
-          fi
-
-      - name: Prepare deployment
-        run: |
-          # Create a new directory structure
-          mkdir -p public_html
-          # Move all contents from dist to public_html
-          cp -r dist/* public_html/
-          # Create a simple .htaccess file for proper routing
-          echo 'RewriteEngine On
-          RewriteBase /
-          RewriteRule ^index\.html$ - [L]
-          RewriteCond %{REQUEST_FILENAME} !-f
-          RewriteCond %{REQUEST_FILENAME} !-d
-          RewriteCond %{REQUEST_FILENAME} !-l
-          RewriteRule . /index.html [L]' > public_html/.htaccess
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git add dist -f
+          git commit -m "chore: Update build files [skip ci]" || echo "No changes to commit"
+          git push
 
       - name: Trigger Hostinger Deployment
         if: success()
         run: |
-          echo "Triggering Hostinger deployment..."
           curl -X POST https://webhooks.hostinger.com/deploy/c8cec9d8493593e95aa221fbd9c7716a \
-            -H "Content-Type: application/json" \
-            -d '{
-              "ref": "main",
-              "repository": "${{ github.repository }}",
-              "commit": "${{ github.sha }}",
-              "build": true,
-              "deploy_path": "public_html"
-            }'
+          -H "Content-Type: application/json" \
+          -d '{"ref": "main", "repository": "${{ github.repository }}", "commit": "${{ github.sha }}"}'
