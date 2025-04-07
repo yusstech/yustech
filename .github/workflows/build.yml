@@ -1,29 +1,109 @@
-name: Generate a build and push to another branch
+name: Build and Deploy to Hostinger
 
+# Trigger on push to main branch
 on:
   push:
     branches:
-      - main # The branch name your are commit the new changes
+      - main
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build and Push
+    name: Build and Deploy
     steps:
-      - name: git-checkout
+      - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
-      - name: Install all dependencies
-        run: npm install
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build
-        run: npm run build # The build command of your project
+        run: npm run build
+        env:
+          VITE_BASE_URL: ./
 
-      - name: Push
+      - name: Verify build
+        run: |
+          if [ ! -f "dist/index.html" ]; then
+            echo "Error: dist/index.html not found"
+            exit 1
+          fi
+          if [ ! -d "dist/assets" ]; then
+            echo "Error: dist/assets directory not found"
+            exit 1
+          fi
+
+      - name: Prepare for deployment
+        run: |
+          # Create deployment directory
+          mkdir -p deploy_temp
+          # Copy build files
+          cp -r dist/* deploy_temp/
+          # Create .htaccess
+          echo "RewriteEngine On
+          RewriteBase /
+          RewriteRule ^index\.html$ - [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteCond %{REQUEST_FILENAME} !-l
+          RewriteRule . /index.html [L]
+
+          # Enable CORS
+          Header set Access-Control-Allow-Origin *
+          
+          # Cache Control
+          <FilesMatch "\.(html|htm)$">
+            Header set Cache-Control "no-cache, no-store, must-revalidate"
+            Header set Pragma "no-cache"
+            Header set Expires 0
+          </FilesMatch>
+          
+          <FilesMatch "\.(js|css|jpg|jpeg|png|gif|ico|svg|woff2|woff|ttf)$">
+            Header set Cache-Control "public, max-age=31536000"
+          </FilesMatch>" > deploy_temp/.htaccess
+          
+          # Remove old dist
+          rm -rf dist
+          # Move deployment files to dist
+          mv deploy_temp dist
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Deploy to GitHub Pages branch
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
-          BRANCH: main # The branch name where you want to push the assets
-          FOLDER: dist # The directory where your assets are generated
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
-          MESSAGE: "Build: ({sha}) {msg}" # The commit message
+          BRANCH: gh-pages
+          FOLDER: dist
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger Hostinger Deployment
+        if: success()
+        run: |
+          curl -X POST https://webhooks.hostinger.com/deploy/c8cec9d8493593e95aa221fbd9c7716a \
+          -H "Content-Type: application/json" \
+          -d '{
+            "ref": "main",
+            "repository": "${{ github.repository }}",
+            "commit": "${{ github.sha }}",
+            "build": true,
+            "deploy_path": "public_html",
+            "clean_target": true
+          }'
