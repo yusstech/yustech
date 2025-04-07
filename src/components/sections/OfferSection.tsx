@@ -6,11 +6,6 @@ import CTAPopup from "@/components/ui/cta-popup";
 const OfferSection = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const handleSubmit = (data: { name: string; email: string; service: string }) => {
-    // Here you can handle the form data, e.g., send to analytics or CRM
-    console.log("Form submitted:", data);
-  };
-
   return (
     <section id="offer" className="py-20 relative">
       <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/10 to-brand-blue/10"></div>
@@ -43,7 +38,6 @@ const OfferSection = () => {
         <CTAPopup 
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
-          onSubmit={handleSubmit}
         />
       </div>
     </section>

@@ -25,11 +25,6 @@ const Hero = () => {
     });
   }, []);
 
-  const handleSubmit = (data: { name: string; email: string; service: string }) => {
-    // Here you can handle the form data, e.g., send to analytics or CRM
-    console.log("Form submitted:", data);
-  };
-
   const handleWhatsAppClick = () => {
     window.open('https://wa.me/7037942851?text=Hi, I\'m interested in discussing a project with YussTech.', '_blank');
   };
@@ -219,7 +214,6 @@ const Hero = () => {
       <CTAPopup 
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
-        onSubmit={handleSubmit}
       />
     </div>
   );
