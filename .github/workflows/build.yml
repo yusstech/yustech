@@ -1,77 +1,29 @@
-name: Build and Deploy to Hostinger
+name: Generate a build and push to another branch
 
-# Trigger on push to main branch
 on:
   push:
     branches:
-      - main
+      - main # The branch name your are commit the new changes
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build and Deploy
-    permissions:
-      contents: write
+    name: Build and Push
     steps:
-      - name: Checkout code
+      - name: git-checkout
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: true
-          fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
+      - name: Install all dependencies
+        run: npm install
 
       - name: Build
-        run: npm run build
+        run: npm run build # The build command of your project
+
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
         env:
-          VITE_BASE_URL: /
-
-      - name: Prepare for deployment
-        run: |
-          # Create necessary directories
-          mkdir -p public_html
-          # Copy build files to public_html
-          cp -r dist/* public_html/
-          # Create .htaccess file for SPA routing
-          echo "RewriteEngine On
-          RewriteBase /
-          RewriteRule ^index\.html$ - [L]
-          RewriteCond %{REQUEST_FILENAME} !-f
-          RewriteCond %{REQUEST_FILENAME} !-d
-          RewriteCond %{REQUEST_FILENAME} !-l
-          RewriteRule . /index.html [L]" > public_html/.htaccess
-          # Remove existing dist
-          rm -rf dist
-          # Move public_html to dist for committing
-          mv public_html dist
-
-      - name: Commit build
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add -f dist
-          git commit -m "chore: Update build files [skip ci]" || echo "No changes to commit"
-          git push
-
-      - name: Trigger Hostinger Deployment
-        if: success()
-        run: |
-          curl -X POST https://webhooks.hostinger.com/deploy/c8cec9d8493593e95aa221fbd9c7716a \
-          -H "Content-Type: application/json" \
-          -d '{
-            "ref": "main",
-            "repository": "${{ github.repository }}",
-            "commit": "${{ github.sha }}",
-            "build": true,
-            "deploy_path": "public_html",
-            "clean_target": true
-          }'
+          REPO: self
+          BRANCH: main # The branch name where you want to push the assets
+          FOLDER: dist # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          MESSAGE: "Build: ({sha}) {msg}" # The commit message
