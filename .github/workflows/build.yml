@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build and Push
+    name: Build and Deploy
     permissions:
       contents: write
     steps:
@@ -32,6 +32,25 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Prepare for Hostinger
+        run: |
+          # Create a temporary directory for deployment
+          mkdir -p temp_deploy
+          # Copy build files to deployment directory
+          cp -r dist/* temp_deploy/
+          # Create .htaccess file for SPA routing
+          echo "RewriteEngine On
+          RewriteBase /
+          RewriteRule ^index\.html$ - [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteCond %{REQUEST_FILENAME} !-l
+          RewriteRule . /index.html [L]" > temp_deploy/.htaccess
+          # Remove existing dist directory
+          rm -rf dist
+          # Move deployment files to dist
+          mv temp_deploy dist
 
       - name: Commit and Push
         run: |
