@@ -31,11 +31,15 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_BASE_URL: /
 
       - name: Prepare for deployment
         run: |
-          # Ensure we're in the dist directory
-          cd dist
+          # Create necessary directories
+          mkdir -p public_html
+          # Copy build files to public_html
+          cp -r dist/* public_html/
           # Create .htaccess file for SPA routing
           echo "RewriteEngine On
           RewriteBase /
@@ -43,9 +47,11 @@ jobs:
           RewriteCond %{REQUEST_FILENAME} !-f
           RewriteCond %{REQUEST_FILENAME} !-d
           RewriteCond %{REQUEST_FILENAME} !-l
-          RewriteRule . /index.html [L]" > .htaccess
-          # Move back to root
-          cd ..
+          RewriteRule . /index.html [L]" > public_html/.htaccess
+          # Remove existing dist
+          rm -rf dist
+          # Move public_html to dist for committing
+          mv public_html dist
 
       - name: Commit build
         run: |
