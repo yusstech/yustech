@@ -31,6 +31,15 @@ const TurnstileChallenge = () => {
 
   // Skip verification in development mode
   const isDevelopment = import.meta.env.DEV;
+  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+
+  // Debug logging
+  console.log('Turnstile Environment:', {
+    isDevelopment,
+    siteKey,
+    hasWindow: typeof window !== 'undefined',
+    hasTurnstile: typeof window !== 'undefined' && !!window.turnstile
+  });
 
   const turnstileCallback = useCallback((token: string) => {
     console.log('Turnstile token:', token);
@@ -50,7 +59,7 @@ const TurnstileChallenge = () => {
         setError(null);
         // Re-render the widget
         const id = window.turnstile.render('#turnstile-container', {
-          sitekey: import.meta.env.VITE_TURNSTILE_SITE_KEY,
+          sitekey: siteKey,
           theme: 'dark',
           callback: turnstileCallback,
           'error-callback': errorCallback,
@@ -58,7 +67,7 @@ const TurnstileChallenge = () => {
         setWidgetId(id);
       }
     }, 2000);
-  }, [widgetId, turnstileCallback]);
+  }, [widgetId, turnstileCallback, siteKey]);
 
   useEffect(() => {
     // Always allow access in development
@@ -75,6 +84,14 @@ const TurnstileChallenge = () => {
       return;
     }
 
+    // Validate site key
+    if (!siteKey) {
+      console.error('Turnstile site key is missing');
+      setError('Security check configuration error. Please contact support.');
+      setIsLoading(false);
+      return;
+    }
+
     // Set a timeout for script loading
     const timeout = setTimeout(() => {
       setError('Failed to load security check. Please refresh the page.');
@@ -87,6 +104,7 @@ const TurnstileChallenge = () => {
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
     script.async = true;
     script.onerror = () => {
+      console.error('Failed to load Turnstile script');
       setError('Failed to load security check. Please check your connection.');
       setIsLoading(false);
       if (scriptLoadTimeout) clearTimeout(scriptLoadTimeout);
@@ -95,17 +113,20 @@ const TurnstileChallenge = () => {
 
     // Define the callback function
     window.onloadTurnstileCallback = () => {
+      console.log('Turnstile script loaded');
       if (scriptLoadTimeout) clearTimeout(scriptLoadTimeout);
       setIsLoading(false);
       if (!widgetId && window.turnstile) {
         try {
+          console.log('Attempting to render Turnstile with site key:', siteKey);
           const id = window.turnstile.render('#turnstile-container', {
-            sitekey: import.meta.env.VITE_TURNSTILE_SITE_KEY,
+            sitekey: siteKey,
             theme: 'dark',
             callback: turnstileCallback,
             'error-callback': errorCallback,
           });
           setWidgetId(id);
+          console.log('Turnstile rendered successfully with ID:', id);
         } catch (err) {
           console.error('Error rendering Turnstile:', err);
           setError('Failed to initialize security check. Please refresh the page.');
@@ -125,7 +146,7 @@ const TurnstileChallenge = () => {
         clearTimeout(scriptLoadTimeout);
       }
     };
-  }, [widgetId, turnstileCallback, errorCallback, isDevelopment, navigate]);
+  }, [widgetId, turnstileCallback, errorCallback, isDevelopment, navigate, siteKey]);
 
   // Don't render anything in development or if verified
   if (isDevelopment || isVerified) {
