@@ -22,10 +22,25 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          sections: ['src/sections'],
-          ui: ['src/components/ui'],
+        manualChunks: (id) => {
+          // Vendor chunk
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || 
+                id.includes('@radix-ui') || 
+                id.includes('class-variance-authority') ||
+                id.includes('clsx') ||
+                id.includes('tailwind-merge')) {
+              return 'vendor';
+            }
+          }
+          // UI components chunk
+          if (id.includes('src/components/ui/')) {
+            return 'ui';
+          }
+          // Sections chunk
+          if (id.includes('src/components/sections/')) {
+            return 'sections';
+          }
         },
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
