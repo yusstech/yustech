@@ -13,32 +13,29 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: git-checkout
+      - name: Checkout code
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
-          clean: true
           fetch-depth: 0
 
-      - name: Clear npm cache
-        run: npm cache clean --force
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
 
-      - name: Install all dependencies
+      - name: Install dependencies
         run: npm ci
-
-      - name: Clean previous build
-        run: rm -rf dist
 
       - name: Build
         run: npm run build
 
-      - name: Prepare for Hostinger
+      - name: Prepare for deployment
         run: |
-          # Create a temporary directory for deployment
-          mkdir -p temp_deploy
-          # Copy build files to deployment directory
-          cp -r dist/* temp_deploy/
+          # Ensure we're in the dist directory
+          cd dist
           # Create .htaccess file for SPA routing
           echo "RewriteEngine On
           RewriteBase /
@@ -46,18 +43,16 @@ jobs:
           RewriteCond %{REQUEST_FILENAME} !-f
           RewriteCond %{REQUEST_FILENAME} !-d
           RewriteCond %{REQUEST_FILENAME} !-l
-          RewriteRule . /index.html [L]" > temp_deploy/.htaccess
-          # Remove existing dist directory
-          rm -rf dist
-          # Move deployment files to dist
-          mv temp_deploy dist
+          RewriteRule . /index.html [L]" > .htaccess
+          # Move back to root
+          cd ..
 
-      - name: Commit and Push
+      - name: Commit build
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add dist -f
+          git add -f dist
           git commit -m "chore: Update build files [skip ci]" || echo "No changes to commit"
           git push
 
@@ -66,4 +61,11 @@ jobs:
         run: |
           curl -X POST https://webhooks.hostinger.com/deploy/c8cec9d8493593e95aa221fbd9c7716a \
           -H "Content-Type: application/json" \
-          -d '{"ref": "main", "repository": "${{ github.repository }}", "commit": "${{ github.sha }}"}'
+          -d '{
+            "ref": "main",
+            "repository": "${{ github.repository }}",
+            "commit": "${{ github.sha }}",
+            "build": true,
+            "deploy_path": "public_html",
+            "clean_target": true
+          }'
