@@ -1,6 +1,6 @@
-
 import React from "react";
 import Testimonial from "@/components/Testimonial";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const FAQSection = () => {
   return (
@@ -48,6 +48,12 @@ const FAQSection = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="mt-8">
+          <CTAButton>
+            Schedule a Call
+          </CTAButton>
         </div>
       </div>
     </section>

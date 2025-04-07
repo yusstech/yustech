@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import CTAPopup from "@/components/ui/cta-popup";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const OfferSection = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -39,6 +40,12 @@ const OfferSection = () => {
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
         />
+
+        <div className="mt-8">
+          <CTAButton>
+            Get Your Free Consultation
+          </CTAButton>
+        </div>
       </div>
     </section>
   );

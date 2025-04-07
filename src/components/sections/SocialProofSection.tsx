@@ -1,6 +1,6 @@
-
 import React from "react";
 import Testimonial from "@/components/Testimonial";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const SocialProofSection = () => {
   return (
@@ -47,6 +47,11 @@ const SocialProofSection = () => {
             variant="default"
             delay={300}
           />
+        </div>
+        <div className="mt-8">
+          <CTAButton>
+            Join Our Success Stories
+          </CTAButton>
         </div>
       </div>
     </section>

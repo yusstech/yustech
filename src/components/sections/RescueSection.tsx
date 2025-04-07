@@ -1,7 +1,7 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Testimonial from "@/components/Testimonial";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const RescueSection = () => {
   return (
@@ -71,6 +71,12 @@ const RescueSection = () => {
             project="Mobile App Rescue"
             variant="featured"
           />
+        </div>
+
+        <div className="mt-8">
+          <CTAButton>
+            Rescue My Project
+          </CTAButton>
         </div>
       </div>
     </section>
