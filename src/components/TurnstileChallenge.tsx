@@ -31,14 +31,15 @@ const TurnstileChallenge = () => {
 
   // Skip verification in development mode
   const isDevelopment = import.meta.env.DEV;
-  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || '0x4AAAAAAAsBveoq757M62Pl';
 
   // Debug logging
   console.log('Turnstile Environment:', {
     isDevelopment,
     siteKey,
     hasWindow: typeof window !== 'undefined',
-    hasTurnstile: typeof window !== 'undefined' && !!window.turnstile
+    hasTurnstile: typeof window !== 'undefined' && !!window.turnstile,
+    env: import.meta.env
   });
 
   const turnstileCallback = useCallback((token: string) => {
