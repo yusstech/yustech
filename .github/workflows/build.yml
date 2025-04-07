@@ -53,29 +53,30 @@ jobs:
           mkdir -p deploy_temp
           # Copy build files
           cp -r dist/* deploy_temp/
-          # Create .htaccess
-          echo "RewriteEngine On
-          RewriteBase /
-          RewriteRule ^index\.html$ - [L]
-          RewriteCond %{REQUEST_FILENAME} !-f
-          RewriteCond %{REQUEST_FILENAME} !-d
-          RewriteCond %{REQUEST_FILENAME} !-l
-          RewriteRule . /index.html [L]
+          # Create .htaccess with proper escaping
+          cat > deploy_temp/.htaccess << 'EOL'
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule . /index.html [L]
 
-          # Enable CORS
-          Header set Access-Control-Allow-Origin *
-          
-          # Cache Control
-          <FilesMatch "\.(html|htm)$">
-            Header set Cache-Control "no-cache, no-store, must-revalidate"
-            Header set Pragma "no-cache"
-            Header set Expires 0
-          </FilesMatch>
-          
-          <FilesMatch "\.(js|css|jpg|jpeg|png|gif|ico|svg|woff2|woff|ttf)$">
-            Header set Cache-Control "public, max-age=31536000"
-          </FilesMatch>" > deploy_temp/.htaccess
-          
+# Enable CORS
+Header set Access-Control-Allow-Origin *
+
+# Cache Control
+<FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+</FilesMatch>
+
+<FilesMatch "\.(js|css|jpg|jpeg|png|gif|ico|svg|woff2|woff|ttf)$">
+    Header set Cache-Control "public, max-age=31536000"
+</FilesMatch>
+EOL
           # Remove old dist
           rm -rf dist
           # Move deployment files to dist
