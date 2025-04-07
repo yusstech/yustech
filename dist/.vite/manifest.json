@@ -1,0 +1,36 @@
+{
+  "_sections-BXcvwhVj.js": {
+    "file": "assets/sections-BXcvwhVj.js",
+    "name": "sections",
+    "imports": [
+      "_vendor-DK4Nn9ZM.js",
+      "_ui-BOoWOJtF.js"
+    ]
+  },
+  "_ui-BOoWOJtF.js": {
+    "file": "assets/ui-BOoWOJtF.js",
+    "name": "ui",
+    "imports": [
+      "_vendor-DK4Nn9ZM.js",
+      "_sections-BXcvwhVj.js"
+    ]
+  },
+  "_vendor-DK4Nn9ZM.js": {
+    "file": "assets/vendor-DK4Nn9ZM.js",
+    "name": "vendor"
+  },
+  "index.html": {
+    "file": "assets/index-BtIwwrXD.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_vendor-DK4Nn9ZM.js",
+      "_ui-BOoWOJtF.js",
+      "_sections-BXcvwhVj.js"
+    ],
+    "css": [
+      "assets/index-7O4PQWli.css"
+    ]
+  }
+}
