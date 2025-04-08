@@ -76,14 +76,15 @@ const Hero = () => {
               </div>
               <div className="flex space-x-2 mr-3">
                 <Avatar className="w-8 h-8 border-2 border-white/10">
-                  <AvatarImage src="https://i.pravatar.cc/100?img=1" alt="Client" />
+                  <AvatarImage src="/images/avatars/client1.jpg" alt="Client" />
                   <AvatarFallback>JS</AvatarFallback>
                 </Avatar>
-                <Avatar className="w-8 h-8 -ml-4 border-2 border-white/10"><AvatarImage src="https://i.pravatar.cc/100?img=2" alt="Client" />
+                <Avatar className="w-8 h-8 -ml-4 border-2 border-white/10">
+                  <AvatarImage src="/images/avatars/client2.jpg" alt="Client" />
                   <AvatarFallback>MR</AvatarFallback>
                 </Avatar>
                 <Avatar className="w-8 h-8 -ml-4 border-2 border-white/10">
-                  <AvatarImage src="https://i.pravatar.cc/100?img=3" alt="Client" />
+                  <AvatarImage src="/images/avatars/client3.jpg" alt="Client" />
                   <AvatarFallback>AL</AvatarFallback>
                 </Avatar>
               </div>

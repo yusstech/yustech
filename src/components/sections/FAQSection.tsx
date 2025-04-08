@@ -52,7 +52,7 @@ const FAQSection = () => {
 
         <div className="mt-8">
           <CTAButton>
-            Schedule a Call
+          Avoid Delays—Let’s Start Building 
           </CTAButton>
         </div>
       </div>
