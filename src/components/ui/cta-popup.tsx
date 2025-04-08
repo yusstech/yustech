@@ -25,11 +25,32 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
   // Initialize EmailJS when component mounts
   useEffect(() => {
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-    if (!publicKey) {
-      console.error('EmailJS public key is missing');
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
+    // Log environment variables for debugging
+    console.log('EmailJS Configuration:', {
+      publicKey: publicKey ? 'Present' : 'Missing',
+      serviceId: serviceId ? 'Present' : 'Missing',
+      templateId: templateId ? 'Present' : 'Missing',
+      env: import.meta.env.MODE
+    });
+
+    if (!publicKey || !serviceId || !templateId) {
+      console.error('EmailJS configuration is incomplete:', {
+        publicKey: !!publicKey,
+        serviceId: !!serviceId,
+        templateId: !!templateId
+      });
       return;
     }
-    emailjs.init(publicKey);
+
+    try {
+      emailjs.init(publicKey);
+      console.log('EmailJS initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize EmailJS:', error);
+    }
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -62,7 +83,11 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 
       if (!serviceId || !templateId) {
-        throw new Error("Email service configuration is missing");
+        console.error('Missing EmailJS configuration:', {
+          serviceId: !!serviceId,
+          templateId: !!templateId
+        });
+        throw new Error("Email service configuration is missing. Please contact support.");
       }
 
       // Send email using EmailJS
