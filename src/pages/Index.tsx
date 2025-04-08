@@ -1,46 +1,47 @@
-import { useEffect } from "react";
-import Hero from "@/components/Hero";
-import ProblemSection from "@/components/sections/ProblemSection";
-import SolutionSection from "@/components/sections/SolutionSection";
-import SocialProofSection from "@/components/sections/SocialProofSection";
-import OfferSection from "@/components/sections/OfferSection";
-import RescueSection from "@/components/sections/RescueSection";
-import FAQSection from "@/components/sections/FAQSection";
-import FinalCTASection from "@/components/sections/FinalCTASection";
+import { Suspense } from "react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { sections } from "@/config/sections";
+import { ErrorBoundary } from "react-error-boundary";
+
+// Fallback loading component
+const SectionLoader = () => (
+  <div className="w-full h-96 flex items-center justify-center">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+  </div>
+);
+
+// Error fallback component
+const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) => (
+  <div className="w-full p-6 text-center">
+    <h2 className="text-xl font-semibold text-red-500">Something went wrong</h2>
+    <p className="mt-2 text-gray-600">{error.message}</p>
+    <button
+      onClick={resetErrorBoundary}
+      className="mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
+    >
+      Try again
+    </button>
+  </div>
+);
 
 const Index = () => {
-  useEffect(() => {
-    // Set up intersection observer for scroll animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('appear');
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    // Observe all elements with the animate-on-scroll class
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-      observer.observe(el);
-    });
-    
-    return () => {
-      document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.unobserve(el);
-      });
-    };
-  }, []);
+  // Initialize scroll animations
+  useScrollAnimation({
+    threshold: 0.1,
+    rootMargin: '50px'
+  });
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Hero />
-      <ProblemSection />
-      <SolutionSection />
-      <SocialProofSection />
-      <OfferSection />
-      <RescueSection />
-      <FAQSection />
-      <FinalCTASection />
+      {sections.map(({ id, Component, priority }) => (
+        <ErrorBoundary key={id} FallbackComponent={ErrorFallback}>
+          <Suspense fallback={<SectionLoader />}>
+            <section id={id} className={`section ${priority === 'high' ? 'contents' : 'animate-on-scroll'}`}>
+              <Component />
+            </section>
+          </Suspense>
+        </ErrorBoundary>
+      ))}
     </div>
   );
 };
