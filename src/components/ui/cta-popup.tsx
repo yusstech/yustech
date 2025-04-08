@@ -173,7 +173,6 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
               onChange={handleChange}
               className="bg-black/50 border-brand-purple/30 text-white"
               required
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             />
           </div>
           
