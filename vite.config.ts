@@ -54,13 +54,20 @@ export default defineConfig(({ mode }) => {
       },
       manifest: true,
       sourcemap: false,
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-        },
-      },
+      minify: 'esbuild',
+      emptyOutDir: true,
+      target: 'esnext',
+      cssMinify: true,
+      reportCompressedSize: true,
+      chunkSizeWarningLimit: 500,
+      // Performance optimizations
+      cssCodeSplit: true,
+      brotliSize: true,
+    },
+    // Optimize dependencies
+    optimizeDeps: {
+      include: ['react', 'react-dom'],
+      exclude: ['@radix-ui/react-icons'],
     },
     define: {
       'process.env': env
