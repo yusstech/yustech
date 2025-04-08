@@ -27,10 +27,20 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         output: {
-          manualChunks: {
-            vendor: ['react', 'react-dom'],
-            ui: ['@radix-ui/react-dropdown-menu', '@radix-ui/react-slot', '@radix-ui/react-tooltip'],
-            sections: ['./src/components/sections/'],
+          manualChunks: (id) => {
+            // Vendor chunk
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) {
+                return 'vendor';
+              }
+              if (id.includes('@radix-ui')) {
+                return 'ui';
+              }
+            }
+            // Sections chunk
+            if (id.includes('src/components/sections/')) {
+              return 'sections';
+            }
           },
           entryFileNames: 'assets/[name]-[hash].js',
           chunkFileNames: 'assets/[name]-[hash].js',
