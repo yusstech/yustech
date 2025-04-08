@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import emailjs from '@emailjs/browser';
 import { toast } from "@/components/ui/use-toast";
 import { MessageCircle, Calendar } from "lucide-react";
+import { useMetaConversion } from "@/hooks/useMetaConversion";
 
 interface CTAPopupProps {
   isOpen: boolean;
@@ -24,6 +25,8 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
     message: "",
     phone: "",
   });
+
+  const { sendConversionEvent } = useMetaConversion();
 
   // Initialize EmailJS when component mounts
   useEffect(() => {
@@ -66,10 +69,32 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
   };
 
   const handleScheduleConsultation = () => {
+    // Track consultation scheduling
+    sendConversionEvent({
+      event_name: 'Schedule',
+      custom_data: {
+        service_type: formData.service || 'not_specified',
+        action: 'consultation_scheduled',
+        value: 100.00,
+        currency: 'USD'
+      }
+    }).catch(console.error);
+
     window.open('https://calendly.com/yusstechh/30min', '_blank');
   };
 
   const handleQuickChat = () => {
+    // Track WhatsApp chat initiation
+    sendConversionEvent({
+      event_name: 'Contact',
+      custom_data: {
+        service_type: formData.service || 'not_specified',
+        action: 'whatsapp_chat',
+        value: 50.00,
+        currency: 'USD'
+      }
+    }).catch(console.error);
+
     // Format the initial message with phone number if provided
     const message = `Hi, I'm ${formData.name}. I'm interested in ${formData.service} services.${formData.phone ? ` You can also reach me at ${formData.phone}.` : ''}`;
     const whatsappUrl = `https://wa.me/2347037942851?text=${encodeURIComponent(message)}`;
@@ -103,6 +128,21 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
         });
         throw new Error("Email service configuration is missing. Please contact support.");
       }
+
+      // Track form submission
+      await sendConversionEvent({
+        event_name: 'Lead',
+        user_data: {
+          em: formData.email, // Note: In production, this should be hashed
+          ph: formData.phone, // Note: In production, this should be hashed
+        },
+        custom_data: {
+          service_type: formData.service,
+          action: 'form_submission',
+          value: 150.00,
+          currency: 'USD'
+        }
+      });
 
       // Send email using EmailJS
       const result = await emailjs.send(
@@ -143,7 +183,7 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
         throw new Error("Failed to send message");
       }
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error:', error);
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "There was a problem sending your message. Please try again.",
