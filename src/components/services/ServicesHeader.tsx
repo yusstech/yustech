@@ -9,7 +9,7 @@ const ServicesHeader = ({ children }: ServicesHeaderProps) => {
   return (
     <div className="text-center mb-16 animate-on-scroll">
       <div className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
-        Step 1: The Problem
+ 
       </div>
       <h2 className="text-3xl md:text-4xl font-bold mb-4">
         Why Most Products <span className="gradient-text">Never Launch</span>

@@ -1,6 +1,5 @@
-
 import { ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const ServicesCTA = () => {
   return (
@@ -9,15 +8,10 @@ const ServicesCTA = () => {
       <p className="text-gray-300 mb-8 max-w-xl mx-auto">
         Your product could be live in weeks. Let's make it happen with our $50 consultation.
       </p>
-      <Button
-        className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group px-8 py-6 text-lg"
-        asChild
-      >
-        <a href="https://paystack.com/pay/hbwnuhje7h" target="_blank" rel="noopener noreferrer">
-          Get Your Custom Build Plan Now
-          <ArrowUpRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-        </a>
-      </Button>
+      <CTAButton className="transition-all group px-8 py-6 text-lg">
+        Get Your Custom Build Plan Now
+        <ArrowUpRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+      </CTAButton>
     </div>
   );
 };

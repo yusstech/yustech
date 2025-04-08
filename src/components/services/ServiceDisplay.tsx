@@ -1,8 +1,7 @@
-
 import { ReactNode } from 'react';
-import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { CTAButton } from "@/components/ui/cta-button";
 import { 
   WebAppVisual, 
   MobileAppVisual, 
@@ -83,12 +82,10 @@ const ServiceDisplay = ({ service, index }: ServiceDisplayProps) => {
             </ul>
             
             <div className="mt-auto">
-              <Button 
-                className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group"
-              >
-                Learn More
+              <CTAButton className="w-full transition-all group">
+              Let’s Build Your Product
                 <ArrowUpRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </Button>
+              </CTAButton>
             </div>
           </div>
         </div>

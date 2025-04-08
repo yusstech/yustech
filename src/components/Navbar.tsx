@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { CTAButton } from "@/components/ui/cta-button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,12 +51,9 @@ const Navbar = () => {
             <a href="#faq" className="font-medium text-gray-300 hover:text-white hover:underline decoration-brand-purple decoration-2 underline-offset-4 transition-all">
               FAQ
             </a>
-            <Button
-              variant="default"
-              className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-opacity hover:shadow-lg hover:shadow-brand-purple/25"
-            >
+            <CTAButton className="transition-opacity hover:shadow-lg hover:shadow-brand-purple/25">
               Book Consultation
-            </Button>
+            </CTAButton>
           </div>
 
           {/* Mobile Menu Button */}
@@ -104,13 +100,9 @@ const Navbar = () => {
               >
                 FAQ
               </a>
-              <Button
-                variant="default"
-                className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-opacity w-full"
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <CTAButton className="w-full">
                 Book Consultation
-              </Button>
+              </CTAButton>
             </div>
           </div>
         )}

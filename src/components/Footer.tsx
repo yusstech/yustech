@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { CTAButton } from "@/components/ui/cta-button";
 
 const Footer = () => {
   return (
@@ -67,14 +67,9 @@ const Footer = () => {
               <li className="text-gray-400">+2347037942851</li>
               <li className="text-gray-400">Plot 831 64 Crescent Gwarimpa, Abuja - Nigeria</li>
               <li className="mt-4">
-                <a 
-                  href="https://paystack.com/pay/hbwnuhje7h" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-brand-purple hover:text-brand-blue transition-colors font-medium"
-                >
-                  Book a one-on-one Build Strategy Session
-                </a>
+                <CTAButton className="text-brand-purple hover:text-brand-blue transition-colors font-medium">
+                Build My Product → Start with a Custom Plan
+                </CTAButton>
               </li>
             </ul>
           </div>
