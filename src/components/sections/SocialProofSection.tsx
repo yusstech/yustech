@@ -56,7 +56,7 @@ const SocialProofSection = () => {
             delay={400}
           />
         </div>
-        <div className="mt-8">
+        <div className="mt-8 flex justify-center">
           <CTAButton>
             Join Our Success Stories
           </CTAButton>
