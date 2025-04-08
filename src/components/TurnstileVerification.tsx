@@ -23,22 +23,36 @@ declare global {
 const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationProps) => {
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const siteKey = import.meta.env.VITE_CLOUDFLARE_SITE_KEY;
 
   useEffect(() => {
+    // Debug log to check if site key is loaded
+    console.log('Turnstile site key:', siteKey);
+    
+    if (!siteKey) {
+      setError('Configuration error: Site key not found');
+      return;
+    }
+
     const loadTurnstile = () => {
       if (containerRef.current && window.turnstile) {
-        window.turnstile.render(containerRef.current, {
-          sitekey: import.meta.env.VITE_CLOUDFLARE_SITE_KEY,
-          theme: 'dark',
-          callback: (token: string) => {
-            console.log('Verification successful', token);
-            onVerificationSuccess();
-          },
-          'error-callback': () => {
-            console.error('Turnstile error');
-            setError('Verification failed. Please try again.');
-          }
-        });
+        try {
+          window.turnstile.render(containerRef.current, {
+            sitekey: siteKey,
+            theme: 'dark',
+            callback: (token: string) => {
+              console.log('Verification successful', token);
+              onVerificationSuccess();
+            },
+            'error-callback': () => {
+              console.error('Turnstile error');
+              setError('Verification failed. Please try again.');
+            }
+          });
+        } catch (err) {
+          console.error('Turnstile render error:', err);
+          setError('Failed to initialize verification. Please refresh the page.');
+        }
       }
     };
 
@@ -62,7 +76,7 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
         }
       }, 10000);
     }
-  }, [onVerificationSuccess]);
+  }, [onVerificationSuccess, siteKey]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/90 z-50">

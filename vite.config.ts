@@ -27,25 +27,10 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         output: {
-          manualChunks: (id) => {
-            // Vendor chunk
-            if (id.includes('node_modules')) {
-              if (id.includes('react') || 
-                  id.includes('@radix-ui') || 
-                  id.includes('class-variance-authority') ||
-                  id.includes('clsx') ||
-                  id.includes('tailwind-merge')) {
-                return 'vendor';
-              }
-            }
-            // UI components chunk
-            if (id.includes('src/components/ui/')) {
-              return 'ui';
-            }
-            // Sections chunk
-            if (id.includes('src/components/sections/')) {
-              return 'sections';
-            }
+          manualChunks: {
+            vendor: ['react', 'react-dom'],
+            ui: ['@radix-ui/react-dropdown-menu', '@radix-ui/react-slot', '@radix-ui/react-tooltip'],
+            sections: ['./src/components/sections/'],
           },
           entryFileNames: 'assets/[name]-[hash].js',
           chunkFileNames: 'assets/[name]-[hash].js',
@@ -59,7 +44,7 @@ export default defineConfig(({ mode }) => {
       target: 'esnext',
       cssMinify: true,
       reportCompressedSize: true,
-      chunkSizeWarningLimit: 500,
+      chunkSizeWarningLimit: 1000,
       // Performance optimizations
       cssCodeSplit: true,
       brotliSize: true,
@@ -70,7 +55,8 @@ export default defineConfig(({ mode }) => {
       exclude: ['@radix-ui/react-icons'],
     },
     define: {
-      'process.env': env
+      'process.env': env,
+      'process.env.VITE_CLOUDFLARE_SITE_KEY': JSON.stringify(env.VITE_CLOUDFLARE_SITE_KEY)
     }
   };
 });
