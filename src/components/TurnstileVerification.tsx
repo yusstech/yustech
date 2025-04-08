@@ -7,10 +7,17 @@ interface TurnstileVerificationProps {
 
 const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationProps) => {
   const [isVerified, setIsVerified] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleVerificationSuccess = (token: string) => {
+    console.log('Verification successful', token);
     setIsVerified(true);
     onVerificationSuccess();
+  };
+
+  const handleError = (error: string) => {
+    console.error('Turnstile error:', error);
+    setError('Verification failed. Please try again.');
   };
 
   return (
@@ -22,12 +29,17 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
           <Turnstile
             siteKey={import.meta.env.VITE_CLOUDFLARE_SITE_KEY}
             onSuccess={handleVerificationSuccess}
+            onError={handleError}
             options={{
               theme: 'dark',
-              size: 'normal'
+              size: 'normal',
+              appearance: 'interaction-only'
             }}
           />
         </div>
+        {error && (
+          <p className="text-red-400 mt-4">{error}</p>
+        )}
       </div>
     </div>
   );
