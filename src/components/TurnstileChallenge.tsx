@@ -43,7 +43,7 @@ const TurnstileChallenge = () => {
   });
 
   const turnstileCallback = useCallback((token: string) => {
-    console.log('Turnstile token:', token);
+    console.log('Turnstile token received');
     setIsVerified(true);
     localStorage.setItem('turnstile_verified', 'true');
     navigate('/');
@@ -100,6 +100,15 @@ const TurnstileChallenge = () => {
     }, 10000); // 10 second timeout
     setScriptLoadTimeout(timeout);
 
+    // Check if script is already loaded
+    if (window.turnstile) {
+      console.log('Turnstile already loaded, rendering immediately');
+      if (scriptLoadTimeout) clearTimeout(scriptLoadTimeout);
+      setIsLoading(false);
+      renderTurnstile();
+      return;
+    }
+
     // Load the Turnstile script
     const script = document.createElement('script');
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
@@ -117,22 +126,7 @@ const TurnstileChallenge = () => {
       console.log('Turnstile script loaded');
       if (scriptLoadTimeout) clearTimeout(scriptLoadTimeout);
       setIsLoading(false);
-      if (!widgetId && window.turnstile) {
-        try {
-          console.log('Attempting to render Turnstile with site key:', siteKey);
-          const id = window.turnstile.render('#turnstile-container', {
-            sitekey: siteKey,
-            theme: 'dark',
-            callback: turnstileCallback,
-            'error-callback': errorCallback,
-          });
-          setWidgetId(id);
-          console.log('Turnstile rendered successfully with ID:', id);
-        } catch (err) {
-          console.error('Error rendering Turnstile:', err);
-          setError('Failed to initialize security check. Please refresh the page.');
-        }
-      }
+      renderTurnstile();
     };
 
     return () => {
@@ -148,6 +142,25 @@ const TurnstileChallenge = () => {
       }
     };
   }, [widgetId, turnstileCallback, errorCallback, isDevelopment, navigate, siteKey]);
+
+  const renderTurnstile = () => {
+    if (!widgetId && window.turnstile) {
+      try {
+        console.log('Rendering Turnstile with site key:', siteKey);
+        const id = window.turnstile.render('#turnstile-container', {
+          sitekey: siteKey,
+          theme: 'dark',
+          callback: turnstileCallback,
+          'error-callback': errorCallback,
+        });
+        setWidgetId(id);
+        console.log('Turnstile rendered successfully with ID:', id);
+      } catch (err) {
+        console.error('Error rendering Turnstile:', err);
+        setError('Failed to initialize security check. Please refresh the page.');
+      }
+    }
+  };
 
   // Don't render anything in development or if verified
   if (isDevelopment || isVerified) {
