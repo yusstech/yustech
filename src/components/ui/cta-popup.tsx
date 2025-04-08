@@ -71,7 +71,7 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
   const handleQuickChat = () => {
     // Format the initial message
     const message = `Hi, I'm ${formData.name}. I'm interested in ${formData.service} services.`;
-    const whatsappUrl = `https://wa.me/+2348167000077?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/2347037942851?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -151,7 +151,8 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-white">Thank You!</DialogTitle>
             <DialogDescription className="text-gray-300">
-              We've received your message. How would you like to connect with us?
+            Thanks for reaching out — you're one step closer to launching your product.
+            Choose how you'd like to move forward:
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 pt-4">
