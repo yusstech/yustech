@@ -1,5 +1,5 @@
 [build]
-  command = "npm cache clean --force && rm -rf node_modules && npm install vite@5.4.1 --save && npm install --legacy-peer-deps && npm run build"
+  command = "npm cache clean --force && rm -rf node_modules && npm install --production=false && npm run build"
   publish = "dist"
 
 [build.environment]
