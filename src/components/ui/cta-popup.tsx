@@ -4,12 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import emailjs from '@emailjs/browser';
 import { toast } from "@/components/ui/use-toast";
-
-// Initialize EmailJS with your public key
-emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
 interface CTAPopupProps {
   isOpen: boolean;
@@ -24,6 +21,16 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
     service: "",
     message: "",
   });
+
+  // Initialize EmailJS when component mounts
+  useEffect(() => {
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    if (!publicKey) {
+      console.error('EmailJS public key is missing');
+      return;
+    }
+    emailjs.init(publicKey);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -51,10 +58,17 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
         throw new Error("Please enter a valid email address");
       }
 
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
+      if (!serviceId || !templateId) {
+        throw new Error("Email service configuration is missing");
+      }
+
       // Send email using EmailJS
       const result = await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        serviceId,
+        templateId,
         {
           from_name: formData.name,
           from_email: formData.email,
@@ -62,11 +76,6 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
           message: formData.message,
           to_name: 'YussTech Team',
           timestamp: new Date().toISOString(),
-          // Add any additional security headers or metadata
-          _security: {
-            origin: window.location.origin,
-            userAgent: navigator.userAgent,
-          }
         }
       );
 
@@ -90,6 +99,8 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
 
         // Close popup
         onClose();
+      } else {
+        throw new Error("Failed to send message");
       }
     } catch (error) {
       console.error('Error sending email:', error);
