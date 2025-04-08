@@ -12,12 +12,19 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Layout from './components/Layout';
 import TurnstileVerification from './components/TurnstileVerification';
+import { useMetaPixel } from './hooks/useMetaPixel';
 
 // Create a client
 const queryClient = new QueryClient();
 
 const App = () => {
   const [isVerified, setIsVerified] = useState(false);
+
+  // Initialize Meta Pixel tracking
+  useMetaPixel([
+    // Track verification completion
+    ...(isVerified ? [{ name: 'VerificationComplete' }] : []),
+  ]);
 
   const handleVerificationSuccess = () => {
     setIsVerified(true);

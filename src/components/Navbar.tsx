@@ -52,7 +52,7 @@ const Navbar = () => {
               FAQ
             </a>
             <CTAButton className="transition-opacity hover:shadow-lg hover:shadow-brand-purple/25">
-              Book Consultation
+            Get Your Product Live
             </CTAButton>
           </div>
 
@@ -101,7 +101,7 @@ const Navbar = () => {
                 FAQ
               </a>
               <CTAButton className="w-full">
-                Book Consultation
+              Get Your Product Live
               </CTAButton>
             </div>
           </div>
