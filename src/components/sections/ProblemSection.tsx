@@ -14,15 +14,15 @@ const ProblemSection = () => {
             Why Most Products <span className="gradient-text">Never Launch</span>
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            <span className="block mb-2">• Frustrated with developers disappearing mid-project?</span>
-            <span className="block mb-2">• Tired of spending months (or years) on something that never ships?</span>
-            <span className="block mb-2">• Lost in technical complexity?</span>
-            <span className="block mt-4 text-white font-semibold">The truth? Most startups fail not because of bad ideas, but because of bad execution.</span>
+            <span className="block mb-2">Frustrated with developers disappearing mid-project?</span>
+            <span className="block mb-2">Tired of spending months (or years) on something that never ships?</span>
+            <span className="block mb-2">Lost in technical complexity?</span>
+            <span className="block mt-4 text-white font-semibold">Most startups fail not because of bad ideas, but because of bad execution.</span>
             <span className="block mt-4 text-brand-purple font-medium">What if you had a team that guarantees your product gets built & launched—without delays?</span>
           </p>
           <div className="mt-8">
             <CTAButton>
-              Get Your Guaranteed Launch Plan
+            Get a Reliable Team to Launch My Product
             </CTAButton>
           </div>
         </div>
@@ -31,9 +31,9 @@ const ProblemSection = () => {
         <div className="mb-16">
           <Testimonial
             quote="After two failed attempts with other developers, YussTech delivered our e-commerce platform in half the time and exactly to spec. Revenue is up 215% since launch."
-            name="Sarah Johnson"
+            name="Thelma"
             title="CEO"
-            company="FashionMart"
+            company="HDSKIN"
             project="E-commerce Website"
             variant="featured"
           />
@@ -52,7 +52,7 @@ const ProblemSection = () => {
                 quote: "The website exceeded our expectations and was delivered ahead of schedule.",
                 name: "Alex Roberts",
                 title: "Marketing Director",
-                company: "GrowthBrand",
+                company: "InspireSport",
                 project: "Company Website"
               }
             },

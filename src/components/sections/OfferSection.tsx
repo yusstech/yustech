@@ -1,12 +1,8 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import React from "react";
 import { ArrowUpRight } from "lucide-react";
-import CTAPopup from "@/components/ui/cta-popup";
 import { CTAButton } from "@/components/ui/cta-button";
 
 const OfferSection = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
   return (
     <section id="offer" className="py-20 relative">
       <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/10 to-brand-blue/10"></div>
@@ -27,23 +23,9 @@ const OfferSection = () => {
         <div className="max-w-md mx-auto glass rounded-lg p-6 shadow-lg border border-brand-purple/30 animate-pulse-glow">
           <h3 className="text-xl font-bold mb-4 text-white">⚡ Limited Slots Available</h3>
           
-          <Button 
-            onClick={() => setIsPopupOpen(true)}
-            className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 transition-all group"
-          >
-            Book Your Consultation
+          <CTAButton className="w-full transition-all group">
+            Let's Get Your Product Live
             <ArrowUpRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </Button>
-        </div>
-
-        <CTAPopup 
-          isOpen={isPopupOpen}
-          onClose={() => setIsPopupOpen(false)}
-        />
-
-        <div className="mt-8">
-          <CTAButton>
-            Get Your Free Consultation
           </CTAButton>
         </div>
       </div>

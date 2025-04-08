@@ -19,9 +19,7 @@ const SolutionSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <AnimatedText className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
-            Step 2: The Solution
-          </AnimatedText>
+       
           
           <AnimatedText variant="gradient" delay={100} className="text-3xl md:text-4xl font-bold mb-4">
             Our Proven <span className="gradient-text">"Shipped Product"</span> Process
@@ -64,7 +62,7 @@ const SolutionSection = () => {
 
         <div className="mt-8">
           <CTAButton>
-            Get Your Guaranteed Launch Plan
+          Finally Launch My Product Without Setbacks
           </CTAButton>
         </div>
       </div>

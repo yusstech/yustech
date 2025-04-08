@@ -8,44 +8,52 @@ const SocialProofSection = () => {
       <div className="absolute inset-0 grid-pattern opacity-10"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16 animate-on-scroll">
-          <div className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
-            Step 3: Social Proof
-          </div>
+          
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Real Clients. <span className="gradient-text">Real Results.</span>
+          Trusted by Founders. <span className="gradient-text">Proven by Results.</span>
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Don't take our word for it. Here's what our clients say about working with us.
+          From stuck to shipped—these are the stories of real founders who partnered with us to turn chaos into clarity, and ideas into fully launched products.
           </p>
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <Testimonial
-            quote="YussTech delivered our platform in 3 weeks—after other teams wasted months!"
-            name="Robert Chen"
+            quote="We came with an idea and left with a working MVP in less than a month. No tech jargon, just execution."
+            name="Nasir. C"
             title="Founder"
-            company="HealthTech Solutions"
+            company="Health Tech Solutions"
             project="Telehealth Platform"
             variant="default"
             delay={100}
           />
+ 
           <Testimonial
             quote="From idea to launch, they handled everything. Best decision we made."
-            name="Amanda Lopez"
+            name="Amanda "
             title="COO"
-            company="RetailConnect"
+            company="Retail "
             project="Inventory System"
             variant="default"
             delay={200}
           />
           <Testimonial
             quote="Their team rescued our project when we were ready to give up. Now we're profitable."
-            name="James Wilson"
+            name="Jamil"
             title="CEO"
-            company="DataDrive"
+            company="Data Drive"
             project="Analytics Dashboard"
             variant="default"
             delay={300}
+          />
+            <Testimonial
+            quote="We needed a clean, fast mobile app for our customers. YussTech helped us launch in under 4 weeks—without endless meetings."
+            name="Nasir"
+            title="Founder"
+            company="FinTech"
+            project="Mobile App"
+            variant="default"
+            delay={400}
           />
         </div>
         <div className="mt-8">

@@ -62,12 +62,12 @@ const ServiceDisplay = ({ service, index }: ServiceDisplayProps) => {
             <p className="text-gray-300 mb-4">{service.description}</p>
             
             <div className="mb-6 bg-brand-purple/10 p-4 rounded-lg border border-brand-purple/20">
-              <h4 className="font-semibold text-brand-purple mb-2">Pain Point:</h4>
+              
               <p className="italic text-gray-300">{service.painPoint}</p>
             </div>
             
             <div className="mb-6 bg-brand-blue/10 p-4 rounded-lg border border-brand-blue/20">
-              <h4 className="font-semibold text-brand-blue mb-2">Our Solution:</h4>
+              
               <p className="text-gray-200">{service.solution}</p>
             </div>
             
