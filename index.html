@@ -13,13 +13,16 @@
     <!-- Security -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: https://challenges.cloudflare.com https://cdn.gpteng.co; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https: https://challenges.cloudflare.com;" />
     
     <!-- Performance -->
     <link rel="preconnect" href="https://cdn.gpteng.co" />
     <link rel="dns-prefetch" href="https://cdn.gpteng.co" />
     <link rel="preload" href="/fonts/Inter.var.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/PlusJakartaSans.var.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
     
     <!-- PWA Support -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
