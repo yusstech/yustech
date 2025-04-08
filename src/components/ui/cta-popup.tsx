@@ -22,6 +22,7 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
     email: "",
     service: "",
     message: "",
+    phone: "",
   });
 
   // Initialize EmailJS when component mounts
@@ -69,8 +70,8 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
   };
 
   const handleQuickChat = () => {
-    // Format the initial message
-    const message = `Hi, I'm ${formData.name}. I'm interested in ${formData.service} services.`;
+    // Format the initial message with phone number if provided
+    const message = `Hi, I'm ${formData.name}. I'm interested in ${formData.service} services.${formData.phone ? ` You can also reach me at ${formData.phone}.` : ''}`;
     const whatsappUrl = `https://wa.me/2347037942851?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -108,12 +109,24 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
         serviceId,
         templateId,
         {
+          to_name: 'YussTech Team',
           from_name: formData.name,
           from_email: formData.email,
-          service_interest: formData.service,
-          message: formData.message,
-          to_name: 'YussTech Team',
-          timestamp: new Date().toISOString(),
+          phone_number: formData.phone || 'Not provided',
+          service_interest: formData.service === 'web' ? 'Web Development' :
+                          formData.service === 'mobile' ? 'Mobile App Development' :
+                          formData.service === 'ai' ? 'AI Integration' :
+                          'Other Services',
+          message: formData.message || 'No additional message provided.',
+          timestamp: new Date().toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short'
+          })
         }
       );
 
@@ -211,6 +224,19 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
               onChange={handleChange}
               className="bg-black/50 border-brand-purple/30 text-white"
               required
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="phone" className="text-gray-300">Phone Number (Optional)</Label>
+            <Input
+              id="phone"
+              name="phone"
+              type="tel"
+              value={formData.phone}
+              onChange={handleChange}
+              className="bg-black/50 border-brand-purple/30 text-white"
+              placeholder="+234 XXX XXX XXXX"
             />
           </div>
           
