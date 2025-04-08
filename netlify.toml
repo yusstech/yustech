@@ -4,7 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  VITE_TURNSTILE_SITE_KEY = "0x4AAAAAAAsBveoq757M62Pl"
+
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
 
 [[headers]]
   for = "/*"
