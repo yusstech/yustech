@@ -1,1 +1,1 @@
-export const META_PIXEL_ID = 1486540282035414; // Replace with your actual Meta Pixel ID 
+export const META_PIXEL_ID = '1486540282035414'; // Meta Pixel ID as string 
