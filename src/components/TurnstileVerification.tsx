@@ -23,13 +23,18 @@ declare global {
 const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationProps) => {
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const siteKey = import.meta.env.VITE_CLOUDFLARE_SITE_KEY;
 
   useEffect(() => {
-    // Debug log to check if site key is loaded
-    console.log('Turnstile site key:', siteKey);
+    // Debug logging for environment variables
+    console.log('All import.meta.env:', import.meta.env);
+    console.log('Direct site key access:', import.meta.env.VITE_CLOUDFLARE_SITE_KEY);
+    console.log('Process env:', process.env);
+    console.log('Process env site key:', process.env.VITE_CLOUDFLARE_SITE_KEY);
+
+    const siteKey = import.meta.env.VITE_CLOUDFLARE_SITE_KEY || process.env.VITE_CLOUDFLARE_SITE_KEY;
     
     if (!siteKey) {
+      console.error('Site key is missing. Environment variables may not be loading correctly.');
       setError('Configuration error: Site key not found');
       return;
     }
@@ -37,6 +42,7 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
     const loadTurnstile = () => {
       if (containerRef.current && window.turnstile) {
         try {
+          console.log('Attempting to render Turnstile with site key:', siteKey);
           window.turnstile.render(containerRef.current, {
             sitekey: siteKey,
             theme: 'dark',
@@ -56,11 +62,9 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
       }
     };
 
-    // Check if Turnstile is already loaded
     if (window.turnstile) {
       loadTurnstile();
     } else {
-      // If not loaded, wait for it
       const checkTurnstile = setInterval(() => {
         if (window.turnstile) {
           loadTurnstile();
@@ -68,7 +72,6 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
         }
       }, 100);
 
-      // Clear interval after 10 seconds if Turnstile hasn't loaded
       setTimeout(() => {
         clearInterval(checkTurnstile);
         if (!window.turnstile) {
@@ -76,7 +79,7 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
         }
       }, 10000);
     }
-  }, [onVerificationSuccess, siteKey]);
+  }, [onVerificationSuccess]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/90 z-50">
