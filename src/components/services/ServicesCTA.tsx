@@ -9,7 +9,7 @@ const ServicesCTA = () => {
         Your product could be live in weeks. Let's make it happen with our $50 consultation.
       </p>
       <CTAButton className="transition-all group px-8 py-6 text-lg">
-        Get Your Custom Build Plan Now
+      Build My Product → Start with a Custom Plan
         <ArrowUpRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
       </CTAButton>
     </div>

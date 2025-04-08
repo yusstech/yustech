@@ -7,12 +7,13 @@ import { Toaster } from "./components/ui/toaster";
 import { Toaster as Sonner } from "./components/ui/sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import TurnstileVerification from "./components/TurnstileVerification";
 import { useMetaPixel } from "./hooks/useMetaPixel";
+import GetStarted from './pages/GetStarted';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -54,18 +55,35 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        {!isVerified && (
-          <TurnstileVerification onVerificationSuccess={handleVerificationSuccess} />
-        )}
         <BrowserRouter>
           <RouteChangeTracker />
-          <Layout className={!isVerified ? 'hidden' : ''}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
+          <Routes>
+            {/* Redirect from old /ad to /getstarted */}
+            <Route 
+              path="/ad" 
+              element={<Navigate to="/getstarted" replace />} 
+            />
+            <Route 
+              path="/getstarted" 
+              element={<GetStarted />} 
+            />
+            <Route
+              path="*"
+              element={
+                <>
+                  {!isVerified && (
+                    <TurnstileVerification onVerificationSuccess={handleVerificationSuccess} />
+                  )}
+                  <Layout className={!isVerified ? 'hidden' : ''}>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Layout>
+                </>
+              }
+            />
+          </Routes>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

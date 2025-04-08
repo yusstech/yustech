@@ -63,7 +63,7 @@ const ServiceCard = ({ persona, painPoint, challenge, solution, socialProof, ind
             {/* Pain point with emotion triggering */}
             <div className="mb-6 bg-brand-purple/10 p-4 rounded-lg border border-brand-purple/20">
               <h4 className="font-semibold text-brand-purple mb-2">Your Challenge:</h4>
-              
+              <p className="italic text-gray-300">{painPoint}</p>
             </div>
             
             {/* Client success story with clear impact */}
