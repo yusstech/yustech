@@ -1,5 +1,5 @@
 [build]
-  command = "npm cache clean --force && rm -rf node_modules && npm install vite @vitejs/plugin-react-swc && npm install && npm run build"
+  command = "npm cache clean --force && rm -rf node_modules && npm install --legacy-peer-deps && NODE_OPTIONS='--experimental-specifier-resolution=node' npm run build"
   publish = "dist"
 
 [build.environment]
