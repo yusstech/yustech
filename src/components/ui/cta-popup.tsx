@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState, useEffect } from "react";
 import emailjs from '@emailjs/browser';
 import { toast } from "@/components/ui/use-toast";
+import { MessageCircle, Calendar } from "lucide-react";
 
 interface CTAPopupProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface CTAPopupProps {
 
 const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -60,6 +62,17 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
 
   const handleServiceChange = (value: string) => {
     setFormData(prev => ({ ...prev, service: value }));
+  };
+
+  const handleScheduleConsultation = () => {
+    window.open('https://calendly.com/yusstechh/30min', '_blank');
+  };
+
+  const handleQuickChat = () => {
+    // Format the initial message
+    const message = `Hi, I'm ${formData.name}. I'm interested in ${formData.service} services.`;
+    const whatsappUrl = `https://wa.me/+2348167000077?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,22 +121,11 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
         // Show success message
         toast({
           title: "Success!",
-          description: "Thank you for your interest. We'll be in touch soon!",
+          description: "Thank you for your interest. Please choose how you'd like to connect with us.",
         });
 
-        // Open Calendly in new tab
-        window.open('https://calendly.com/yusstechh/30min', '_blank');
-
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          service: "",
-          message: "",
-        });
-
-        // Close popup
-        onClose();
+        // Show success dialog
+        setShowSuccess(true);
       } else {
         throw new Error("Failed to send message");
       }
@@ -138,6 +140,41 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
       setIsSubmitting(false);
     }
   };
+
+  if (showSuccess) {
+    return (
+      <Dialog open={true} onOpenChange={() => {
+        setShowSuccess(false);
+        onClose();
+      }}>
+        <DialogContent className="sm:max-w-[425px] bg-black/90 border border-brand-purple/30">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-white">Thank You!</DialogTitle>
+            <DialogDescription className="text-gray-300">
+              We've received your message. How would you like to connect with us?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <Button
+              onClick={handleScheduleConsultation}
+              className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 space-x-2"
+            >
+              <Calendar className="w-4 h-4" />
+              <span>Schedule Detailed Consultation</span>
+            </Button>
+            <Button
+              onClick={handleQuickChat}
+              variant="outline"
+              className="w-full border-brand-purple/30 text-white hover:bg-brand-purple/10 space-x-2"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>Quick WhatsApp Chat</span>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -209,7 +246,7 @@ const CTAPopup = ({ isOpen, onClose }: CTAPopupProps) => {
             className="w-full bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Sending..." : "Schedule Consultation"}
+            {isSubmitting ? "Sending..." : "Submit"}
           </Button>
         </form>
       </DialogContent>
