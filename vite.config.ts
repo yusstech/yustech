@@ -55,5 +55,19 @@ export default defineConfig(({ mode }) => ({
     cssMinify: true,
     reportCompressedSize: true,
     chunkSizeWarningLimit: 500,
-  }
+    // Performance optimizations
+    cssCodeSplit: true,
+    brotliSize: true,
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+    exclude: ['@radix-ui/react-icons'],
+  },
 }));

@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
@@ -16,6 +18,8 @@
     <!-- Performance -->
     <link rel="preconnect" href="https://cdn.gpteng.co" />
     <link rel="dns-prefetch" href="https://cdn.gpteng.co" />
+    <link rel="preload" href="/fonts/Inter.var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/PlusJakartaSans.var.woff2" as="font" type="font/woff2" crossorigin />
     
     <!-- PWA Support -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -37,6 +41,8 @@
     <meta property="og:title" content="YussTech - Modern Web Development & AI Integration Agency" />
     <meta property="og:description" content="Transform your vision into reality with YussTech. We build high-converting websites, mobile apps, and AI solutions that launch in days, not months." />
     <meta property="og:image" content="https://yusstech.com/og-image.png" />
+    <meta property="og:site_name" content="YussTech" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -44,6 +50,7 @@
     <meta name="twitter:title" content="YussTech - Modern Web Development & AI Integration Agency" />
     <meta name="twitter:description" content="Transform your vision into reality with YussTech. We build high-converting websites, mobile apps, and AI solutions that launch in days, not months." />
     <meta name="twitter:image" content="https://yusstech.com/og-image.png" />
+    <meta name="twitter:creator" content="@yusstech" />
     
     <!-- Additional SEO -->
     <meta name="robots" content="index, follow" />
@@ -60,50 +67,27 @@
       "name": "YussTech",
       "url": "https://yusstech.com",
       "logo": "https://yusstech.com/logo.png",
-      "description": "Transform your vision into reality with YussTech. We build high-converting websites, mobile apps, and AI solutions that launch in days, not months.",
+      "description": "Modern Web Development & AI Integration Agency",
       "address": {
         "@type": "PostalAddress",
-        "addressCountry": "Nigeria"
+        "addressCountry": "US"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@yusstech.com",
+        "availableLanguage": "English"
       },
       "sameAs": [
         "https://twitter.com/yusstech",
         "https://linkedin.com/company/yusstech"
       ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "YussTech Services",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "name": "Web Development",
-            "description": "Custom responsive websites and powerful web applications built specifically to drive conversions.",
-            "category": "Web Development"
-          },
-          {
-            "@type": "Offer",
-            "name": "Mobile App Development",
-            "description": "Native and cross-platform mobile applications that launch on schedule, every time.",
-            "category": "Mobile Development"
-          },
-          {
-            "@type": "Offer",
-            "name": "AI Integration",
-            "description": "Practical AI solutions focused on measurable ROI and real business outcomes.",
-            "category": "Artificial Intelligence"
-          },
-          {
-            "@type": "Offer",
-            "name": "Project Rescue",
-            "description": "We take over stalled projects, fix issues, and get your product back on track.",
-            "category": "Project Management"
-          }
-        ]
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "customer service",
-        "availableLanguage": ["English"],
-        "areaServed": ["NG", "US", "GB", "CA", "AU"]
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": "5000",
+        "highPrice": "50000",
+        "offerCount": "3"
       },
       "aggregateRating": {
         "@type": "AggregateRating",
