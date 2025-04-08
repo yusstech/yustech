@@ -1,1 +1,1 @@
-export const META_PIXEL_ID = '1486540282035414'; // Meta Pixel ID as string 
+export const META_PIXEL_ID = '1185846656343517'; // Meta Pixel ID as string 
