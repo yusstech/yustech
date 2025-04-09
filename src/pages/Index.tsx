@@ -31,6 +31,13 @@ const Index = () => {
   useEffect(() => {
     // Track initial page view
     trackViewContent('Home Page', 'landing_page');
+    
+    // Test event to verify tracking
+    setTimeout(() => {
+      trackViewContent('Test Page', 'verification', {
+        test_event_code: 'TEST8679'
+      });
+    }, 5000); // Send test event after 5 seconds
   }, [trackViewContent]);
 
   const handleServiceClick = (service: string) => {

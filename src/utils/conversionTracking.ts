@@ -19,7 +19,7 @@ type UserData = {
 };
 
 export const useConversionTracking = () => {
-  const { trackEvent } = useMetaPixel();
+  const { trackEvent, trackCustom } = useMetaPixel();
 
   const getBasePayload = (action: string) => ({
     event_name: action,
@@ -57,12 +57,13 @@ export const useConversionTracking = () => {
     });
   };
 
-  const trackViewContent = (contentName: string, contentCategory?: string) => {
+  const trackViewContent = (contentName: string, contentCategory?: string, testEventCode?: string) => {
     trackEvent('ViewContent', {
       ...getBasePayload('ViewContent'),
       custom_data: {
         content_name: contentName,
-        content_category: contentCategory || 'general'
+        content_category: contentCategory || 'general',
+        ...(testEventCode && { test_event_code: testEventCode })
       }
     });
   };
@@ -72,7 +73,7 @@ export const useConversionTracking = () => {
     eventId: string,
     userData: Partial<UserData> = {}
   ) => {
-    trackEvent('Contact', {
+    trackCustom('Contact', {
       ...getBasePayload('Contact'),
       event_id: eventId,
       custom_data: {
@@ -90,7 +91,7 @@ export const useConversionTracking = () => {
     eventId: string,
     userData: Partial<UserData> = {}
   ) => {
-    trackEvent('Lead', {
+    trackCustom('Lead', {
       ...getBasePayload('Lead'),
       event_id: eventId,
       custom_data: {
