@@ -2,40 +2,54 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MessageCircle, Calendar } from 'lucide-react';
 import { CTAButton } from './ui/cta-button';
+import { useConversionTracking } from '../utils/conversionTracking';
 
 const LeadPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [remainingSpots, setRemainingSpots] = useState(3);
+  const { trackLead, trackContact } = useConversionTracking();
 
   useEffect(() => {
-    // Check if popup was closed recently
     const lastClosed = localStorage.getItem('popupLastClosed');
     const now = Date.now();
-    const shouldShow = !lastClosed || (now - parseInt(lastClosed)) > 20 * 1000; // 20 seconds
+    const shouldShow = !lastClosed || (now - parseInt(lastClosed)) > 20 * 1000;
 
     if (shouldShow) {
-      // Show popup immediately
       setIsOpen(true);
+      // Track popup view as a lead
+      trackLead('popup_view', `popup_view_${Date.now()}`, {
+        client_user_agent: navigator.userAgent
+      });
+      // Increment view count
+      localStorage.setItem('popupViewCount', 
+        (parseInt(localStorage.getItem('popupViewCount') || '0') + 1).toString()
+      );
     }
-  }, []);
+  }, [trackLead]);
 
   const handleClose = () => {
     setIsOpen(false);
-    // Store the time when popup was closed
     localStorage.setItem('popupLastClosed', Date.now().toString());
-    
-    // Set a timer to show the popup again after 20 seconds
     setTimeout(() => {
       setIsOpen(true);
     }, 40 * 1000);
   };
 
   const handleWhatsAppClick = () => {
+    // Track WhatsApp contact
+    trackContact('whatsapp', `whatsapp_contact_${Date.now()}`, {
+      client_user_agent: navigator.userAgent,
+      ph: [] // Will be filled with hashed phone if available
+    });
     window.open('https://wa.me/2347037942851?text=Hi%20YussTech%2C%20I%27m%20interested%20in%20the%2020%25%20off%20offer', '_blank');
     handleClose();
   };
 
   const handleScheduleClick = () => {
+    // Track Calendly contact
+    trackContact('calendly', `calendly_contact_${Date.now()}`, {
+      client_user_agent: navigator.userAgent
+    });
     window.open('https://calendly.com/yusstechh/30min', '_blank');
     handleClose();
   };

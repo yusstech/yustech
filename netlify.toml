@@ -1,7 +1,6 @@
 [build]
   command = "npm cache clean --force && rm -rf node_modules && npm install --production=false && npm run build"
   publish = "dist"
-  functions = ".netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
@@ -12,7 +11,6 @@
 # - VITE_EMAILJS_PUBLIC_KEY
 # - VITE_EMAILJS_SERVICE_ID
 # - VITE_EMAILJS_TEMPLATE_ID
-# - META_CONVERSION_API_ACCESS_TOKEN
 
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
@@ -21,4 +19,4 @@
   for = "/*"
     [headers.values]
     X-Frame-Options = "SAMEORIGIN"
-    Content-Security-Policy = "default-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://api.emailjs.com https://graph.facebook.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://cdn.emailjs.com; style-src 'self' 'unsafe-inline';" 
+    Content-Security-Policy = "default-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://api.emailjs.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://cdn.emailjs.com; style-src 'self' 'unsafe-inline';" 

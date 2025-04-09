@@ -14,7 +14,7 @@ interface TurnstileOptions {
 declare global {
   interface Window {
     turnstile: {
-      render: (container: string | HTMLElement, options: TurnstileOptions) => string;
+      render: (container: string | HTMLElement, options: TurnstileOptions) => void;
       reset: (widgetId: string) => void;
     };
   }
@@ -22,89 +22,63 @@ declare global {
 
 const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationProps) => {
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
-  const widgetId = useRef<string | null>(null);
 
   useEffect(() => {
-    const siteKey = import.meta.env.VITE_CLOUDFLARE_SITE_KEY;
+    // Debug logging for environment variables
+    console.log('All import.meta.env:', import.meta.env);
+    console.log('Direct site key access:', import.meta.env.VITE_CLOUDFLARE_SITE_KEY);
+    console.log('Process env:', process.env);
+    console.log('Process env site key:', process.env.VITE_CLOUDFLARE_SITE_KEY);
+
+    const siteKey = import.meta.env.VITE_CLOUDFLARE_SITE_KEY || process.env.VITE_CLOUDFLARE_SITE_KEY;
     
     if (!siteKey) {
-      console.error('Site key is missing:', {
-        env: import.meta.env.MODE,
-        hasKey: !!siteKey
-      });
+      console.error('Site key is missing. Environment variables may not be loading correctly.');
       setError('Configuration error: Site key not found');
-      setIsLoading(false);
       return;
     }
 
-    let retryCount = 0;
-    const maxRetries = 3;
-    
     const loadTurnstile = () => {
-      if (!containerRef.current || !window.turnstile) {
-        return false;
-      }
-
-      try {
-        console.log('Rendering Turnstile with site key:', siteKey);
-        widgetId.current = window.turnstile.render(containerRef.current, {
-          sitekey: siteKey,
-          theme: 'dark',
-          callback: (token: string) => {
-            console.log('Verification successful');
-            setError(null);
-            onVerificationSuccess();
-          },
-          'error-callback': () => {
-            console.error('Turnstile verification failed');
-            setError('Verification failed. Please try again.');
-            if (widgetId.current) {
-              window.turnstile.reset(widgetId.current);
-            }
-          }
-        });
-        setIsLoading(false);
-        return true;
-      } catch (err) {
-        console.error('Turnstile render error:', err);
-        setError('Failed to initialize verification. Please refresh the page.');
-        setIsLoading(false);
-        return false;
-      }
-    };
-
-    const initTurnstile = () => {
-      if (window.turnstile) {
-        if (loadTurnstile()) {
-          return;
-        }
-      }
-
-      if (retryCount >= maxRetries) {
-        setError('Verification system failed to load. Please refresh the page.');
-        setIsLoading(false);
-        return;
-      }
-
-      retryCount++;
-      setTimeout(initTurnstile, 1000); // Retry after 1 second
-    };
-
-    // Start initialization
-    initTurnstile();
-
-    // Cleanup
-    return () => {
-      if (widgetId.current) {
+      if (containerRef.current && window.turnstile) {
         try {
-          window.turnstile.reset(widgetId.current);
+          console.log('Attempting to render Turnstile with site key:', siteKey);
+          window.turnstile.render(containerRef.current, {
+            sitekey: siteKey,
+            theme: 'dark',
+            callback: (token: string) => {
+              console.log('Verification successful', token);
+              onVerificationSuccess();
+            },
+            'error-callback': () => {
+              console.error('Turnstile error');
+              setError('Verification failed. Please try again.');
+            }
+          });
         } catch (err) {
-          console.error('Error cleaning up Turnstile:', err);
+          console.error('Turnstile render error:', err);
+          setError('Failed to initialize verification. Please refresh the page.');
         }
       }
     };
+
+    if (window.turnstile) {
+      loadTurnstile();
+    } else {
+      const checkTurnstile = setInterval(() => {
+        if (window.turnstile) {
+          loadTurnstile();
+          clearInterval(checkTurnstile);
+        }
+      }, 100);
+
+      setTimeout(() => {
+        clearInterval(checkTurnstile);
+        if (!window.turnstile) {
+          setError('Verification system failed to load. Please refresh the page.');
+        }
+      }, 10000);
+    }
   }, [onVerificationSuccess]);
 
   return (
@@ -113,9 +87,6 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
         <h2 className="text-2xl font-bold mb-6 text-white">Welcome to YussTech</h2>
         <p className="text-gray-300 mb-6">Please complete the verification to continue</p>
         <div ref={containerRef} className="flex justify-center"></div>
-        {isLoading && (
-          <p className="text-blue-400 mt-4">Loading verification...</p>
-        )}
         {error && (
           <p className="text-red-400 mt-4">{error}</p>
         )}

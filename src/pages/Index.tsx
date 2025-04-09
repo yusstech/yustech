@@ -1,7 +1,8 @@
-import { Suspense } from "react";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { sections } from "@/config/sections";
+import { Suspense, useEffect } from "react";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { sections } from "../config/sections";
 import { ErrorBoundary } from "react-error-boundary";
+import { useConversionTracking } from '../utils/conversionTracking';
 
 // Fallback loading component
 const SectionLoader = () => (
@@ -25,6 +26,23 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetError
 );
 
 const Index = () => {
+  const { trackViewContent, trackContact, trackLead } = useConversionTracking();
+
+  useEffect(() => {
+    // Track initial page view
+    trackViewContent('Home Page', 'landing_page');
+  }, [trackViewContent]);
+
+  const handleServiceClick = (service: string) => {
+    trackViewContent(service, 'service_page');
+  };
+
+  const handleCTAClick = (ctaType: string) => {
+    trackContact(ctaType, `cta_${ctaType}_${Date.now()}`, {
+      client_user_agent: navigator.userAgent
+    });
+  };
+
   // Initialize scroll animations
   useScrollAnimation({
     threshold: 0.1,
@@ -36,7 +54,11 @@ const Index = () => {
       {sections.map(({ id, Component, priority }) => (
         <ErrorBoundary key={id} FallbackComponent={ErrorFallback}>
           <Suspense fallback={<SectionLoader />}>
-            <section id={id} className={`section ${priority === 'high' ? 'contents' : 'animate-on-scroll'}`}>
+            <section 
+              id={id} 
+              className={`section ${priority === 'high' ? 'contents' : 'animate-on-scroll'}`}
+              onClick={() => handleServiceClick(id)}
+            >
               <Component />
             </section>
           </Suspense>
@@ -46,4 +68,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Index; 

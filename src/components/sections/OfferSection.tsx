@@ -10,7 +10,7 @@ const OfferSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16 animate-on-scroll">
           <div className="inline-block mb-2 px-3 py-1 rounded-full border border-brand-purple/30 text-sm text-brand-purple">
-            
+            Step 4: Limited Offer
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Your Custom <span className="gradient-text">Build Plan</span>

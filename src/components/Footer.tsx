@@ -67,8 +67,8 @@ const Footer = () => {
               <li className="text-gray-400">+2347037942851</li>
               <li className="text-gray-400">Plot 831 64 Crescent Gwarimpa, Abuja - Nigeria</li>
               <li className="mt-4">
-                <CTAButton className="text-brand-purple hover:text-brand-blue transition-colors font-medium">
-                Build My Product → Start with a Custom Plan
+                <CTAButton className="text-white hover:text-white transition-colors font-medium bg-gradient-to-r from-brand-purple to-brand-blue">
+                  Get a 20% off your next project →
                 </CTAButton>
               </li>
             </ul>

@@ -1,18 +1,15 @@
-import { lazy } from 'react';
-
-// Lazy load all sections
-const Hero = lazy(() => import('@/components/Hero'));
-const ProblemSection = lazy(() => import('@/components/sections/ProblemSection'));
-const SolutionSection = lazy(() => import('@/components/sections/SolutionSection'));
-const SocialProofSection = lazy(() => import('@/components/sections/SocialProofSection'));
-const OfferSection = lazy(() => import('@/components/sections/OfferSection'));
-const RescueSection = lazy(() => import('@/components/sections/RescueSection'));
-const FAQSection = lazy(() => import('@/components/sections/FAQSection'));
-const FinalCTASection = lazy(() => import('@/components/sections/FinalCTASection'));
+import Hero from "../components/Hero";
+import ProblemSection from "../components/sections/ProblemSection";
+import SolutionSection from "../components/sections/SolutionSection";
+import SocialProofSection from "../components/sections/SocialProofSection";
+import OfferSection from "../components/sections/OfferSection";
+import RescueSection from "../components/sections/RescueSection";
+import FAQSection from "../components/sections/FAQSection";
+import FinalCTASection from "../components/sections/FinalCTASection";
 
 export interface Section {
   id: string;
-  Component: React.LazyExoticComponent<() => JSX.Element>;
+  Component: React.ComponentType;
   priority?: 'high' | 'low';
 }
 

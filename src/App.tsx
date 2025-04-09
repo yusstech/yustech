@@ -7,13 +7,12 @@ import { Toaster } from "./components/ui/toaster";
 import { Toaster as Sonner } from "./components/ui/sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import TurnstileVerification from "./components/TurnstileVerification";
+import LeadPopup from "./components/LeadPopup";
 import { useMetaPixel } from "./hooks/useMetaPixel";
-import GetStarted from './pages/GetStarted';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -35,7 +34,7 @@ const RouteChangeTracker = () => {
 };
 
 const App = () => {
-  const [isVerified, setIsVerified] = useState(false);
+  const [isVerified, setIsVerified] = useState(true); // Set to true by default for local testing
   const { trackEvent } = useMetaPixel([
     // Track verification completion
     ...(isVerified ? [{ name: 'VerificationComplete' }] : []),
@@ -50,6 +49,26 @@ const App = () => {
     });
   };
 
+  useEffect(() => {
+    // Initialize Turnstile
+    const turnstileOptions = {
+      sitekey: '0x4AAAAAAAZXhXQZQZQZQZQ',
+      callback: (token: string) => {
+        setIsVerified(true);
+        localStorage.setItem('isVerified', 'true');
+      },
+      'error-callback': () => {
+        setIsVerified(false);
+        localStorage.setItem('isVerified', 'false');
+      },
+      appearance: 'interaction-only', // This makes Turnstile only show when needed
+      execution: 'execute' // This makes it run automatically
+    };
+
+    // @ts-expect-error - Turnstile types are not properly defined
+    window.turnstile?.render('#turnstile-widget', turnstileOptions);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -57,34 +76,13 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <RouteChangeTracker />
-          <Routes>
-            {/* Redirect from old /ad to /getstarted */}
-            <Route 
-              path="/ad" 
-              element={<Navigate to="/getstarted" replace />} 
-            />
-            <Route 
-              path="/getstarted" 
-              element={<GetStarted />} 
-            />
-            <Route
-              path="*"
-              element={
-                <>
-                  {!isVerified && (
-                    <TurnstileVerification onVerificationSuccess={handleVerificationSuccess} />
-                  )}
-                  <Layout className={!isVerified ? 'hidden' : ''}>
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </Layout>
-                </>
-              }
-            />
-          </Routes>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Index />} />
+            </Routes>
+          </Layout>
         </BrowserRouter>
+        <LeadPopup />
       </TooltipProvider>
     </QueryClientProvider>
   );
