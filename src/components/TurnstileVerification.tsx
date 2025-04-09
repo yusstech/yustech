@@ -34,92 +34,92 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
 
   useEffect(() => {
     // Debug logging for environment variables
-    console.log('All import.meta.env:', import.meta.env);
-    console.log('Direct site key access:', import.meta.env.VITE_CLOUDFLARE_SITE_KEY);
-    console.log('Process env:', process.env);
-    console.log('Process env site key:', process.env.VITE_CLOUDFLARE_SITE_KEY);
+    console.log('Turnstile Verification - Environment Check:', {
+      envMode: import.meta.env.MODE,
+      siteKey: import.meta.env.VITE_CLOUDFLARE_SITE_KEY,
+      isDev: import.meta.env.DEV,
+      isProd: import.meta.env.PROD
+    });
 
-    const siteKey = import.meta.env.VITE_CLOUDFLARE_SITE_KEY || process.env.VITE_CLOUDFLARE_SITE_KEY;
+    const siteKey = import.meta.env.VITE_CLOUDFLARE_SITE_KEY;
     
     if (!siteKey) {
-      console.error('Site key is missing. Environment variables may not be loading correctly.');
+      console.error('Turnstile Error: Site key is missing');
       setError('Configuration error: Site key not found');
       return;
     }
 
+    // Check if Turnstile script is loaded
+    if (!window.turnstile) {
+      console.error('Turnstile Error: Script not loaded');
+      setError('Turnstile script not loaded. Please check your network connection.');
+      return;
+    }
+
     const loadTurnstile = () => {
-      if (containerRef.current && window.turnstile) {
-        try {
-          // Remove existing widget if any
-          if (widgetIdRef.current) {
-            window.turnstile.remove(widgetIdRef.current);
-          }
+      if (!containerRef.current) {
+        console.error('Turnstile Error: Container not found');
+        return;
+      }
 
-          // Render new widget
-          const widgetId = window.turnstile.render(containerRef.current, {
-            sitekey: siteKey,
-            theme: 'dark',
-            appearance: 'interaction-only',
-            execution: 'execute',
-            'refresh-expired': 'auto',
-            'response-field': false,
-            'response-field-name': 'cf-turnstile-response',
-            size: 'invisible',
-            callback: (token: string) => {
-              console.log('Verification successful', token);
-              onVerificationSuccess();
-              setError(null);
-            },
-            'error-callback': () => {
-              console.error('Turnstile error');
-              setError('Verification failed. Please try again.');
-            }
-          });
-
-          widgetIdRef.current = widgetId;
-        } catch (err) {
-          console.error('Turnstile render error:', err);
-          setError('Failed to initialize verification. Please refresh the page.');
+      try {
+        // Remove any existing widget
+        if (widgetIdRef.current) {
+          window.turnstile.remove(widgetIdRef.current);
         }
+
+        console.log('Turnstile Debug: Rendering widget with options:', {
+          siteKey,
+          appearance: 'interaction-only',
+          size: 'invisible'
+        });
+
+        // Render the Turnstile widget
+        widgetIdRef.current = window.turnstile.render(containerRef.current, {
+          sitekey: siteKey,
+          appearance: 'interaction-only',
+          size: 'invisible',
+          callback: (token) => {
+            console.log('Turnstile Success: Verification token received');
+            onVerificationSuccess();
+          },
+          'error-callback': () => {
+            console.error('Turnstile Error: Verification failed');
+            setError('Verification failed. Please try again.');
+          }
+        });
+
+        console.log('Turnstile Debug: Widget rendered with ID:', widgetIdRef.current);
+      } catch (err) {
+        console.error('Turnstile Error:', err);
+        setError('Failed to initialize Turnstile. Please try again.');
       }
     };
 
-    if (window.turnstile) {
-      loadTurnstile();
-    } else {
-      const checkTurnstile = setInterval(() => {
-        if (window.turnstile) {
-          loadTurnstile();
-          clearInterval(checkTurnstile);
-        }
-      }, 100);
+    // Initial load
+    loadTurnstile();
 
-      setTimeout(() => {
-        clearInterval(checkTurnstile);
-        if (!window.turnstile) {
-          setError('Verification system failed to load. Please refresh the page.');
-        }
-      }, 10000);
-    }
-
-    // Cleanup
+    // Cleanup function
     return () => {
       if (widgetIdRef.current) {
-        window.turnstile?.remove(widgetIdRef.current);
+        try {
+          window.turnstile.remove(widgetIdRef.current);
+          console.log('Turnstile Debug: Widget removed during cleanup');
+        } catch (err) {
+          console.error('Turnstile Error during cleanup:', err);
+        }
       }
     };
   }, [onVerificationSuccess]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/90 z-50">
-      <div className="bg-white/10 backdrop-blur-md p-8 rounded-lg shadow-xl text-center">
-        <h2 className="text-2xl font-bold mb-6 text-white">Welcome to YussTech</h2>
-        <p className="text-gray-300 mb-6">Please complete the verification to continue</p>
-        <div ref={containerRef} className="flex justify-center"></div>
-        {error && (
-          <p className="text-red-400 mt-4">{error}</p>
-        )}
-      </div>
+    <div className="turnstile-container">
+      <div ref={containerRef} id="turnstile-widget" />
+      {error && (
+        <div className="text-red-500 text-sm mt-2">
+          {error}
+        </div>
+      )}
     </div>
   );
 };
