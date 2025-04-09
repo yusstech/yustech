@@ -126,3 +126,86 @@ For support or inquiries:
 ---
 
 Built with precision and care by YussTech 🚀
+
+# Yustech Website
+
+## Security Best Practices
+
+### Environment Variables
+- Never commit `.env` files to version control
+- Use `.env.example` as a template for required environment variables
+- Keep API keys and secrets secure
+- Rotate credentials regularly
+
+### Dependencies
+- Keep all dependencies up to date
+- Run `npm audit` regularly to check for vulnerabilities
+- Use `npm audit fix` to automatically fix vulnerabilities
+- Review dependency licenses
+
+### Code Security
+- Use HTTPS for all API calls
+- Implement proper CORS policies
+- Sanitize user input
+- Use Content Security Policy headers
+- Implement rate limiting where appropriate
+
+### Authentication & Authorization
+- Use secure session management
+- Implement proper access controls
+- Use secure password hashing
+- Implement 2FA where possible
+
+## Setup Instructions
+
+1. Clone the repository
+2. Copy `.env.example` to `.env` and fill in your values
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start development server:
+   ```bash
+   npm run dev
+   ```
+5. Build for production:
+   ```bash
+   npm run build
+   ```
+
+## Deployment
+
+The site is deployed on Netlify. To deploy:
+
+1. Install Netlify CLI:
+   ```bash
+   npm install -g netlify-cli
+   ```
+
+2. Login to Netlify:
+   ```bash
+   netlify login
+   ```
+
+3. Link your site:
+   ```bash
+   netlify link
+   ```
+
+4. Deploy:
+   ```bash
+   netlify deploy --prod
+   ```
+
+## Security Checklist
+
+- [ ] All environment variables are properly set
+- [ ] Dependencies are up to date
+- [ ] No sensitive data in version control
+- [ ] HTTPS is enforced
+- [ ] CSP headers are properly configured
+- [ ] Rate limiting is implemented
+- [ ] Input validation is in place
+- [ ] Error handling is secure
+- [ ] Logging is properly configured
+- [ ] Regular security audits are performed

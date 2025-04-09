@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: (id) => {
-            // Vendor chunk
+            // Vendor chunks
             if (id.includes('node_modules')) {
               if (id.includes('react') || id.includes('react-dom')) {
                 return 'vendor';
@@ -36,6 +36,10 @@ export default defineConfig(({ mode }) => {
               if (id.includes('@radix-ui')) {
                 return 'ui';
               }
+              if (id.includes('@tanstack')) {
+                return 'query';
+              }
+              return 'vendor';
             }
             // Sections chunk
             if (id.includes('src/components/sections/')) {
@@ -45,7 +49,10 @@ export default defineConfig(({ mode }) => {
           entryFileNames: 'assets/[name]-[hash].js',
           chunkFileNames: 'assets/[name]-[hash].js',
           assetFileNames: 'assets/[name]-[hash].[ext]'
-        }
+        },
+        external: [
+          // Add any external dependencies that should not be bundled
+        ]
       },
       manifest: true,
       sourcemap: false,
@@ -61,8 +68,18 @@ export default defineConfig(({ mode }) => {
     },
     // Optimize dependencies
     optimizeDeps: {
-      include: ['react', 'react-dom'],
-      exclude: ['@radix-ui/react-icons'],
+      include: [
+        'react',
+        'react-dom',
+        '@tanstack/react-query',
+        '@radix-ui/react-icons',
+        'lucide-react',
+        'date-fns',
+        'zod',
+        'react-hook-form',
+        '@hookform/resolvers'
+      ],
+      exclude: [],
     },
     define: {
       'process.env': env,

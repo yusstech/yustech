@@ -6,21 +6,32 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Security Headers -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    
-    <!-- Security -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
+    
+    <!-- Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://connect.facebook.net https://cdn.gpteng.co;
+      script-src 'self' https://challenges.cloudflare.com https://connect.facebook.net https://cdn.gpteng.co;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
       font-src 'self' https://fonts.gstatic.com;
       img-src 'self' data: https:;
       frame-src 'self' https://challenges.cloudflare.com;
       connect-src 'self' https://api.gpteng.co https://connect.facebook.net;
+      upgrade-insecure-requests;
+      frame-ancestors 'self';
+      base-uri 'self';
+      form-action 'self';
+      object-src 'none';
     ">
     
     <!-- Performance -->
@@ -104,7 +115,7 @@
     <!-- Meta Pixel Code (noscript) -->
     <noscript>
       <img height="1" width="1" style="display:none" 
-        src="https://www.facebook.com/tr?id=1185846656343517&ev=PageView&noscript=1"/>
+        src="https://www.facebook.com/tr?id=1434753597974269&ev=PageView&noscript=1"/>
     </noscript>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
