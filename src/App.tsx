@@ -34,7 +34,17 @@ const RouteChangeTracker = () => {
 };
 
 const App = () => {
-  const [isVerified, setIsVerified] = useState(true); // Set to true by default for local testing
+  // Set to false in production, true for local testing
+  const [isVerified, setIsVerified] = useState(() => {
+    // Check if we're in development mode
+    if (import.meta.env.DEV) {
+      return true;
+    }
+    // In production, check localStorage first
+    const stored = localStorage.getItem('isVerified');
+    return stored === 'true';
+  });
+
   const { trackEvent } = useMetaPixel([
     // Track verification completion
     ...(isVerified ? [{ name: 'VerificationComplete' }] : []),
@@ -42,6 +52,7 @@ const App = () => {
 
   const handleVerificationSuccess = () => {
     setIsVerified(true);
+    localStorage.setItem('isVerified', 'true');
     // Track successful verification with additional data
     trackEvent('VerificationSuccess', {
       timestamp: new Date().toISOString(),
@@ -52,17 +63,24 @@ const App = () => {
   useEffect(() => {
     // Initialize Turnstile
     const turnstileOptions = {
-      sitekey: '0x4AAAAAAAZXhXQZQZQZQZQ',
+      sitekey: import.meta.env.VITE_CLOUDFLARE_SITE_KEY,
       callback: (token: string) => {
+        console.log('Turnstile verification successful', token);
         setIsVerified(true);
         localStorage.setItem('isVerified', 'true');
       },
       'error-callback': () => {
+        console.error('Turnstile verification failed');
         setIsVerified(false);
         localStorage.setItem('isVerified', 'false');
       },
-      appearance: 'interaction-only', // This makes Turnstile only show when needed
-      execution: 'execute' // This makes it run automatically
+      appearance: 'interaction-only', // Use interaction-only for invisible mode
+      execution: 'execute', // Execute automatically
+      'refresh-expired': 'auto', // Automatically refresh expired tokens
+      'response-field': false, // Don't show response field
+      'response-field-name': 'cf-turnstile-response', // Custom response field name
+      'size': 'invisible', // Ensure invisible size
+      'theme': 'dark' // Match your site's theme
     };
 
     // @ts-expect-error - Turnstile types are not properly defined

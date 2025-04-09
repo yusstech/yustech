@@ -9,13 +9,20 @@ interface TurnstileOptions {
   theme?: 'light' | 'dark';
   callback: (token: string) => void;
   'error-callback': () => void;
+  appearance?: 'always' | 'execute' | 'interaction-only';
+  execution?: 'execute' | 'render';
+  'refresh-expired'?: 'auto' | 'manual';
+  'response-field'?: boolean;
+  'response-field-name'?: string;
+  size?: 'invisible' | 'normal' | 'compact';
 }
 
 declare global {
   interface Window {
     turnstile: {
-      render: (container: string | HTMLElement, options: TurnstileOptions) => void;
+      render: (container: string | HTMLElement, options: TurnstileOptions) => string;
       reset: (widgetId: string) => void;
+      remove: (widgetId: string) => void;
     };
   }
 }
@@ -23,6 +30,7 @@ declare global {
 const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationProps) => {
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     // Debug logging for environment variables
@@ -42,19 +50,33 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
     const loadTurnstile = () => {
       if (containerRef.current && window.turnstile) {
         try {
-          console.log('Attempting to render Turnstile with site key:', siteKey);
-          window.turnstile.render(containerRef.current, {
+          // Remove existing widget if any
+          if (widgetIdRef.current) {
+            window.turnstile.remove(widgetIdRef.current);
+          }
+
+          // Render new widget
+          const widgetId = window.turnstile.render(containerRef.current, {
             sitekey: siteKey,
             theme: 'dark',
+            appearance: 'interaction-only',
+            execution: 'execute',
+            'refresh-expired': 'auto',
+            'response-field': false,
+            'response-field-name': 'cf-turnstile-response',
+            size: 'invisible',
             callback: (token: string) => {
               console.log('Verification successful', token);
               onVerificationSuccess();
+              setError(null);
             },
             'error-callback': () => {
               console.error('Turnstile error');
               setError('Verification failed. Please try again.');
             }
           });
+
+          widgetIdRef.current = widgetId;
         } catch (err) {
           console.error('Turnstile render error:', err);
           setError('Failed to initialize verification. Please refresh the page.');
@@ -79,6 +101,13 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
         }
       }, 10000);
     }
+
+    // Cleanup
+    return () => {
+      if (widgetIdRef.current) {
+        window.turnstile?.remove(widgetIdRef.current);
+      }
+    };
   }, [onVerificationSuccess]);
 
   return (
