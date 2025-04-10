@@ -13,6 +13,8 @@ import Layout from "./components/Layout";
 import TurnstileVerification from "./components/TurnstileVerification";
 import LeadPopup from "./components/LeadPopup";
 import { useMetaPixel } from "./hooks/useMetaPixel";
+import Portfolio from "./pages/Portfolio";
+import ClientLinks from "./pages/ClientLinks";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -97,6 +99,8 @@ const App = () => {
           <Layout>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/clients" element={<ClientLinks />} />
             </Routes>
           </Layout>
         </BrowserRouter>
