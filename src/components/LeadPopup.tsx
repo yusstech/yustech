@@ -3,36 +3,38 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, MessageCircle, Calendar } from 'lucide-react';
 import { CTAButton } from './ui/cta-button';
 import { useConversionTracking } from '../utils/conversionTracking';
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { useMetaPixel } from "@/hooks/useMetaPixel";
 
 const LeadPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [remainingSpots, setRemainingSpots] = useState(3);
   const { trackLead, trackContact } = useConversionTracking();
+  const { trackEvent } = useMetaPixel();
 
   useEffect(() => {
-    const lastClosed = localStorage.getItem('popupLastClosed');
-    const now = Date.now();
-    const shouldShow = !lastClosed || (now - parseInt(lastClosed)) > 20 * 1000;
+    // Check if popup has been shown in this session
+    const hasShownPopup = sessionStorage.getItem('hasShownPopup');
+    const hasEngaged = sessionStorage.getItem('hasEngaged');
 
-    if (shouldShow) {
+    if (!hasShownPopup && !hasEngaged) {
       setIsOpen(true);
+      sessionStorage.setItem('hasShownPopup', 'true');
+      
       // Track popup view as a lead
       trackLead('popup_view', `popup_view_${Date.now()}`, {
         client_user_agent: navigator.userAgent
       });
-      // Increment view count
-      localStorage.setItem('popupViewCount', 
-        (parseInt(localStorage.getItem('popupViewCount') || '0') + 1).toString()
-      );
     }
   }, [trackLead]);
 
   const handleClose = () => {
     setIsOpen(false);
-    localStorage.setItem('popupLastClosed', Date.now().toString());
-    setTimeout(() => {
-      setIsOpen(true);
-    }, 40 * 1000);
+    trackEvent('PopupClose', {
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent
+    });
   };
 
   const handleWhatsAppClick = () => {
@@ -41,6 +43,7 @@ const LeadPopup = () => {
       client_user_agent: navigator.userAgent,
       ph: [] // Will be filled with hashed phone if available
     });
+    sessionStorage.setItem('hasEngaged', 'true');
     window.open('https://wa.me/2347037942851?text=Hi%20YussTech%2C%20I%27m%20interested%20in%20the%2020%25%20off%20offer', '_blank');
     handleClose();
   };
@@ -50,6 +53,7 @@ const LeadPopup = () => {
     trackContact('calendly', `calendly_contact_${Date.now()}`, {
       client_user_agent: navigator.userAgent
     });
+    sessionStorage.setItem('hasEngaged', 'true');
     window.open('https://calendly.com/yusstechh/30min', '_blank');
     handleClose();
   };
@@ -106,22 +110,22 @@ const LeadPopup = () => {
 
               {/* CTA Buttons */}
               <div className="space-y-3 pt-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <CTAButton 
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    asChild
+                    className="bg-gradient-to-r from-brand-purple to-brand-blue hover:opacity-90 min-w-[200px]"
                     onClick={handleWhatsAppClick}
-                    className="w-full bg-gradient-to-r from-brand-purple to-brand-blue text-white hover:opacity-90 flex items-center justify-center gap-2"
                   >
-                    <MessageCircle size={18} />
-                    Chat Now
-                  </CTAButton>
-                  
-                  <CTAButton 
+                    <a>Chat on WhatsApp</a>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="border-white/20 hover:bg-white/10 min-w-[200px]"
                     onClick={handleScheduleClick}
-                    className="w-full bg-gradient-to-r from-brand-blue to-brand-purple text-white hover:opacity-90 flex items-center justify-center gap-2"
                   >
-                    <Calendar size={18} />
-                    Schedule Call
-                  </CTAButton>
+                    <a>Schedule a Call</a>
+                  </Button>
                 </div>
                 
                 <button
