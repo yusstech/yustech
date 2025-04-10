@@ -8,7 +8,7 @@ interface TurnstileOptions {
   sitekey: string;
   theme?: 'light' | 'dark';
   callback: (token: string) => void;
-  'error-callback': () => void;
+  'error-callback': (error: Error) => void;
   appearance?: 'always' | 'execute' | 'interaction-only';
   execution?: 'execute' | 'render';
   'refresh-expired'?: 'auto' | 'manual';
@@ -29,6 +29,7 @@ declare global {
 
 const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationProps) => {
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
 
@@ -46,19 +47,24 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
     if (!siteKey) {
       console.error('Turnstile Error: Site key is missing');
       setError('Configuration error: Site key not found');
+      setIsLoading(false);
       return;
     }
 
     // Check if Turnstile script is loaded
-    if (!window.turnstile) {
-      console.error('Turnstile Error: Script not loaded');
-      setError('Turnstile script not loaded. Please check your network connection.');
-      return;
-    }
+    const checkTurnstile = () => {
+      if (window.turnstile) {
+        initializeTurnstile(siteKey);
+      } else {
+        setTimeout(checkTurnstile, 100);
+      }
+    };
 
-    const loadTurnstile = () => {
+    const initializeTurnstile = (siteKey: string) => {
       if (!containerRef.current) {
         console.error('Turnstile Error: Container not found');
+        setError('Initialization error: Container not found');
+        setIsLoading(false);
         return;
       }
 
@@ -68,56 +74,56 @@ const TurnstileVerification = ({ onVerificationSuccess }: TurnstileVerificationP
           window.turnstile.remove(widgetIdRef.current);
         }
 
-        console.log('Turnstile Debug: Rendering widget with options:', {
-          siteKey,
+        const widgetId = window.turnstile.render(containerRef.current, {
+          sitekey: siteKey,
+          callback: (token: string) => {
+            console.log('Turnstile verification successful');
+            localStorage.setItem('isVerified', 'true');
+            onVerificationSuccess();
+            setIsLoading(false);
+          },
+          'error-callback': (error: Error) => {
+            console.error('Turnstile verification failed:', error);
+            setError('Verification failed. Please try again.');
+            setIsLoading(false);
+          },
           appearance: 'interaction-only',
+          execution: 'execute',
           size: 'invisible'
         });
 
-        // Render the Turnstile widget
-        widgetIdRef.current = window.turnstile.render(containerRef.current, {
-          sitekey: siteKey,
-          appearance: 'interaction-only',
-          size: 'invisible',
-          callback: (token) => {
-            console.log('Turnstile Success: Verification token received');
-            onVerificationSuccess();
-          },
-          'error-callback': () => {
-            console.error('Turnstile Error: Verification failed');
-            setError('Verification failed. Please try again.');
-          }
-        });
-
-        console.log('Turnstile Debug: Widget rendered with ID:', widgetIdRef.current);
+        widgetIdRef.current = widgetId;
       } catch (err) {
         console.error('Turnstile Error:', err);
-        setError('Failed to initialize Turnstile. Please try again.');
+        setError('Failed to initialize verification');
+        setIsLoading(false);
       }
     };
 
-    // Initial load
-    loadTurnstile();
+    // Start checking for Turnstile script
+    checkTurnstile();
 
-    // Cleanup function
+    // Cleanup
     return () => {
       if (widgetIdRef.current) {
-        try {
-          window.turnstile.remove(widgetIdRef.current);
-          console.log('Turnstile Debug: Widget removed during cleanup');
-        } catch (err) {
-          console.error('Turnstile Error during cleanup:', err);
-        }
+        window.turnstile.remove(widgetIdRef.current);
       }
     };
   }, [onVerificationSuccess]);
 
+  if (error) {
+    return (
+      <div className="text-red-500 text-sm">
+        {error}
+      </div>
+    );
+  }
+
   return (
-    <div className="turnstile-container">
-      <div ref={containerRef} id="turnstile-widget" />
-      {error && (
-        <div className="text-red-500 text-sm mt-2">
-          {error}
+    <div ref={containerRef} className="turnstile-container">
+      {isLoading && (
+        <div className="text-sm text-gray-500">
+          Loading verification...
         </div>
       )}
     </div>

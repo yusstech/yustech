@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
+      outDir: 'dist',
       rollupOptions: {
         output: {
           manualChunks: (id) => {
@@ -48,38 +49,31 @@ export default defineConfig(({ mode }) => {
           },
           entryFileNames: 'assets/[name]-[hash].js',
           chunkFileNames: 'assets/[name]-[hash].js',
-          assetFileNames: 'assets/[name]-[hash].[ext]'
+          assetFileNames: 'assets/[name]-[hash].[ext]',
         },
-        external: [
-          // Add any external dependencies that should not be bundled
-        ]
       },
-      manifest: true,
-      sourcemap: false,
-      minify: 'esbuild',
-      emptyOutDir: true,
-      target: 'esnext',
-      cssMinify: true,
-      reportCompressedSize: true,
-      chunkSizeWarningLimit: 1000,
-      // Performance optimizations
-      cssCodeSplit: true,
-      brotliSize: true,
+      sourcemap: true,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
     },
-    // Optimize dependencies
     optimizeDeps: {
       include: [
         'react',
         'react-dom',
+        'react-router-dom',
+        '@radix-ui/react-dialog',
+        '@radix-ui/react-dropdown-menu',
+        '@radix-ui/react-slot',
+        '@radix-ui/react-tooltip',
         '@tanstack/react-query',
-        '@radix-ui/react-icons',
+        'framer-motion',
         'lucide-react',
-        'date-fns',
-        'zod',
-        'react-hook-form',
-        '@hookform/resolvers'
       ],
-      exclude: [],
     },
     define: {
       'process.env': env,

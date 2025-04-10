@@ -15,6 +15,7 @@ import LeadPopup from "./components/LeadPopup";
 import { useMetaPixel } from "./hooks/useMetaPixel";
 import Portfolio from "./pages/Portfolio";
 import ClientLinks from "./pages/ClientLinks";
+import PreMeetingForm from "./pages/PreMeetingForm";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -62,33 +63,6 @@ const App = () => {
     });
   };
 
-  useEffect(() => {
-    // Initialize Turnstile
-    const turnstileOptions = {
-      sitekey: import.meta.env.VITE_CLOUDFLARE_SITE_KEY,
-      callback: (token: string) => {
-        console.log('Turnstile verification successful', token);
-        setIsVerified(true);
-        localStorage.setItem('isVerified', 'true');
-      },
-      'error-callback': () => {
-        console.error('Turnstile verification failed');
-        setIsVerified(false);
-        localStorage.setItem('isVerified', 'false');
-      },
-      appearance: 'interaction-only', // Use interaction-only for invisible mode
-      execution: 'execute', // Execute automatically
-      'refresh-expired': 'auto', // Automatically refresh expired tokens
-      'response-field': false, // Don't show response field
-      'response-field-name': 'cf-turnstile-response', // Custom response field name
-      'size': 'invisible', // Ensure invisible size
-      'theme': 'dark' // Match your site's theme
-    };
-
-    // @ts-expect-error - Turnstile types are not properly defined
-    window.turnstile?.render('#turnstile-widget', turnstileOptions);
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -101,10 +75,14 @@ const App = () => {
               <Route path="/" element={<Index />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/clients" element={<ClientLinks />} />
+              <Route path="/prepform" element={<PreMeetingForm />} />
             </Routes>
           </Layout>
+          <LeadPopup />
+          {!isVerified && (
+            <TurnstileVerification onVerificationSuccess={handleVerificationSuccess} />
+          )}
         </BrowserRouter>
-        <LeadPopup />
       </TooltipProvider>
     </QueryClientProvider>
   );
