@@ -26,6 +26,7 @@ const RouteChangeTracker = () => {
   const { trackEvent } = useMetaPixel();
 
   useEffect(() => {
+    console.log('Current route:', location.pathname);
     // Track page view on route change
     trackEvent('PageView', {
       path: location.pathname,

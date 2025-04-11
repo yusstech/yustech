@@ -9,6 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2 } from "lucide-react";
 
 const PreMeetingForm = () => {
+  console.log('PreMeetingForm component rendered');
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -45,6 +47,13 @@ const PreMeetingForm = () => {
     setError('');
 
     try {
+      console.log('Form data:', formData);
+      console.log('Environment variables:', {
+        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      });
+
       const templateParams = {
         ...formData,
         to_name: 'YusTech Team',
@@ -52,13 +61,14 @@ const PreMeetingForm = () => {
         reply_to: formData.email
       };
 
-      await emailjs.send(
+      const response = await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         templateParams,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
+      console.log('EmailJS response:', response);
       setIsSuccess(true);
       setFormData({
         name: '',
@@ -113,51 +123,51 @@ const PreMeetingForm = () => {
             </p>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8 bg-white/5 p-8 rounded-xl">
             {/* Basic Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Full Name *</label>
+                <label className="block text-sm font-medium mb-2 text-white">Full Name *</label>
                 <Input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="bg-white/5 border-white/10"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Email Address *</label>
+                <label className="block text-sm font-medium mb-2 text-white">Email Address *</label>
                 <Input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="bg-white/5 border-white/10"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Company Name</label>
+                <label className="block text-sm font-medium mb-2 text-white">Company Name</label>
                 <Input
                   type="text"
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
-                  className="bg-white/5 border-white/10"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Project Type *</label>
+                <label className="block text-sm font-medium mb-2 text-white">Project Type *</label>
                 <Select
                   value={formData.projectType}
                   onValueChange={(value) => setFormData(prev => ({ ...prev, projectType: value }))}
                 >
-                  <SelectTrigger className="bg-white/5 border-white/10">
+                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
                     <SelectValue placeholder="Select project type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-black border-white/20">
                     <SelectItem value="web">Web Application</SelectItem>
                     <SelectItem value="mobile">Mobile Application</SelectItem>
                     <SelectItem value="ecommerce">E-commerce Platform</SelectItem>
@@ -166,53 +176,71 @@ const PreMeetingForm = () => {
                   </SelectContent>
                 </Select>
               </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white">Budget Range *</label>
+                <Select
+                  value={formData.budget}
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, budget: value }))}
+                >
+                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                    <SelectValue placeholder="Select budget range" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-black border-white/20">
+                    <SelectItem value="under-10k">Under N10,000,000</SelectItem>
+                    <SelectItem value="10k-25k">N10,000,000 - N25,000,000</SelectItem>
+                    <SelectItem value="25k-50k">N25,000,000 - N50,000,000</SelectItem>
+                    <SelectItem value="50k-100k">N50,000,000 - N100,000,000</SelectItem>
+                    <SelectItem value="over-100k">Over N100,000,000</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             {/* Project Details */}
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Project Description *</label>
+                <label className="block text-sm font-medium mb-2 text-white">Project Description *</label>
                 <Textarea
                   name="projectDescription"
                   value={formData.projectDescription}
                   onChange={handleChange}
                   required
-                  className="bg-white/5 border-white/10 min-h-[120px]"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 min-h-[120px]"
                   placeholder="Describe your project goals, features, and requirements..."
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Technical Requirements</label>
+                <label className="block text-sm font-medium mb-2 text-white">Technical Requirements</label>
                 <Textarea
                   name="technicalRequirements"
                   value={formData.technicalRequirements}
                   onChange={handleChange}
-                  className="bg-white/5 border-white/10 min-h-[100px]"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50 min-h-[100px]"
                   placeholder="Any specific technologies, integrations, or technical constraints..."
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Target Users</label>
+                  <label className="block text-sm font-medium mb-2 text-white">Target Users</label>
                   <Input
                     type="text"
                     name="targetUsers"
                     value={formData.targetUsers}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
                     placeholder="Who will use your product?"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Competitors</label>
+                  <label className="block text-sm font-medium mb-2 text-white">Competitors</label>
                   <Input
                     type="text"
                     name="competitors"
                     value={formData.competitors}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
                     placeholder="Similar products in the market"
                   />
                 </div>
@@ -221,15 +249,16 @@ const PreMeetingForm = () => {
 
             {/* Project Resources */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Project Resources</h3>
+              <h3 className="text-lg font-semibold text-white">Project Resources</h3>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="hasDomain"
                     checked={formData.hasDomain}
                     onCheckedChange={(checked) => handleCheckboxChange('hasDomain', checked as boolean)}
+                    className="border-white/20 data-[state=checked]:bg-brand-purple"
                   />
-                  <label htmlFor="hasDomain" className="text-sm">
+                  <label htmlFor="hasDomain" className="text-sm text-white">
                     I have a domain name
                   </label>
                 </div>
@@ -238,8 +267,9 @@ const PreMeetingForm = () => {
                     id="hasHosting"
                     checked={formData.hasHosting}
                     onCheckedChange={(checked) => handleCheckboxChange('hasHosting', checked as boolean)}
+                    className="border-white/20 data-[state=checked]:bg-brand-purple"
                   />
-                  <label htmlFor="hasHosting" className="text-sm">
+                  <label htmlFor="hasHosting" className="text-sm text-white">
                     I have hosting set up
                   </label>
                 </div>
@@ -248,8 +278,9 @@ const PreMeetingForm = () => {
                     id="hasDesign"
                     checked={formData.hasDesign}
                     onCheckedChange={(checked) => handleCheckboxChange('hasDesign', checked as boolean)}
+                    className="border-white/20 data-[state=checked]:bg-brand-purple"
                   />
-                  <label htmlFor="hasDesign" className="text-sm">
+                  <label htmlFor="hasDesign" className="text-sm text-white">
                     I have design assets ready
                   </label>
                 </div>
@@ -258,12 +289,12 @@ const PreMeetingForm = () => {
 
             {/* Additional Notes */}
             <div>
-              <label className="block text-sm font-medium mb-2">Additional Notes</label>
+              <label className="block text-sm font-medium mb-2 text-white">Additional Notes</label>
               <Textarea
                 name="additionalNotes"
                 value={formData.additionalNotes}
                 onChange={handleChange}
-                className="bg-white/5 border-white/10 min-h-[100px]"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 min-h-[100px]"
                 placeholder="Any other information you'd like to share..."
               />
             </div>
